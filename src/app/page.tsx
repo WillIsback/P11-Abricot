@@ -5,6 +5,8 @@ import CardProject from "@/components/Card/CardPoject";
 import UserIcon from "@/components/UserIcon/UserIcon";
 import MenuItems from "@/components/MenuItems/MenuItems";
 import IconButton from "@/components/IconButton/IconButton";
+import CustomLink from "@/components/CustomLink/CustomLink";
+
 export default function Home() {
   return (
     <div className="flex">
@@ -57,6 +59,10 @@ export default function Home() {
             <h2>Icon Button</h2>
             <IconButton button="MoveLeft" />
             <IconButton button="Ellipsis" />
+          </div>
+          <div className="flex flex-col bg-purple-300 px-4 gap-4 py-4">
+            <h2>Link Custom</h2>
+              <CustomLink label="Link" link="/" />
           </div>
         </div>
       </main>
