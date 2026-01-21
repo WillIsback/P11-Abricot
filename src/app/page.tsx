@@ -8,11 +8,14 @@ import IconButton from "@/components/IconButton/IconButton";
 import CustomLink from "@/components/CustomLink/CustomLink";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomInput from "@/components/CustomInput/CustomInput";
+import Menu from "@/components/Menu/Menu";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
     <div className="flex">
-      <main className="flex">
+      <main className="flex flex-col">
+        <Menu />
         <div className="flex gap-20 border-2 px-4 py-4 flex-wrap">
           <div className="flex flex-col">
             <h2>IA Button</h2>
@@ -79,6 +82,7 @@ export default function Home() {
               <CustomInput label="Label" inputID="Input-test" type="ComboBox"/>
           </div>
         </div>
+        <Footer />
       </main>
     </div>
   );
