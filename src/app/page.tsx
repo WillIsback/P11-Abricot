@@ -6,6 +6,8 @@ import UserIcon from "@/components/UserIcon/UserIcon";
 import MenuItems from "@/components/MenuItems/MenuItems";
 import IconButton from "@/components/IconButton/IconButton";
 import CustomLink from "@/components/CustomLink/CustomLink";
+import CustomButton from "@/components/CustomButton/CustomButton";
+import CustomInput from "@/components/CustomInput/CustomInput";
 
 export default function Home() {
   return (
@@ -63,6 +65,18 @@ export default function Home() {
           <div className="flex flex-col bg-purple-300 px-4 gap-4 py-4">
             <h2>Link Custom</h2>
               <CustomLink label="Link" link="/" />
+          </div>
+          <div className="flex flex-col bg-purple-300 px-4 gap-4 py-4">
+            <h2>Button Custom</h2>
+              <CustomButton label="Label" pending={false} buttonType="button" disabled={false} />
+              <CustomButton label="Label" pending={true} buttonType="button" disabled={false} />
+              <CustomButton label="Label" pending={false} buttonType="button" disabled={true} />
+          </div>
+          <div className="flex flex-col bg-gray-200 px-4 gap-4 py-4">
+            <h2>Input Custom</h2>
+              <CustomInput label="Label" inputID="Input-test" type="Default"/>
+              <CustomInput label="Label" inputID="Input-test" type="DatePicker"/>
+              <CustomInput label="Label" inputID="Input-test" type="ComboBox"/>
           </div>
         </div>
       </main>
