@@ -4,6 +4,7 @@ import Tags from "@/components/Tags/Tags";
 import CardProject from "@/components/Card/CardPoject";
 import UserIcon from "@/components/UserIcon/UserIcon";
 import MenuItems from "@/components/MenuItems/MenuItems";
+import IconButton from "@/components/IconButton/IconButton";
 export default function Home() {
   return (
     <div className="flex">
@@ -51,6 +52,11 @@ export default function Home() {
           <div className="flex flex-col bg-purple-300 px-4 gap-4 py-4">
             <h2>Menu Items</h2>
             <MenuItems />
+          </div>
+          <div className="flex flex-col bg-purple-300 px-4 gap-4 py-4">
+            <h2>Icon Button</h2>
+            <IconButton button="MoveLeft" />
+            <IconButton button="Ellipsis" />
           </div>
         </div>
       </main>
