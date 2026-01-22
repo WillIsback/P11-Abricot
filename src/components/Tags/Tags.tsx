@@ -24,6 +24,8 @@ export default function Tags({ label, color }: TagsProps){
             rounded-full
             justify-center
             body-s
+            px-4
+            py-1
             ${colorStyles[color]}
         `}>
             {label}

@@ -10,6 +10,12 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomInput from "@/components/CustomInput/CustomInput";
 import Menu from "@/components/Menu/Menu";
 import Footer from "@/components/Footer/Footer";
+import Comment from "@/components/Comment/Comment";
+import TaskThumbnail from "@/components/Tasks/TaskThumbnail";
+import TaskKanban from "@/components/Tasks/TaskKanban";
+import TaskProject from "@/components/Tasks/TaskProject/TaskProject";
+import TaskAI from "@/components/Tasks/TaskAi";
+
 
 export default function Home() {
   return (
@@ -42,9 +48,9 @@ export default function Home() {
           </div>
           <div>
             <h2>CardProject</h2>
-            <CardProject 
-              name='Nom du projet' 
-              description="Développement de la nouvelle version de l'API REST avec authentification JWT" 
+            <CardProject
+              name='Nom du projet'
+              description="Développement de la nouvelle version de l'API REST avec authentification JWT"
               todo={4}
               completed={1}
               team={3}
@@ -80,6 +86,38 @@ export default function Home() {
               <CustomInput label="Label" inputID="Input-test" type="Default"/>
               <CustomInput label="Label" inputID="Input-test" type="DatePicker"/>
               <CustomInput label="Label" inputID="Input-test" type="ComboBox"/>
+          </div>
+          <div className="flex flex-col bg-gray-200 px-4 gap-4 py-4">
+            <h2>Comment</h2>
+              <Comment />
+          </div>
+          <div className="flex flex-col bg-gray-200 px-4 gap-4 py-4">
+            <h2>Tasks</h2>
+            <div className="w-255.5">
+              <h3>Thumnail</h3>
+                <TaskThumbnail />
+              </div>
+            <div className="w-92.75">
+              <h3>Kanban</h3>
+                <TaskKanban />
+            </div>
+            <div className="w-92.75">
+              <h3>Projet</h3>
+                <TaskProject
+                  name="Authentification JWT"
+                  description="Implémenter le système d'authentification avec tokens JWT"
+                  labelProps={{label: 'À faire', color: 'error'}}
+                  dueDate={new Date("2026-03-09")}
+                  assignees={{assignees: [
+                    {intial: 'BD',firstName: 'Bertrand', lastName: 'Dupont'},
+                    {intial: 'AD',firstName: 'Anne', lastName: 'Dupont'}]}}
+                  comments={1}
+                />
+            </div>
+            <div className="w-92.75">
+              <h3>Task AI</h3>
+                <TaskAI />
+            </div>
           </div>
         </div>
         <Footer />

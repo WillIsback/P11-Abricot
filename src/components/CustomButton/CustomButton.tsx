@@ -1,13 +1,13 @@
 'use client';
 import { LoaderCircle } from 'lucide-react';
 
-export default function CustomButton ({ 
+export default function CustomButton ({
     label,
     pending,
     disabled,
-    buttonType 
+    buttonType
 } : {
-    label: string, 
+    label: string,
     pending: boolean,
     disabled: boolean,
     buttonType: "submit" | "reset" | "button" | undefined
@@ -21,9 +21,8 @@ export default function CustomButton ({
                 justify-center
                 items-center
                 h-12.5
-                w-fit
+                w-full
                 py-3.25
-                px-18.5
                 rounded-[10px]
                 ${pending
                     ? 'bg-white text-brand-dark border border-brand-dark'
