@@ -1,6 +1,6 @@
 type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success'
 
-type TagsProps = {
+interface TagsProps {
     label: string;
     color: TagColor;
 }
