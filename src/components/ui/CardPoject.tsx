@@ -21,7 +21,7 @@ export default function CardProject ({
     assigned
 
 }: CardProps){
-    const progression = (completed/todo)*100;
+    const progression = Math.round((completed/todo)*100);
     return (
         <div className="
             flex

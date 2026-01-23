@@ -1,6 +1,7 @@
 import Menu from "@/components/Menu/Menu"
 import Footer from "@/components/Footer/Footer"
 import Banner from "@/components/ui/Banner"
+import DisplayProjects from "@/components/Projects/DisplayProjects"
 
 export default function Projects({}){
 
@@ -14,7 +15,7 @@ export default function Projects({}){
             firstName="Alice"
             lastName="Dupont"
           />
-          {/* <DisplayProjectContent /> */ }
+          <DisplayProjects />
         </main>
         <Footer />
       </div>
