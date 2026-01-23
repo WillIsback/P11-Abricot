@@ -4,7 +4,6 @@ import Banner from "@/components/ui/Banner"
 import DisplayProjects from "@/components/Projects/DisplayProjects"
 
 export default function Projects({}){
-
   return (
     <div className="flex h-screen bg-gray-50">
       <div className="w-360 m-auto mt-0">

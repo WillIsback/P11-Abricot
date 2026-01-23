@@ -1,15 +1,12 @@
 import Menu from "@/components/Menu/Menu"
 import Footer from "@/components/Footer/Footer"
 import Banner from "@/components/ui/Banner"
+import { notFound } from 'next/navigation'
 
-interface ProjetPageProps {
-  params: Promise<{
-    projet: string
-  }>
-}
 
-export default async function ProjetPage({ params }: ProjetPageProps) {
-  const { projet } = await params
+export default async function Projet({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  if(!slug) return notFound();
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -17,7 +14,7 @@ export default async function ProjetPage({ params }: ProjetPageProps) {
         <Menu />
         <main className="px-25 py-22.25">
           <Banner
-            title={`Projet: ${projet}`}
+            title="Mes projets"
             firstName="Alice"
             lastName="Dupont"
           />
