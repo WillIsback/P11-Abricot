@@ -1,8 +1,8 @@
 import { MessageSquareText } from 'lucide-react';
 import { FolderOpen } from 'lucide-react';
 import SVGCalendar from '@/assets/icons/calendar.svg'
-import Tags from '../Tags/Tags';
-import CustomButton from '../CustomButton/CustomButton';
+import Tags from '../ui/Tags';
+import CustomButton from '../ui/CustomButton';
 import { fr } from 'date-fns/locale';
 import { format } from 'date-fns';
 

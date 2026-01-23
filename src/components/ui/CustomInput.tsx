@@ -1,5 +1,5 @@
-import DatePicker from './DatePicker/DatePicker';
-import { ComboBox } from './ComboBox/ComboBox';
+import DatePicker from "./DatePicker";
+import { ComboBox } from "./ComboBox";
 
 type InputType = 'DatePicker' | 'ComboBox' | 'email' | 'password' | 'text';
 

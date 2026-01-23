@@ -17,7 +17,7 @@ export default function SearchBar ({}){
         (name: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
         params.set(name, value)
-    
+
         return params.toString()
         },
         [searchParams]
@@ -29,14 +29,14 @@ export default function SearchBar ({}){
                 id='searchBar'
                 type="text"
                 placeholder="Rechercher une tâche"
-                className="body-s text-gray-600 w-auto focus:outline-0" 
+                className="body-s text-gray-600 w-auto focus:outline-0"
                 value={currentSearch}
                 onChange={e => setCurrentSearch(e.target.value)}
             />
-            <button 
+            <button
                 onClick={() => {
                     router.push(pathname + '?' + createQueryString('search', `${currentSearch}`))
-                }}            
+                }}
             >
                 <Search stroke='#6B7280' size={14}/>
             </button>

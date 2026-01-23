@@ -1,8 +1,8 @@
 import { MessageSquareText } from 'lucide-react';
 import { FolderOpen } from 'lucide-react';
 import SVGCalendar from '@/assets/icons/calendar.svg'
-import Tags from '../Tags/Tags';
-import CustomButton from '../CustomButton/CustomButton';
+import Tags from '../ui/Tags';
+import CustomButton from '../ui/CustomButton';
 import { fr } from 'date-fns/locale';
 import { format } from 'date-fns';
 
@@ -16,7 +16,7 @@ interface PropType {
 }
 
 export default function TaskThumbnail ({ name, description, projectName, dueDate, comments, tag }: PropType){
-  
+
   const formattedDate = format(new Date(dueDate), 'd MMMM', { locale: fr });
   return (
       <div className="flex justify-between items-center w-255.5 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">

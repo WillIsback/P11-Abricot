@@ -1,13 +1,13 @@
 'use client';
-import Tags from "@/components/Tags/Tags"
-import IconButton from "@/components/IconButton/IconButton"
+import Tags from "@/components/ui/Tags"
+import IconButton from "@/components/ui/IconButton"
 import SVGCalendar from '@/assets/icons/calendar.svg'
-import Assignee from "@/components/Assignee/Assignee"
+import Assignee from "@/components/ui/Assignee"
 import { ChevronUp } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import Comment from "@/components/Comment/Comment";
+import Comment from "@/components/ui/Comment";
 
 import { useState } from "react";
 

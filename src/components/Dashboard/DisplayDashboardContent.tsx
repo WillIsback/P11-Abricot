@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
-import Chips from "../Chips/Chips";
+import Chips from "../ui/Chips";
 import DashBoardTasks from "./DashboardTasks";
 import DashBoardKanban from "./DashboardKanban";
 

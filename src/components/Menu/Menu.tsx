@@ -1,5 +1,5 @@
 import LogoBrandDark from "@/assets/logo/loge_brand_dark.svg"
-import MenuItems from "../MenuItems/MenuItems"
+import MenuItems from "../ui/MenuItems"
 import UserIcon from "../UserIcon/UserIcon"
 
 export default function Menu ({}){

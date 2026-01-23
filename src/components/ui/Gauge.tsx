@@ -1,5 +1,3 @@
-
-
 export default function Gauge ({ todo, completed }: {todo : number, completed: number}){
 
     const clampedProgress = Math.min(100, Math.max(0, ((completed/todo)*100)));
@@ -13,7 +11,7 @@ export default function Gauge ({ todo, completed }: {todo : number, completed: n
                 >
                 </div>
             </div>
-            <p className="body-2xs text-gray-600">{completed}/{todo} tâches terminées</p> 
+            <p className="body-2xs text-gray-600">{completed}/{todo} tâches terminées</p>
         </div>
     );
 };

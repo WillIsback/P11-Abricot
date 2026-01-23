@@ -1,20 +1,74 @@
-import IAButton from "@/components/IAButton/IAButton";
-import Chips from "@/components/Chips/Chips";
-import Tags from "@/components/Tags/Tags";
-import CardProject from "@/components/Card/CardPoject";
+import IAButton from "@/components/ui/IAButton";
+import Chips from "@/components/ui/Chips";
+import Tags from "@/components/ui/Tags";
+import CardProject from "@/components/ui/CardPoject";
 import UserIcon from "@/components/UserIcon/UserIcon";
-import MenuItems from "@/components/MenuItems/MenuItems";
-import IconButton from "@/components/IconButton/IconButton";
-import CustomLink from "@/components/CustomLink/CustomLink";
-import CustomButton from "@/components/CustomButton/CustomButton";
-import CustomInput from "@/components/CustomInput/CustomInput";
+import MenuItems from "@/components/ui/MenuItems";
+import IconButton from "@/components/ui/IconButton";
+import CustomLink from "@/components/ui/CustomLink";
+import CustomButton from "@/components/ui/CustomButton";
+import CustomInput from "@/components/ui/CustomInput";
 import Menu from "@/components/Menu/Menu";
 import Footer from "@/components/Footer/Footer";
-import Comment from "@/components/Comment/Comment";
+import Comment from "@/components/ui/Comment";
 import TaskThumbnail from "@/components/Tasks/TaskThumbnail";
 import TaskKanban from "@/components/Tasks/TaskKanban";
 import TaskProject from "@/components/Tasks/TaskProject/TaskProject";
 import TaskAI from "@/components/Tasks/TaskAi";
+
+type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success'
+
+const tasks = [
+  {
+    name: "Tâche 1",
+    description: "Faire la mise au point des sizes",
+    projectName: "P11-Saas",
+    dueDate: "2026-03-07" as unknown as Date,
+    comments: 2,
+    tag:{label: 'A faire', color:'error' as TagColor}
+  },
+  {
+    name: "Tâche 2",
+    description: "Activer les liens API",
+    projectName: "P11-Saas",
+    dueDate: "2026-03-14" as unknown as Date,
+    comments: 5,
+    tag:{label: 'En cours', color:'warning' as TagColor}
+  },
+  {
+    name: "Tâche 0",
+    description: "KickOff projet",
+    projectName: "P11-Saas",
+    dueDate: "2026-02-01" as unknown as Date,
+    comments: 5,
+    tag:{label: 'Terminée', color:'success' as TagColor}
+  },
+  {
+    name: "Tâche 1",
+    description: "Faire la mise au point des sizes",
+    projectName: "P11-Saas",
+    dueDate: "2026-03-07" as unknown as Date,
+    comments: 2,
+    tag:{label: 'A faire', color:'error' as TagColor}
+  },
+  {
+    name: "Tâche 2",
+    description: "Activer les liens API",
+    projectName: "P11-Saas",
+    dueDate: "2026-03-14" as unknown as Date,
+    comments: 5,
+    tag:{label: 'En cours', color:'warning' as TagColor}
+  },
+  {
+    name: "Tâche 0",
+    description: "KickOff projet",
+    projectName: "P11-Saas",
+    dueDate: "2026-02-01" as unknown as Date,
+    comments: 5,
+    tag:{label: 'Terminée', color:'success' as TagColor}
+  }
+]
+
 
 
 export default function Home() {
@@ -30,11 +84,11 @@ export default function Home() {
           <div className="flex flex-col bg-blue-300 px-4 gap-4">
             <h2>Chips</h2>
             <Chips type="task" />
-            <Chips type="task" isActive={true}/>
+            <Chips type="task" />
             <Chips type="kanban" />
-            <Chips type="kanban" isActive={true}/>
+            <Chips type="kanban" />
             <Chips type="project" />
-            <Chips type="project" isActive={true}/>
+            <Chips type="project" />
           </div>
           <div className="flex flex-col gap-4 bg-purple-300 px-1">
             <h2>Tags</h2>
@@ -95,11 +149,38 @@ export default function Home() {
             <h2>Tasks</h2>
             <div className="w-255.5">
               <h3>Thumnail</h3>
-                <TaskThumbnail />
+                <ul>
+                  {tasks.map((task)=>{
+                    return <li key={crypto.randomUUID()}>
+                      <TaskThumbnail
+                        name={task.name}
+                        description={task.description}
+                        projectName={task.description}
+                        dueDate={task.dueDate}
+                        comments={task.comments}
+                        tag={task.tag}
+                      />
+                    </li>
+                  })}
+
+                </ul>
               </div>
             <div className="w-92.75">
               <h3>Kanban</h3>
-                <TaskKanban />
+                <ul>
+                  {tasks.map((task)=>{
+                    return <li key={crypto.randomUUID()}>
+                      <TaskKanban
+                        name={task.name}
+                        description={task.description}
+                        projectName={task.description}
+                        dueDate={task.dueDate}
+                        comments={task.comments}
+                        tag={task.tag}
+                      />
+                    </li>
+                  })}
+                </ul>
             </div>
             <div className="w-92.75">
               <h3>Projet</h3>

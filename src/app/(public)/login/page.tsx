@@ -1,7 +1,7 @@
 import LogoBrandDark from "@/assets/logo/loge_brand_dark.svg";
-import CustomInput from "@/components/CustomInput/CustomInput";
-import CustomButton from "@/components/CustomButton/CustomButton";
-import CustomLink from "@/components/CustomLink/CustomLink";
+import CustomInput from "@/components/ui/CustomInput";
+import CustomButton from "@/components/ui/CustomButton";
+import CustomLink from "@/components/ui/CustomLink";
 
 export default function Login() {
   return (

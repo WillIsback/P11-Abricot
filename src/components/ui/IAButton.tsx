@@ -3,7 +3,7 @@ import { Sparkles } from 'lucide-react';
 export default function IAButton(){
     return (
         <button className="
-        group 
+        group
         flex
         items-center
         justify-center
@@ -22,6 +22,3 @@ export default function IAButton(){
         </button>
     )
 }
-
-
-

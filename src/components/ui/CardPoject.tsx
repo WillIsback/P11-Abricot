@@ -1,4 +1,4 @@
-import Gauge from "../Gauge/Gauge";
+import Gauge from "./Gauge";
 import Team from "../Team/Team";
 
 type CardProps = {
@@ -12,11 +12,11 @@ type CardProps = {
 }
 
 export default function CardProject ({
-    name, 
-    description, 
-    todo, 
-    completed, 
-    team, 
+    name,
+    description,
+    todo,
+    completed,
+    team,
     creator,
     assigned
 
