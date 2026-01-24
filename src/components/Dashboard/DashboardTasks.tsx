@@ -35,7 +35,6 @@ export default function DashBoardTasks ({ tasks }: PropsType){
                     )
                 })}
             </ul>
-
         </section>
     )
 }
