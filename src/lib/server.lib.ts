@@ -2,35 +2,75 @@ import * as z from "zod";
 
 import { Error, Success } from "@/schemas/backend.schemas";
 
-const validateResponse = async (res : Response, schema: z.ZodType) => {
-  const responseData = await res.json();
-  return schema.safeParse(responseData);
-}
-
-const validateData = <T>(data: unknown, schema: z.ZodType<T>) => {
-  const parsed = schema.safeParse(data);
-  return parsed.success ? { success: true, data: parsed.data } : { success: false, error: parsed.error };
+type ApiSuccess<T> = {
+  ok: true;
+  status: number;
+  message?: string;
+  data: T;
 };
 
-const handleFetch = async (res: Response) => {
-    if (!res.ok) {
-      const error = await validateResponse(res, Error);
-      if(!error.success){
-        console.warn('Fail to validate error response from auth service fetch', error.error)
-      } else {
-        console.warn(error.data)
-      }
-      return error
-    } else {
-      const success = await validateResponse(res, Success);
-      if(!success.success){
-        console.warn('Fail to validate success response from auth service fetch', success.error)
-      } else {
-        console.log(success.success)
-      }
-      return success
+type ApiFailure = {
+  ok: false;
+  status: number;
+  message: string;
+  backendError?: string;
+  details?: z.infer<typeof Error>["details"];
+  validationError?: z.ZodError;
+};
+
+export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
+
+const validateResponse = async <T>(res: Response, schema: z.ZodType<T>) => {
+  const responseData = await res.json();
+  return schema.safeParse(responseData);
+};
+
+const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiResult<T>> => {
+  if (!res.ok) {
+    const parsedError = await validateResponse(res, Error);
+    if (parsedError.success) {
+      return {
+        ok: false,
+        status: res.status,
+        message: parsedError.data.message,
+        backendError: parsedError.data.error,
+        details: parsedError.data.details,
+      };
     }
-}
+    return {
+      ok: false,
+      status: res.status,
+      message: "Invalid error payload received from backend",
+      validationError: parsedError.error,
+    };
+  }
 
+  const parsedSuccessEnvelope = await validateResponse(res, Success);
+  if (!parsedSuccessEnvelope.success) {
+    return {
+      ok: false,
+      status: res.status,
+      message: "Invalid success payload received from backend",
+      validationError: parsedSuccessEnvelope.error,
+    };
+  }
 
-export { validateResponse, validateData, handleFetch }
+  const parsedData = schema.safeParse(parsedSuccessEnvelope.data.data);
+  if (!parsedData.success) {
+    return {
+      ok: false,
+      status: res.status,
+      message: "Invalid data payload received from backend",
+      validationError: parsedData.error,
+    };
+  }
+
+  return {
+    ok: true,
+    status: res.status,
+    message: parsedSuccessEnvelope.data.message,
+    data: parsedData.data,
+  };
+};
+
+export { handleFetch }
