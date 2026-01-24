@@ -23,6 +23,7 @@ export default function CustomButton ({
                 h-12.5
                 w-full
                 py-3.25
+                px-4
                 rounded-[10px]
                 ${pending
                     ? 'bg-white text-brand-dark border border-brand-dark'
