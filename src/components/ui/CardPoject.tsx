@@ -1,14 +1,20 @@
 import Gauge from "./Gauge";
 import Team from "../Team/Team";
 
-type CardProps = {
+interface Assignee {
+  intial: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface CardProps {
     name: string;
     description: string;
     todo: number;
     completed: number;
     team: number;
     creator: string;
-    assigned: string[];
+    assignees: Assignee[];
 }
 
 export default function CardProject ({
@@ -18,7 +24,7 @@ export default function CardProject ({
     completed,
     team,
     creator,
-    assigned
+    assignees
 
 }: CardProps){
     const progression = Math.round((completed/todo)*100);
@@ -51,7 +57,7 @@ export default function CardProject ({
                     </svg>
                     <span className="text-gray-600 body-2xs">Équipe ({team})</span>
                 </div>
-                    <Team creator={creator}assigned={assigned} />
+                    <Team creator={creator} assignees={assignees} variant="Short"/>
             </div>
         </div>
     )

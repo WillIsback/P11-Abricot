@@ -2,6 +2,20 @@ import Menu from "@/components/Menu/Menu"
 import Footer from "@/components/Footer/Footer"
 import ProjectBanner from "@/components/ui/ProjectBanner";
 import { notFound } from 'next/navigation'
+import Workers from "@/components/ui/Workers";
+
+
+const project = 
+  {
+    name: "Projet P6",
+    description: "Projet de coach sportif en ligne",
+    todo: 4,
+    completed: 4,
+    team: 2,
+    creator:'WD',
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
+    slug: 'P6'
+  }
 
 
 export default async function Projet({ params }: { params: Promise<{ slug: string }> }) {
@@ -14,9 +28,10 @@ export default async function Projet({ params }: { params: Promise<{ slug: strin
         <Menu />
         <main className="px-25 py-22.25">
           <ProjectBanner
-            title="Nom du projet"
-            description="Développement de la nouvelle version de l'API REST avec authentification JWT"
+            title={project.name}
+            description={project.description}
           />
+          <Workers contributors={project.team} teamProps={{creator: project.creator, assignees: project.assignees}}/>
         </main>
         <Footer />
       </div>

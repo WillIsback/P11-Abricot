@@ -1,9 +1,20 @@
-type TeamProps = {
-    creator: string;
-    assigned: string[];
+import Assignee from "../ui/Assignee";
+
+interface Assignee {
+  intial: string;
+  firstName: string;
+  lastName: string;
 }
 
-export default function Team ({ creator, assigned }: TeamProps){
+interface TeamProps  {
+    creator: string;
+    assignees: Assignee[];
+    variant?: 'Default'|'Short';
+}
+
+
+
+export default function Team ({ creator, assignees, variant='Default' }: TeamProps){
     return (
         <div className="flex gap-1">
             <div className="flex gap-1.5">
@@ -14,16 +25,21 @@ export default function Team ({ creator, assigned }: TeamProps){
                     Propriétaire
                 </p>
             </div>
-            <ul className="flex items-center">
-            {assigned.map((assignee, index) => (
-                <li
-                key={assignee}
-                className={`w-7 h-7 rounded-full bg-gray-200 border border-white text-gray-950 body-2xs flex items-center justify-center ${index > 0 ? '-ml-2' : ''}`}
-                >
-                {assignee}
-                </li>
-            ))}
-            </ul>
+            {variant==='Short' 
+                ?
+                <ul className="flex items-center">
+                    {assignees.map((assignee, index) => (
+                        <li
+                            key={crypto.randomUUID()}
+                            className={`w-7 h-7 rounded-full bg-gray-200 border border-white text-gray-950 body-2xs flex items-center justify-center ${index > 0 ? '-ml-2' : ''}`}
+                        >
+                            {assignee.intial}
+                        </li>
+                    ))}
+                </ul>
+                :
+                <Assignee assignees={assignees} />
+            }
         </div>
     )
 }

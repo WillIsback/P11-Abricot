@@ -9,7 +9,7 @@ const projects = [
     completed: 0,
     team: 3,
     creator:'WD',
-    assigned: ['BG','VL'],
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
     slug: 'P10'
   },
   {
@@ -19,8 +19,7 @@ const projects = [
     completed: 8,
     team: 4,
     creator:'WD',
-    assigned: ['BG','VL','PT','MH'],
-    slug: 'P9'
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
   },
   {
     name: "Projet P8",
@@ -29,7 +28,7 @@ const projects = [
     completed: 4,
     team: 1,
     creator:'WD',
-    assigned: ['WD'],
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
     slug: 'P8'
   },
   {
@@ -39,7 +38,7 @@ const projects = [
     completed: 0,
     team: 2,
     creator:'WD',
-    assigned: ['BG','VL'],
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
     slug: 'P7'
   },
   {
@@ -49,7 +48,7 @@ const projects = [
     completed: 2,
     team: 3,
     creator:'WD',
-    assigned: ['BG','VL'],
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
     slug: 'P11'
   },
   {
@@ -59,7 +58,7 @@ const projects = [
     completed: 4,
     team: 2,
     creator:'WD',
-    assigned: ['BG','VL'],
+    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
     slug: 'P6'
   }
 ]
@@ -82,7 +81,7 @@ export default function DisplayProjects ({}){
                   completed={p.completed}
                   team={p.team}
                   creator={p.creator}
-                  assigned={p.assigned}
+                  assignees={p.assignees}
                 />
               </Link>
             </li>
