@@ -7,32 +7,35 @@ import { ChevronUp } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import Comment from "@/components/ui/Comment";
+import Comments from "@/components/ui/Comments";
 import { mapStatusColor, mapStatusLabel } from '@/lib/client.lib';
 import { useState } from "react";
 import { Task } from "@/schemas/backend.schemas";
 import * as z from "zod";
 
 
+interface TaskProjectProps {
+  task: z.infer<typeof Task>,
+  projectOwner: string
+}
 
 
-
-export default function TaskProject (props : z.infer<typeof Task>){
+export default function TaskProject ({task, projectOwner} : TaskProjectProps){
   const [isCollapse, setIsCollapse] = useState(true)
-  const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
+  const formattedDate = format(new Date(task.dueDate), 'd MMMM', { locale: fr });
 
   return (
-    <div className="flex flex-col bg-white w-255.5 rounded-[10px] py-6.25 px-10 gap-6">
+    <div className="flex flex-col bg-white w-255.5 rounded-[10px] py-6.25 px-10 gap-6 border border-gray-200">
       {/* Bloc d'en tête */}
       <div className="flex justify-between">
         {/*Bloc titre projet + tags + description*/}
           <div className='flex justify-between items-center'>
             <div className='flex flex-col gap-1.75'>
               <div className="flex items-center gap-2">
-                <h5>{props.title}</h5>
-                <Tags label={mapStatusLabel[props.status]} color={mapStatusColor[props.status]}/>
+                <h5>{task.title}</h5>
+                <Tags label={mapStatusLabel[task.status]} color={mapStatusColor[task.status]}/>
               </div>
-              <p className='body-s text-gray-600'>{props.description}</p>
+              <p className='body-s text-gray-600'>{task.description}</p>
             </div>
           </div>
           {/*Bloc bouton paramètre*/}
@@ -48,11 +51,11 @@ export default function TaskProject (props : z.infer<typeof Task>){
       </div>
       <div className="flex items-center gap-1">
         <p>Assigné à :</p>
-        <Assignees assignee={props.assignees}/>
+        <Assignees assignee={task.assignees}/>
       </div>
       <hr className="h-0.5 border-t-0 bg-gray-200" />
       <div className="flex justify-between">
-        <p className="body-s text-gray-800">Commentaires<span>({props.comments.length})</span></p>
+        <p className="body-s text-gray-800">Commentaires<span>({task.comments.length})</span></p>
         <button type="button"
           onClick={(e)=> {setIsCollapse(!isCollapse); e.preventDefault()}}
         >
@@ -62,7 +65,7 @@ export default function TaskProject (props : z.infer<typeof Task>){
           }
         </button>
       </div>
-        {isCollapse && <Comment/>}
+        {isCollapse && <Comments comments={task.comments} projectOwner={projectOwner}/>}
     </div>
   )
 }

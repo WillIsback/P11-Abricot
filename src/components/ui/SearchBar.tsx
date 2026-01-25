@@ -24,7 +24,7 @@ export default function SearchBar ({}){
     )
 
     return (
-        <div className="flex w-89.25 px-8 py-5.75 justify-between items-center bg-white border border-gray-200 rounded-xl">
+        <div className="flex w-89.25 px-8 justify-between items-center bg-white border border-gray-200 rounded-xl">
             <input
                 id='searchBar'
                 type="text"

@@ -29,7 +29,9 @@ const mapStatusLabel: Record<z.infer<typeof Task>['status'], string> = {
 }
 
 
+const isUserOwner = (userId: string, OwnerId: string) : boolean => {
+    return (userId===OwnerId)
+}
 
 
-
-export { getInitialsFromName, mapStatusColor, mapStatusLabel }
+export { getInitialsFromName, mapStatusColor, mapStatusLabel, isUserOwner }

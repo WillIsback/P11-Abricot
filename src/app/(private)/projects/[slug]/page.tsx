@@ -8,10 +8,12 @@ import { getProjectTask } from "@/action/project.action";
 import { getProjectDetail } from "@/lib/dto.lib";
 import { redirect } from "next/navigation"
 import ProjetFilterBar from "@/components/ui/ProjectFilterBar";
-
+import { cache } from "react";
 type ProjetPageProps = {
   searchParams: Promise<{
-    chips?: string
+    chips?: string,
+    status?: string,
+    search?: string,
   }>,
   params : Promise<{
     slug: string
@@ -20,7 +22,7 @@ type ProjetPageProps = {
 
 export default async function Projet({ searchParams, params }: ProjetPageProps) {
   const { slug } = await params;
-  const { chips } = await searchParams;
+  const { chips, status, search } = await searchParams;
 
   const projectTask = await getProjectTask(slug);
   if(!slug || !projectTask.ok || !projectTask?.data) return notFound();
@@ -31,6 +33,19 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
   if (!chips) {
     redirect(`/projects/${slug}?chips=task`)
   }
+
+  const q = search?.toLowerCase() ?? "";
+
+  const filteredTasks = tasks.filter((t) => {
+    const okStatus = !status || t.status === status;
+    const okSearch =
+      !q ||
+      t.title.toLowerCase().includes(q) ||
+      t.description.toLowerCase().includes(q) ||
+      t.comments.some((c) => c.content.toLowerCase().includes(q)) ||
+      t.assignees.some((a) => a.user.name.toLowerCase().includes(q));
+    return okStatus && okSearch;
+  });
 
 
   return (
@@ -45,13 +60,13 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
         </div>
         <main className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto">
           <Workers owner={owner} members={members} variant="Default"/>
-          <div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10">
+          <div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10 gap-10.25">
             <ProjetFilterBar />
             <ul className="flex flex-col gap-4.25">
-                {tasks.map((task)=>{
+                {filteredTasks.map((task)=>{
                     return (
                         <li key={task.id}>
-                            <TaskProject {...task}/>
+                            <TaskProject task={task} projectOwner={project.ownerId}/>
                         </li>
                     )
                 })}
