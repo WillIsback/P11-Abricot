@@ -5,8 +5,7 @@ import CustomButton from "./CustomButton"
 
 interface BannerProps {
   title: string;
-  firstName: string;
-  lastName: string;
+  name: string;
 }
 
 export default function Banner (props: BannerProps){
@@ -19,7 +18,7 @@ export default function Banner (props: BannerProps){
         <h4>{props.title}</h4>
         {isProject
           ? <p>Gérez vos projets</p>
-          : <p>Bonjour {props.firstName} {props.lastName}, voici un aperçu de vos projets et tâches</p>
+          : <p>Bonjour {props.name}, voici un aperçu de vos projets et tâches</p>
         }
       </div>
       <div className="flex items-center w-45.25">

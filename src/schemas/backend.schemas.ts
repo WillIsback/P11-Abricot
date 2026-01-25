@@ -53,8 +53,8 @@ const Task = z.object({
     dueDate: z.iso.datetime({local: true}),
     projectId: z.string(),
     creatorId: z.string(),
-    assignees: TaskAssignee,
-    comments: Comment,
+    assignees: z.array(TaskAssignee),
+    comments: z.array(Comment),
     createdAt: z.iso.datetime({local : true}),
     updatedAt: z.iso.datetime({local : true}),
 })

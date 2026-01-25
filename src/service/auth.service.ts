@@ -22,8 +22,12 @@ const PostResponseData = z.object({
   token: z.string()
 })
 
+const ProfileResponseData = z.object({
+  user: User
+})
+
 type PostResponse = z.infer<typeof PostResponseData>;
-type UserResponse = z.infer<typeof User>;
+type UserResponse = z.infer<typeof ProfileResponseData>;
 
 export const AuthService = {
     register: cache(async (payload: z.infer<typeof Register>): Promise<ApiResult<PostResponse>> => {
@@ -59,6 +63,6 @@ export const AuthService = {
               "Authorization": `Bearer ${token}`
             },
         });
-        return await handleFetch(res, User);  
+        return await handleFetch(res, ProfileResponseData);  
     }),
 };

@@ -4,6 +4,8 @@ import Menu from "@/components/Menu/Menu"
 import Footer from "@/components/Footer/Footer"
 import Banner from "@/components/ui/Banner"
 import DisplayDashboardContent from "@/components/Dashboard/DisplayDashboardContent"
+import { profile } from "@/action/auth.action"
+
 
 type DashboardPageProps = {
   searchParams: Promise<{
@@ -14,6 +16,11 @@ type DashboardPageProps = {
 export default async function DashBoard({ searchParams }: DashboardPageProps){
   const params = await searchParams
   const chips = params?.chips
+
+  const profileData = await profile();
+ 
+  if(!profileData.ok) return <p>Une erreur est apparue : {profileData.message}</p>
+  if(profileData.data?.user === undefined) return <p>Une erreur est apparue : {profileData.message}</p>
 
   if (!chips) {
     redirect("/dashboard?chips=task")
@@ -26,8 +33,7 @@ export default async function DashBoard({ searchParams }: DashboardPageProps){
         <main className="px-25 py-22.25">
           <Banner
             title="Tableau de bord"
-            firstName="Alice"
-            lastName="Dupont"
+            name={profileData.data?.user.name}
           />
           <DisplayDashboardContent />
         </main>

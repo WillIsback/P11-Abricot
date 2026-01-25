@@ -7,31 +7,76 @@ import { fr } from 'date-fns/locale';
 import { format } from 'date-fns';
 
 interface PropsType {
-  name: string;
-  description: string;
-  projectName: string;
-  dueDate: Date;
-  comments: number
-  tag: React.ComponentProps<typeof Tags>
+    id: string;
+    title: string;
+    description: string;
+    status: "TODO" | "IN_PROGRESS" | "DONE" | "CANCELED";
+    priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+    dueDate: string;
+    projectId: string;
+    creatorId: string;
+    assignees: {
+        id: string;
+        userId: string;
+        taskId: string;
+        user: {
+            id: string;
+            email: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+        assignedAt: string;
+    }[];
+    comments: {
+        id: string;
+        content: string;
+        taskId: string;
+        authorId: string;
+        author: {
+            id: string;
+            email: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+        createdAt: string;
+        updatedAt: string;
+    }[];
+    createdAt: string;
+    updatedAt: string;
 }
 
-export default function TaskKanban ({name, description, projectName, dueDate, comments, tag }: PropsType){
-  const formattedDate = format(new Date(dueDate), 'd MMMM', { locale: fr });
+type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success';
 
+export default function TaskKanban (props: PropsType){
+  const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
+  const statusColor: Record<PropsType['status'], TagColor> = {
+    'TODO': 'error',
+    'IN_PROGRESS': 'warning',
+    'DONE': 'success',
+    'CANCELED': 'gray'
+  }
+  const statusLabel: Record<PropsType['status'], string> = {
+    'TODO': 'À faire',
+    'IN_PROGRESS': 'En cours',
+    'DONE': 'Terminée',
+    'CANCELED': 'Abandonnée'
+  }
   return (
     <div className='flex flex-col rounded-[10px] bg-white px-10 py-6.25 gap-8 border border-gray-200'>
       <div className='flex flex-col gap-8'>
         <div className='flex justify-between items-center'>
           <div className='flex flex-col gap-1.75'>
-            <h5>{name}</h5>
-            <p className='body-s text-gray-600'>{description}</p>
+            <h5>{props.title}</h5>
+            <p className='body-s text-gray-600'>{props.description}</p>
           </div>
-          <Tags label={tag.label} color={tag.color}/>
+          <Tags label={statusLabel[props.status]} color={statusColor[props.status]}/>
         </div>
         <div className="flex flex-row gap-3.75 items-center">
           <div className='flex gap-2 w-26.75 flex-nowrap items-center'>
             <FolderOpen className='fill-gray-400 stroke-white'/>
-            <span className='text-gray-600 body-xs whitespace-nowrap'>{projectName}</span>
+            <span className='text-gray-600 body-xs whitespace-nowrap'>{'projectName'}</span>
           </div>
           <span className='text-gray-400 text-[11px]'>|</span>
           <div className='flex gap-2 w-15.5 flex-nowrap items-center'>
@@ -41,7 +86,7 @@ export default function TaskKanban ({name, description, projectName, dueDate, co
           <span className='text-gray-400 text-[11px]'>|</span>
           <div className='flex gap-2 w-15.5 flex-nowrap items-center'>
             <MessageSquareText className='stroke-gray-600' width={15}/>
-            <span className='text-gray-600 body-xs whitespace-nowrap'>{comments}</span>
+            <span className='text-gray-600 body-xs whitespace-nowrap'>{props.comments.length}</span>
           </div>
         </div>
       </div>

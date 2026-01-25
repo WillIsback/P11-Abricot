@@ -19,3 +19,12 @@ export const SignupFormSchema = z.object({
         .trim(),
 })
  
+export const LoginFormSchema = z.object({
+    email: z.email({ error: 'Please enter a valid email.' }).trim(),
+    password: z
+        .string()
+        .min(3, { error: 'Be at least 3 characters long' })
+        .regex(/[a-zA-Z]/, { error: 'Contain at least one letter.' })
+        .regex(/[0-9]/, { error: 'Contain at least one number.' })
+        .trim(),
+})

@@ -1,79 +1,50 @@
 'use client';
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 
 import Chips from "../ui/Chips";
 import DashBoardTasks from "./DashboardTasks";
 import DashBoardKanban from "./DashboardKanban";
 
-type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success'
+import { getAllTasks } from "@/action/dashboard.action";
+import { Task as TaskSchema } from "@/schemas/backend.schemas";
+import * as z from "zod";
 
-const tasks = [
-  {
-    name: "Tâche 1",
-    description: "Faire la mise au point des sizes",
-    projectName: "P11-Saas",
-    dueDate: "2026-03-07" as unknown as Date,
-    comments: 2,
-    tag:{label: 'A faire', color:'error' as TagColor}
-  },
-  {
-    name: "Tâche 2",
-    description: "Activer les liens API",
-    projectName: "P11-Saas",
-    dueDate: "2026-03-14" as unknown as Date,
-    comments: 5,
-    tag:{label: 'En cours', color:'warning' as TagColor}
-  },
-  {
-    name: "Tâche 0",
-    description: "KickOff projet",
-    projectName: "P11-Saas",
-    dueDate: "2026-02-01" as unknown as Date,
-    comments: 5,
-    tag:{label: 'Terminée', color:'success' as TagColor}
-  },
-  {
-    name: "Tâche 1",
-    description: "Faire la mise au point des sizes",
-    projectName: "P11-Saas",
-    dueDate: "2026-03-07" as unknown as Date,
-    comments: 2,
-    tag:{label: 'A faire', color:'error' as TagColor}
-  },
-  {
-    name: "Tâche 2",
-    description: "Activer les liens API",
-    projectName: "P11-Saas",
-    dueDate: "2026-03-14" as unknown as Date,
-    comments: 5,
-    tag:{label: 'En cours', color:'warning' as TagColor}
-  },
-  {
-    name: "Tâche 0",
-    description: "KickOff projet",
-    projectName: "P11-Saas",
-    dueDate: "2026-02-01" as unknown as Date,
-    comments: 5,
-    tag:{label: 'Terminée', color:'success' as TagColor}
-  }
-]
+import { LoaderCircle } from 'lucide-react';
 
 
+type Task = z.infer<typeof TaskSchema>;
+type Tasks = Task[];
 
 export default function DisplayDashboardContent ({}){
   const searchParams = useSearchParams()
   const chips = searchParams.get('chips')
   const search = searchParams.get('search')
+  const [isPending, startTransition] = useTransition();
+  const [tasks, setTasks] = useState([] as Tasks);
+
+  useEffect(()=>{
+    startTransition(async () => {
+      const currentTasks = await getAllTasks();
+      if(!currentTasks.ok){
+        console.log(currentTasks.message)
+      } else {
+        if(currentTasks.data?.tasks){
+          setTasks(currentTasks.data.tasks)
+        }
+      }
+    });
+  },[]);
 
   const taskSearchFilter = useMemo(() => {
-    if(search && search.length > 3){
-      return tasks.filter((t)=>t.name.includes(search) || t.description.includes(search) || t.projectName.includes(search))
-    }
-    return tasks;
-  }, [search])
+    const term = (search || "").toLowerCase().trim();
+    if (term.length < 3) return tasks;
+    return tasks.filter((t) =>
+      t.title.toLowerCase().includes(term) || t.description.toLowerCase().includes(term)
+    );
+  }, [search, tasks])
 
-
+  console.log(tasks)
 
 
   return (
@@ -86,6 +57,7 @@ export default function DisplayDashboardContent ({}){
         ? <DashBoardTasks tasks={taskSearchFilter}/>
         : <DashBoardKanban tasks={taskSearchFilter}/>
       }
+      {isPending && <LoaderCircle />}
     </div>
   )
 }

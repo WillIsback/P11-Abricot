@@ -56,11 +56,9 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
     };
   }
 
-  console.log("📦 Data received from backend:", parsedSuccessEnvelope.data.data);
-
+  console.log(parsedSuccessEnvelope.data.data)
   const parsedData = schema.safeParse(parsedSuccessEnvelope.data.data);
   if (!parsedData.success) {
-    console.error("❌ Data validation failed:", parsedData.error);
     return {
       ok: false,
       status: res.status,

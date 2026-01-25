@@ -8,11 +8,11 @@ interface PropsType {
 
 export default function DashBoardKanban ({ tasks }: PropsType){
 
-    const todo = tasks.filter((t)=>t.tag.label === 'A faire')
+    const todo = tasks.filter((t)=>t.status === 'TODO')
     const nbTodo = todo.length;
-    const inProgress = tasks.filter((t)=>t.tag.label === 'En cours')
+    const inProgress = tasks.filter((t)=>t.status === 'IN_PROGRESS')
     const nbInProgress = inProgress.length;
-    const Done = tasks.filter((t)=>t.tag.label === 'Terminée')
+    const Done = tasks.filter((t)=>t.status === 'DONE')
     const nbDone = Done.length;
 
     return (
@@ -26,14 +26,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
                     {todo.map((t)=>{
                         return (
                             <li key={crypto.randomUUID()}>
-                                <TaskKanban 
-                                    name={t.name}
-                                    description={t.description}
-                                    projectName={t.projectName}
-                                    dueDate={t.dueDate}
-                                    comments={t.comments}
-                                    tag={t.tag}
-                                />
+                                <TaskKanban {...t}/>
                             </li>
                         )
                     })}
@@ -49,14 +42,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
                     {inProgress.map((t)=>{
                         return (
                             <li key={crypto.randomUUID()}>
-                                <TaskKanban 
-                                    name={t.name}
-                                    description={t.description}
-                                    projectName={t.projectName}
-                                    dueDate={t.dueDate}
-                                    comments={t.comments}
-                                    tag={t.tag}
-                                />
+                                <TaskKanban {...t}/>
                             </li>
                         )
                     })}
@@ -72,14 +58,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
                     {Done.map((t)=>{
                         return (
                             <li key={crypto.randomUUID()}>
-                                <TaskKanban 
-                                    name={t.name}
-                                    description={t.description}
-                                    projectName={t.projectName}
-                                    dueDate={t.dueDate}
-                                    comments={t.comments}
-                                    tag={t.tag}
-                                />
+                                <TaskKanban {...t}/>
                             </li>
                         )
                     })}
