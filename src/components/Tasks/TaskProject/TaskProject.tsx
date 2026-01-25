@@ -2,28 +2,22 @@
 import Tags from "@/components/ui/Tags"
 import IconButton from "@/components/ui/IconButton"
 import SVGCalendar from '@/assets/icons/calendar.svg'
-import Assignee from "@/components/ui/Assignee"
+import Assignees from "@/components/ui/Assignees"
 import { ChevronUp } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import Comment from "@/components/ui/Comment";
-
+import { mapStatusColor, mapStatusLabel } from '@/lib/client.lib';
 import { useState } from "react";
-
-interface ProjectProps {
-  name: string;
-  description: string;
-  labelProps: React.ComponentProps<typeof Tags>;
-  dueDate: Date;
-  assignees: React.ComponentProps<typeof Assignee>;
-  comments: number
-}
+import { Task } from "@/schemas/backend.schemas";
+import * as z from "zod";
 
 
 
 
-export default function TaskProject (props : ProjectProps){
+
+export default function TaskProject (props : z.infer<typeof Task>){
   const [isCollapse, setIsCollapse] = useState(true)
   const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
 
@@ -35,8 +29,8 @@ export default function TaskProject (props : ProjectProps){
           <div className='flex justify-between items-center'>
             <div className='flex flex-col gap-1.75'>
               <div className="flex items-center gap-2">
-                <h5>{props.name}</h5>
-                <Tags label={props.labelProps.label} color={props.labelProps.color}/>
+                <h5>{props.title}</h5>
+                <Tags label={mapStatusLabel[props.status]} color={mapStatusColor[props.status]}/>
               </div>
               <p className='body-s text-gray-600'>{props.description}</p>
             </div>
@@ -54,11 +48,11 @@ export default function TaskProject (props : ProjectProps){
       </div>
       <div className="flex items-center gap-1">
         <p>Assigné à :</p>
-        <Assignee {...props.assignees}/>
+        <Assignees assignee={props.assignees}/>
       </div>
       <hr className="h-0.5 border-t-0 bg-gray-200" />
       <div className="flex justify-between">
-        <p className="body-s text-gray-800">Commentaires<span>({props.comments})</span></p>
+        <p className="body-s text-gray-800">Commentaires<span>({props.comments.length})</span></p>
         <button type="button"
           onClick={(e)=> {setIsCollapse(!isCollapse); e.preventDefault()}}
         >

@@ -8,69 +8,15 @@ import { fr } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { useProjectName } from '@/hooks/CustomHooks';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect } from 'react';
+import { Task } from '@/schemas/backend.schemas';
+import { mapStatusColor, mapStatusLabel } from '@/lib/client.lib';
+import * as z from "zod";
 
-interface PropType {
-    id: string;
-    title: string;
-    description: string;
-    status: "TODO" | "IN_PROGRESS" | "DONE" | "CANCELED";
-    priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
-    dueDate: string;
-    projectId: string;
-    creatorId: string;
-    assignees: {
-        id: string;
-        userId: string;
-        taskId: string;
-        user: {
-            id: string;
-            email: string;
-            name: string;
-            createdAt: string;
-            updatedAt: string;
-        };
-        assignedAt: string;
-    }[];
-    comments: {
-        id: string;
-        content: string;
-        taskId: string;
-        authorId: string;
-        author: {
-            id: string;
-            email: string;
-            name: string;
-            createdAt: string;
-            updatedAt: string;
-        };
-        createdAt: string;
-        updatedAt: string;
-    }[];
-    createdAt: string;
-    updatedAt: string;
-}
-
-type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success'
+type PropType = z.infer<typeof Task>
 
 export default function TaskThumbnail (props: PropType){
-
   const [isPending, projectName] = useProjectName(props.projectId)
-
   const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
-
-  const statusColor: Record<PropType['status'], TagColor> = {
-    'TODO': 'error',
-    'IN_PROGRESS': 'warning',
-    'DONE': 'success',
-    'CANCELED': 'gray'
-  }
-  const statusLabel: Record<PropType['status'], string> = {
-    'TODO': 'À faire',
-    'IN_PROGRESS': 'En cours',
-    'DONE': 'Terminée',
-    'CANCELED': 'Abandonnée'
-  }
 
   return (
       <div className="flex justify-between items-center w-255.5 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">
@@ -98,7 +44,7 @@ export default function TaskThumbnail (props: PropType){
 
         {/*PARTIE DROITE*/}
         <div className='flex flex-col items-end w-30.25 gap gap-9.25'>
-          <Tags label={statusLabel[props.status]} color={statusColor[props.status]}/>
+          <Tags label={mapStatusLabel[props.status]} color={mapStatusColor[props.status]}/>
           <CustomButton
             label='Voir'
             pending={false}

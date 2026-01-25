@@ -26,6 +26,7 @@ const Project = z.object({
     updatedAt: z.iso.datetime({local : true}),
 })
 
+
 const TaskAssignee = z.object({
     id: z.string(),
     userId: z.string(),
@@ -59,6 +60,18 @@ const Task = z.object({
     updatedAt: z.iso.datetime({local : true}),
 })
 
+const ProjectWithTasks = z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    ownerId: z.string(),
+    owner: User,
+    members: z.array(ProjectMember),
+    createdAt: z.iso.datetime({local : true}),
+    updatedAt: z.iso.datetime({local : true}),
+    tasks: z.array(Task)
+})
+
 const Details = z.object({
     field: z.string(),
     message: z.string(),
@@ -77,4 +90,4 @@ const Success = z.object({
     data: z.unknown(),
 })
 
-export { User, Project, ProjectMember, Task, TaskAssignee, Comment, Error, Success }
+export { User, Project, ProjectMember, Task, TaskAssignee, ProjectWithTasks, Comment, Error, Success }

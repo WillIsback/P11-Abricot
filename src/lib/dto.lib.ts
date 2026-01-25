@@ -2,8 +2,7 @@
 
 import { getAllProjects } from '@/action/project.action';
 
-
-export async function getProjectNameByID( projectId: string): Promise<string> {
+export async function getProjectDetail( projectId: string){
 
   // 1. fetch the data
   const allProjects = await getAllProjects();
@@ -15,10 +14,11 @@ export async function getProjectNameByID( projectId: string): Promise<string> {
   const project = allProjects.data?.projects.find((p) => p.id === projectId)
 
   // 4. return projectName
-  if(project?.name)
+  if(!project)
   {
-    return project.name
+    console.log("Erreur dans la récupération des détails du projet")
+    return null
   } else {
-    return ''
+    return project
   }
 }

@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation"
-
 import Menu from "@/components/Menu/Menu"
 import Footer from "@/components/Footer/Footer"
 import Banner from "@/components/ui/Banner"

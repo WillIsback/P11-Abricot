@@ -12,12 +12,12 @@ export default function ProjectBanner (props: ProjectBannerProps){
 
 
   return (
-    <section className="flex justify-between" aria-label="Banniere">
+    <section className="flex justify-between w-full" aria-label="Banniere">
       <div className="flex gap-4">
         <IconButton button="MoveLeft"/>
         <div className="flex flex-col gap-3.5 justify-center">
-          <div className="flex justify-between w-57.75 items-center">
-            <h4>{props.title}</h4>
+          <div className="flex justify-between gap-4 w-57.75 items-center">
+            <h4 className="whitespace-nowrap">{props.title}</h4>
             <CustomLink label='Modifier' link="#edit"/>
           </div>
           <p>{props.description}</p>

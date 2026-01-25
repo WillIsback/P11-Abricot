@@ -1,88 +1,20 @@
 import CardProject from "../ui/CardPoject";
 import Link from "next/link";
-
-const projects = [
-  {
-    name: "Projet P10",
-    description: "Machine Learning Projet 10",
-    todo: 4,
-    completed: 0,
-    team: 3,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-    slug: 'P10'
-  },
-  {
-    name: "Projet P9",
-    description: "Plateforme de partage de photo",
-    todo: 12,
-    completed: 8,
-    team: 4,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-  },
-  {
-    name: "Projet P8",
-    description: "Analyse des données d'une boutique en ligne",
-    todo: 4,
-    completed: 4,
-    team: 1,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-    slug: 'P8'
-  },
-  {
-    name: "Projet P7",
-    description: "Data analyse du marche immobilier Projet 7",
-    todo: 4,
-    completed: 0,
-    team: 2,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-    slug: 'P7'
-  },
-  {
-    name: "Projet P11",
-    description: "Saas gestion des projet",
-    todo: 12,
-    completed: 2,
-    team: 3,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-    slug: 'P11'
-  },
-  {
-    name: "Projet P6",
-    description: "Projet de coach sportif en ligne",
-    todo: 4,
-    completed: 4,
-    team: 2,
-    creator:'WD',
-    assignees: [{intial: 'BG', firstName: 'Bertrand', lastName: 'Guitombo'}, {intial: 'VL', firstName: 'Valerie', lastName:'Lanvin'}],
-    slug: 'P6'
-  }
-]
+import { getAllTasksAllProjects } from "@/action/dashboard.action";
 
 
-
-export default function DisplayProjects ({}){
+export default async function DisplayProjects ({}){
+  const { ok, message, data } = await getAllTasksAllProjects();
+  if(!ok || !data) return <p>Error retrieve projects data : {message}</p>
 
   return (
     <div className="mt-15">
       <ul className="flex flex-row gap-x-4 gap-y-16 flex-wrap">
-        {projects.map((p) => {
+        {data.projects.map((p) => {
           return (
-            <li key={crypto.randomUUID()}>
-              <Link href={`/projects/${p.slug}`}>
-                <CardProject
-                  name={p.name}
-                  description={p.description}
-                  todo={p.todo}
-                  completed={p.completed}
-                  team={p.team}
-                  creator={p.creator}
-                  assignees={p.assignees}
-                />
+            <li key={p.id}>
+              <Link href={`/projects/${p.id}`}>
+                <CardProject {...p}/>
               </Link>
             </li>
           )

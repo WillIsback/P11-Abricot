@@ -3,7 +3,7 @@ import Footer from "@/components/Footer/Footer"
 import Banner from "@/components/ui/Banner"
 import DisplayProjects from "@/components/Projects/DisplayProjects"
 
-export default function Projects({}){
+export default async function Projects({}){
   return (
     <div className="flex h-screen bg-gray-50">
       <div className="w-360 m-auto mt-0">
@@ -11,8 +11,7 @@ export default function Projects({}){
         <main className="px-25 py-22.25">
           <Banner
             title="Mes projets"
-            firstName="Alice"
-            lastName="Dupont"
+            name=""
           />
           <DisplayProjects />
         </main>

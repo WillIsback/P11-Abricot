@@ -34,3 +34,35 @@ export async function getAllProjects(){
         data: allProjects.data
     }
 }
+
+export async function getProjectTask(projectId: string){
+  // 1. Verify session
+  const session = await verifySession();
+  if(!session.isAuth || !session.token){
+    return {
+      ok: false,
+      message: "Session not verified",
+    }
+  }
+
+  // 2. fetch the data
+  const ProjectTask = await ProjectService.getProjectTask(session.token as string, projectId)
+  // 3. verify and log errors
+  if(!ProjectTask.ok){
+    console.log(ProjectTask.message)
+    if(ProjectTask.details)console.log(ProjectTask.details)
+    return {
+        ok: false,
+        message: ProjectTask.message
+    }
+  }
+
+  
+
+  // 4. return the data
+    return {
+        ok: true,
+        message: ProjectTask.message,
+        data: ProjectTask.data
+    }
+}

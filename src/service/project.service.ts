@@ -53,8 +53,8 @@ export const ProjectService = {
         return await handleFetch(res, Projects);  
     }),
 
-    getProjectTask: cache(async (token: string, id: string): Promise<ApiResult<TaksResponse>> => {
-        const res = await fetch(`${BASE_URL}/projects/${id}/tasks`, {
+    getProjectTask: cache(async (token: string, projectId: string): Promise<ApiResult<TaksResponse>> => {
+        const res = await fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
             method: 'GET',
             headers: {
               "Content-Type": "application/json",

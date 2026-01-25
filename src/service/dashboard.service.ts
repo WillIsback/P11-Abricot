@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { cache } from "react";
-import { Task, Project } from "@/schemas/backend.schemas";
+import { Task, ProjectWithTasks } from "@/schemas/backend.schemas";
 import { ApiResult, handleFetch } from "@/lib/server.lib";
 
 
@@ -11,9 +11,8 @@ const Tasks = z.object({
 })
 
 const ProjectsWithTasks = z.object({
-    projects: z.array(Project),
-    tasks: z.array(Task),
-})
+    projects: z.array(ProjectWithTasks),
+});
 
 type TaksResponse = z.infer<typeof Tasks>;
 type ProjectsWithTasksResponse = z.infer<typeof ProjectsWithTasks>;

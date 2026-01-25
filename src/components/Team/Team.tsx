@@ -1,25 +1,23 @@
-import Assignee from "../ui/Assignee";
+import Contributors from "../ui/Contributors";
+import { getInitialsFromName } from "@/lib/client.lib";
+import { User, ProjectMember } from "@/schemas/backend.schemas";
 
-interface Assignee {
-  intial: string;
-  firstName: string;
-  lastName: string;
+import * as z from "zod";
+
+interface TeamProps{
+    owner: z.infer<typeof User>,
+    members: z.infer<typeof ProjectMember>[],
+    variant: 'Short' | 'Default',
 }
 
-interface TeamProps  {
-    creator: string;
-    assignees: Assignee[];
-    variant?: 'Default'|'Short';
-}
-
-
-
-export default function Team ({ creator, assignees, variant='Default' }: TeamProps){
+export default function Team ({ owner, members, variant='Default' }: TeamProps){
+    const contributors = members.filter((m)=>m.role==='CONTRIBUTOR')
+    const ownerInitials = getInitialsFromName(owner.name)
     return (
         <div className="flex gap-1">
             <div className="flex gap-1.5">
                 <p className="w-6.75 h-6.75 rounded-full bg-brand-light text-gray-950 body-2xs flex items-center justify-center">
-                {creator}
+                {ownerInitials}
                 </p> 
                 <p className="rounded-full bg-brand-light text-brand-dark body-s flex items-center justify-center px-4 py-1">
                     Propriétaire
@@ -28,17 +26,18 @@ export default function Team ({ creator, assignees, variant='Default' }: TeamPro
             {variant==='Short' 
                 ?
                 <ul className="flex items-center">
-                    {assignees.map((assignee, index) => (
+                    {contributors.map((c, index) => (
                         <li
-                            key={crypto.randomUUID()}
+                            key={c.id}
                             className={`w-7 h-7 rounded-full bg-gray-200 border border-white text-gray-950 body-2xs flex items-center justify-center ${index > 0 ? '-ml-2' : ''}`}
                         >
-                            {assignee.intial}
+                            {getInitialsFromName(c.user.name)}
                         </li>
+
                     ))}
                 </ul>
                 :
-                <Assignee assignees={assignees} />
+                <Contributors members={members}/>
             }
         </div>
     )
