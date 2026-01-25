@@ -1,16 +1,18 @@
 'use client';
-import { LoaderCircle } from 'lucide-react';
+// import { LoaderCircle } from 'lucide-react';
 
 export default function CustomButton ({
     label,
     pending,
     disabled,
-    buttonType
+    buttonType,
+    ref,
 } : {
     label: string,
     pending: boolean,
     disabled: boolean,
-    buttonType: "submit" | "reset" | "button" | undefined
+    buttonType: "submit" | "reset" | "button" | undefined,
+    ref?: React.Ref<HTMLButtonElement>
 }) {
 
     return (
@@ -30,6 +32,7 @@ export default function CustomButton ({
                     : 'bg-gray-800 text-white focus:bg-gray-950 disabled:bg-gray-200 disabled:text-gray-400'}
             `}
             disabled={disabled}
+            ref={ref}
             >
             <span className='body-m'>{label}</span>
             </button>

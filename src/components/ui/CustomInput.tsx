@@ -12,7 +12,7 @@ export default function CustomInput ({ label, inputID, type } : {label: string, 
                 {label}
             </label>
             {(type === 'text' || 'email' || 'password')
-                ? <input id={inputID} type={type} className="rounded-s min-h-13.25 bg-white body-xs focus:outline-none px-4.25 py-4.75"/>
+                ? <input id={inputID} name={inputID} type={type} className="rounded-s min-h-13.25 bg-white body-xs focus:outline-none px-4.25 py-4.75"/>
                 : type === 'DatePicker'
                     ? <DatePicker/>
                     : <ComboBox />

@@ -4,7 +4,7 @@ import { User } from "@/schemas/backend.schemas";
 import { ApiResult, handleFetch } from "@/lib/server.lib";
 
 
-const BASE_URL = process.env.API_URL || 'http://localhost:8000/api';
+const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 const Users = z.object({
     users: z.array(User),

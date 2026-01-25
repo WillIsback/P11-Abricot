@@ -67,8 +67,8 @@ const Details = z.object({
 const Error = z.object({
     success: z.boolean(),
     message: z.string(),
-    error: z.string(),
-    details: z.array(Details),
+    error: z.optional(z.string()),
+    details: z.optional(z.array(Details)),
 })
 
 const Success = z.object({

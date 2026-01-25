@@ -22,6 +22,7 @@ export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
 const validateResponse = async <T>(res: Response, schema: z.ZodType<T>) => {
   const responseData = await res.json();
+  console.log("responseData : ",responseData)
   return schema.safeParse(responseData);
 };
 
@@ -40,7 +41,7 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
     return {
       ok: false,
       status: res.status,
-      message: "Invalid error payload received from backend",
+      message: z.prettifyError(parsedError.error),
       validationError: parsedError.error,
     };
   }
@@ -50,17 +51,20 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
     return {
       ok: false,
       status: res.status,
-      message: "Invalid success payload received from backend",
+      message: z.prettifyError(parsedSuccessEnvelope.error),
       validationError: parsedSuccessEnvelope.error,
     };
   }
 
+  console.log("📦 Data received from backend:", parsedSuccessEnvelope.data.data);
+
   const parsedData = schema.safeParse(parsedSuccessEnvelope.data.data);
   if (!parsedData.success) {
+    console.error("❌ Data validation failed:", parsedData.error);
     return {
       ok: false,
       status: res.status,
-      message: "Invalid data payload received from backend",
+      message: z.prettifyError(parsedData.error),
       validationError: parsedData.error,
     };
   }

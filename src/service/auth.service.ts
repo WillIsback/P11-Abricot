@@ -4,21 +4,13 @@ import { User } from "@/schemas/backend.schemas";
 import { ApiResult, handleFetch } from "@/lib/server.lib";
 
 
-const BASE_URL = process.env.API_URL || 'http://localhost:8000/api';
-
-const Name = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-});
+const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 const Register = z.object({
   email: z.email(),
   password: z.string(),
-  name: Name,
-}).transform((data) => ({
-  ...data,
-  name: `${data.name.firstName} ${data.name.lastName}`,
-}));
+  name: z.string(),
+})
 
 const Login = z.object({
   email: z.email(),
@@ -37,7 +29,7 @@ export const AuthService = {
     register: cache(async (payload: z.infer<typeof Register>): Promise<ApiResult<PostResponse>> => {
         const validated = Register.safeParse(payload);
         if (!validated.success) {
-          return { ok: false, status: 400, message: "Invalid payload", validationError: validated.error };
+          return { ok: false, status: 400, message: validated.error.message};
         }
         const res = await fetch(`${BASE_URL}/auth/register`, {
             method: 'POST',
@@ -50,7 +42,7 @@ export const AuthService = {
     login: cache(async (payload: z.infer<typeof Login>): Promise<ApiResult<PostResponse>> => {
       const validated = Login.safeParse(payload);
         if (!validated.success) {
-          return { ok: false, status: 400, message: "Invalid payload", validationError: validated.error };
+          return { ok: false, status: 400, message: validated.error.message};
         }
         const res = await fetch(`${BASE_URL}/auth/login`, {
             method: 'POST',

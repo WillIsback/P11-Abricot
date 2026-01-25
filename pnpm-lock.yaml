@@ -26,9 +26,12 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      dompurify:
-        specifier: ^3.3.1
-        version: 3.3.1
+      isomorphic-dompurify:
+        specifier: ^2.35.0
+        version: 2.35.0
+      jose:
+        specifier: ^6.1.3
+        version: 6.1.3
       jsdom:
         specifier: ^27.4.0
         version: 27.4.0
@@ -2441,6 +2444,10 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  isomorphic-dompurify@2.35.0:
+    resolution: {integrity: sha512-a9+LQqylQCU8f1zmsYmg2tfrbdY2YS/Hc+xntcq/mDI2MY3Q108nq8K23BWDIg6YGC5JsUMC15fj2ZMqCzt/+A==}
+    engines: {node: '>=20.19.5'}
+
   iterator.prototype@1.1.5:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
@@ -2448,6 +2455,9 @@ packages:
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
+
+  jose@6.1.3:
+    resolution: {integrity: sha512-0TpaTfihd4QMNwrz/ob2Bp7X04yuxJkjRGi4aKmOqwhov54i6u79oCv7T+C7lo70MKH6BesI3vscD1yb/yzKXQ==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -5906,6 +5916,17 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  isomorphic-dompurify@2.35.0:
+    dependencies:
+      dompurify: 3.3.1
+      jsdom: 27.4.0
+    transitivePeerDependencies:
+      - '@noble/hashes'
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   iterator.prototype@1.1.5:
     dependencies:
       define-data-property: 1.1.4
@@ -5916,6 +5937,8 @@ snapshots:
       set-function-name: 2.0.2
 
   jiti@2.6.1: {}
+
+  jose@6.1.3: {}
 
   js-tokens@4.0.0: {}
 

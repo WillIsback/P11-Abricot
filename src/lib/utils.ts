@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import DOMPurify from 'dompurify';
+import DOMPurify from "isomorphic-dompurify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -17,10 +17,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export const sanitizeString = (value: string): string => {
   if (typeof value !== 'string') return '';
-  return DOMPurify.sanitize(value.trim(), { 
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: []
-  });
+  return DOMPurify.sanitize(value)
 };
 
 /**

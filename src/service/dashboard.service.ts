@@ -4,7 +4,7 @@ import { Task, Project } from "@/schemas/backend.schemas";
 import { ApiResult, handleFetch } from "@/lib/server.lib";
 
 
-const BASE_URL = process.env.API_URL || 'http://localhost:8000/api';
+const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 const Tasks = z.object({
     tasks: z.array(Task),
