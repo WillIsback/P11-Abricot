@@ -42,3 +42,36 @@ export async function getAllTasks() {
     }
   
 }
+
+
+export async function getAllTasksAllProjects() {
+  // 1. Verify session
+  const session = await verifySession();
+  if(!session.isAuth || !session.token){
+    return {
+      ok: false,
+      message: "Session not verified",
+    }
+  }
+
+
+  // 2. fetch the data
+  const projectsWithTasks = await DashboardService.getProjectWithTasks(session.token as string)
+  // 3. verify and log errors
+  if(!projectsWithTasks.ok){
+    console.log(projectsWithTasks.message)
+    if(projectsWithTasks.details)console.log(projectsWithTasks.details)
+    return {
+        ok: false,
+        message: projectsWithTasks.message
+    }
+  }
+
+  // 4. return the data
+    return {
+        ok: true,
+        message: projectsWithTasks.message,
+        data: projectsWithTasks.data
+    }
+  
+}

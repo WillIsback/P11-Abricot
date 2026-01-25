@@ -21,7 +21,7 @@ const Project = z.object({
     description: z.string(),
     ownerId: z.string(),
     owner: User,
-    member: ProjectMember,
+    members: z.array(ProjectMember),
     createdAt: z.iso.datetime({local : true}),
     updatedAt: z.iso.datetime({local : true}),
 })

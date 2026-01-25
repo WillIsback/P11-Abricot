@@ -1,7 +1,10 @@
+
 import SearchBar from "../ui/SearchBar"
 import TaskThumbnail from "../Tasks/TaskThumbnail"
+import { Task as TaskSchema } from "@/schemas/backend.schemas";
+import * as z from "zod";
 
-type Task = React.ComponentProps<typeof TaskThumbnail>;
+type Task = z.infer<typeof TaskSchema>;
 interface PropsType {
     tasks: Task[]
 }
