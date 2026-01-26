@@ -1,15 +1,30 @@
+'use client';
 import CustomButton from "./CustomButton"
 import IAButtonSquare from "./IAButtonSquare";
 import CustomLink from "./CustomLink";
 import IconButton from "./IconButton";
+import { useState } from "react";
+import CreateTask from "../Tasks/Modal/CreateTask";
+import { Task } from "@/schemas/backend.schemas";
+
+import * as z from 'zod';
+
+type NewTask = z.infer<typeof Task>
 
 interface ProjectBannerProps {
   title: string;
   description: string;
+  projectId: string;
 }
 
-export default function ProjectBanner (props: ProjectBannerProps){
 
+export default function ProjectBanner (props: ProjectBannerProps){
+  const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
+  const [tasks, setTasks] = useState<NewTask[]>([]);
+  const handleTaskCreated = (newTask: NewTask) => {
+    setTasks([...tasks, newTask]);
+    console.log('Nouvelle tâche créée !', newTask);
+  };
 
   return (
     <section className="flex justify-between w-full" aria-label="Banniere">
@@ -25,6 +40,7 @@ export default function ProjectBanner (props: ProjectBannerProps){
       </div>
       <div className="flex items-center gap-3">
         <CustomButton
+          onClick={() => setIsCreateTaskOpen(true)}
           label="Créer une tâche"
           pending={false}
           disabled={false}
@@ -32,6 +48,13 @@ export default function ProjectBanner (props: ProjectBannerProps){
         />
         <IAButtonSquare />
       </div>
+      {/* Modal de création de tâche */}
+      <CreateTask
+        open={isCreateTaskOpen}
+        onOpenChange={setIsCreateTaskOpen}
+        projectId={props.projectId}
+        onTaskCreated={handleTaskCreated}
+      />
     </section>
   )
 }

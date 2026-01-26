@@ -1,3 +1,4 @@
+import { TaskAssignee } from './backend.schemas'
 import * as z from 'zod'
 
 
@@ -18,7 +19,7 @@ export const SignupFormSchema = z.object({
         .regex(/[0-9]/, { error: 'Contain at least one number.' })
         .trim(),
 })
- 
+
 export const LoginFormSchema = z.object({
     email: z.email({ error: 'Please enter a valid email.' }).trim(),
     password: z
@@ -27,4 +28,19 @@ export const LoginFormSchema = z.object({
         .regex(/[a-zA-Z]/, { error: 'Contain at least one letter.' })
         .regex(/[0-9]/, { error: 'Contain at least one number.' })
         .trim(),
+})
+
+
+export const CreateTaskSchema = z.object({
+    title: z
+        .string()
+        .min(2, { error: 'firstName must be at least 2 characters long.' })
+        .trim(),
+    description: z
+        .string()
+        .min(2, { error: 'lastName must be at least 2 characters long.' })
+        .trim(),
+    dueDate: z.iso.datetime(),
+    assignees: z.array(TaskAssignee),
+    status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']),
 })

@@ -3,12 +3,12 @@ import Footer from "@/components/Footer/Footer"
 import ProjectBanner from "@/components/ui/ProjectBanner";
 import { notFound } from 'next/navigation'
 import Workers from "@/components/ui/Workers";
-import TaskProject from "@/components/Tasks/TaskProject/TaskProject";
+import TaskProject from "@/components/Tasks/TaskProject";
 import { getProjectTask } from "@/action/project.action";
 import { getProjectDetail } from "@/lib/dto.lib";
 import { redirect } from "next/navigation"
 import ProjetFilterBar from "@/components/ui/ProjectFilterBar";
-import { cache } from "react";
+
 type ProjetPageProps = {
   searchParams: Promise<{
     chips?: string,
@@ -56,6 +56,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
           <ProjectBanner
               title={name}
               description={description}
+              projectId={slug}
             />
         </div>
         <main className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto">
