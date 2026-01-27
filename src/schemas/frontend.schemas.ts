@@ -80,9 +80,11 @@ const UpdatePasswordSchema = z.object({
         .trim(),
 })
 const CreateProjectSchema = z.object({
-    name: z.string(),
-    description: z.string().optional(),
-    contributors: z.array(z.string()).optional(), // Array d'emails des contributeurs
+    name: z.string()
+            .min(2, { error: 'Project name must be at least 2 characters long.' }),
+    description: z.string()
+            .min(2, { error: 'description name must be at least 2 characters long.' }),
+    contributors: z.array(z.email()).optional(), // Array d'emails des contributeurs
 })
 
 const UpdateProjectSchema = z.object({
@@ -108,6 +110,9 @@ const UpdateCommentSchema  = z.object({
     userId: z.string(),
 })
 
+const UserSearchQuerySchema = z.string().min(2)
+
+
 
 export {
     SignupFormSchema,
@@ -121,5 +126,6 @@ export {
     AddContributorSchema,
     RemoveContributorSchema,
     CreateCommentSchema,
-    UpdateCommentSchema
+    UpdateCommentSchema,
+    UserSearchQuerySchema
 }

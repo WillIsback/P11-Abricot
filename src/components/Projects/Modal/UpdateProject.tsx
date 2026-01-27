@@ -1,4 +1,4 @@
-// src/components/Tasks/Modal/CreateTask.tsx
+// src/components/Projects/Modal/UpdateProject.tsx
 'use client';
 
 import {
@@ -10,12 +10,12 @@ import {
 } from '@/components/ui/dialog';
 import CustomInput from '@/components/ui/CustomInput';
 import CustomButton from '@/components/ui/CustomButton';
-import { createTask } from '@/action/task.action';
+import { updateProject } from '@/action/project.action';
 import { useActionState, useEffect, useState, useRef } from 'react';
 import Tags from '@/components/ui/Tags';
 import { mapStatusLabel, mapStatusColor } from '@/lib/client.lib';
-import { CreateTaskSchema } from "@/schemas/frontend.schemas";
-import { AlertCircle } from 'lucide-react';
+import { UpdateProjectSchema } from "@/schemas/frontend.schemas";
+import { AlertCircle} from 'lucide-react';
 
 enum Status {
   'TODO'='TODO',
@@ -23,24 +23,21 @@ enum Status {
   'DONE'='DONE'
 }
 
-
-interface CreateTaskProps {
+interface UpdateProjectProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   projectId: string;
-  onTaskCreated?: (task: unknown) => void;
+  onProjectUpdated?: (project: unknown) => void;
 }
 
-
-
-export default function CreateTask({
+export default function UpdateProject({
   open,
   onOpenChange,
   projectId,
-  onTaskCreated,
-}: CreateTaskProps) {
-  const boundCreateTask = createTask.bind(null, projectId);
-  const [state, action, pending] = useActionState(boundCreateTask, undefined);
+  onProjectUpdated,
+}: UpdateProjectProps) {
+  const boundUpdateProject = updateProject.bind(null, projectId);
+  const [state, action, pending] = useActionState(boundUpdateProject, undefined);
   const [selectedStatus, setSelectedStatus] = useState<Status>(Status.TODO)
   const formRef = useRef<HTMLFormElement>(null);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -60,13 +57,13 @@ export default function CreateTask({
 
   useEffect(() => {
     if (state?.ok && state?.shouldClose) {
-      onTaskCreated?.(state.data);
+      onProjectUpdated?.(state.data);
       onOpenChange(false);
     }
     if (state?.formValidationError || state?.apiValidationError) {
       console.error('Erreurs de validation:', state?.message);
     }
-  }, [state?.shouldClose, state?.data, onTaskCreated, onOpenChange, state?.ok, state?.formValidationError, state?.apiValidationError, state?.message]);
+  }, [state?.shouldClose, state?.data, onProjectUpdated, onOpenChange, state?.ok, state?.formValidationError, state?.apiValidationError, state?.message]);
 
   // Nettoyer quand le modal se ferme
   const handleOpenChange = (isOpen: boolean) => {
@@ -75,8 +72,6 @@ export default function CreateTask({
     }
     onOpenChange(isOpen);
   };
-
-
 
   const handleStatusSelection = (newStatus: Status) => {
     console.log("Bouton cliqué :", newStatus);
@@ -88,17 +83,18 @@ export default function CreateTask({
     if (fieldName) {
       setTouchedFields(prev => new Set(prev).add(fieldName));
     }
-
     const formData = new FormData(formRef.current!);
-    const result = CreateTaskSchema.safeParse({
-      title: formData.get('title'),
-      description: formData.get('description'),
-      dueDate: formData.get('dueDate'),
-      assignees: formData.getAll('assignees'),
-      status: formData.get('status'),
-      priority: formData.get('priority'),
+    const toUndefinedIfEmpty = (v: FormDataEntryValue | null) =>
+      typeof v === "string" && v.trim() === "" ? undefined : v;
+    
+    const result = UpdateProjectSchema.safeParse({
+      title: toUndefinedIfEmpty(formData.get('title')),
+      description: toUndefinedIfEmpty(formData.get('description')),
+      dueDate: toUndefinedIfEmpty(formData.get('dueDate')),
+      assignees: formData.getAll('assignees').filter(Boolean),
+      status: toUndefinedIfEmpty(formData.get('status')),
+      priority: toUndefinedIfEmpty(formData.get('priority')),
     });
-
     if (!result.success) {
       // Transformer les erreurs Zod en objet { champ: message }
       const errors: Record<string, string> = {};
@@ -157,7 +153,7 @@ export default function CreateTask({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75">
         <DialogHeader>
-          <DialogTitle>Créer une tâche</DialogTitle>
+          <DialogTitle>Modifier</DialogTitle>
         </DialogHeader>
 
 
@@ -183,7 +179,6 @@ export default function CreateTask({
             label="Titre*"
             type="text"
             inputID="title"
-            required={true}
             error={getFieldError('title')}
           />
           {/* Description */}
@@ -191,7 +186,6 @@ export default function CreateTask({
             label="Description*"
             type="text"
             inputID="description"
-            required={true}
             error={getFieldError('description')}
           />
           {/* Date d'échéance */}
@@ -199,7 +193,6 @@ export default function CreateTask({
             label="Echéance*"
             type="DatePicker"
             inputID="dueDate"
-            required={true}
             onValueChange={handleCustomFieldChange('dueDate')}
             error={getFieldError('dueDate')}
           />
@@ -255,7 +248,7 @@ export default function CreateTask({
 
           <DialogFooter className="gap-2 w-61 flex justify-start">
             <CustomButton
-              label='+ Ajouter une tâche'
+              label='Enregistrer'
               pending={pending}
               disabled={!isFormValid}
               buttonType="submit"

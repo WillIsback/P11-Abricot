@@ -26,7 +26,7 @@ type ActionState<T = unknown> = {
   message?: string;
   data?: T;
   status?: number;
-  formValidationError?: z.ZodError | z.ZodFormattedError<unknown>;
+  formValidationError?: unknown;
   apiValidationError?: z.ZodError;
 } | undefined;
 
@@ -87,17 +87,17 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
 };
 
 // server.lib.ts
-const apiErrorToState = <T>(response: ApiFailure): ActionState<T> => ({
+const apiErrorToState = (response: ApiFailure): ActionState => ({
   ok: false,
   status: response.status,
   message: response.message,
   apiValidationError: response.validationError
 });
 
-const validationErrorToState = <T>(validatedFields: z.ZodSafeParseError<T>): ActionState<T> => ({
-      ok: false,
-      status: 430,
-      message: validatedFields?.error.message,
+const validationErrorToState = (validatedFields: z.ZodSafeParseError<unknown>): ActionState => ({
+  ok: false,
+  status: 430,
+  message: validatedFields?.error.message,
   formValidationError: validatedFields?.error
 });
 

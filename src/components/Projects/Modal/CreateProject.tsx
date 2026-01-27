@@ -1,4 +1,4 @@
-// src/components/Tasks/Modal/CreateTask.tsx
+// src/components/Projects/Modal/CreateProject.tsx
 'use client';
 
 import {
@@ -10,63 +10,45 @@ import {
 } from '@/components/ui/dialog';
 import CustomInput from '@/components/ui/CustomInput';
 import CustomButton from '@/components/ui/CustomButton';
-import { createTask } from '@/action/task.action';
+import { createProject } from '@/action/project.action';
 import { useActionState, useEffect, useState, useRef } from 'react';
-import Tags from '@/components/ui/Tags';
-import { mapStatusLabel, mapStatusColor } from '@/lib/client.lib';
-import { CreateTaskSchema } from "@/schemas/frontend.schemas";
+import { CreateProjectSchema } from "@/schemas/frontend.schemas";
 import { AlertCircle } from 'lucide-react';
 
-enum Status {
-  'TODO'='TODO',
-  'IN_PROGRESS'='IN_PROGRESS',
-  'DONE'='DONE'
-}
-
-
-interface CreateTaskProps {
+interface CreateProjectProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  projectId: string;
-  onTaskCreated?: (task: unknown) => void;
+  onProjectCreated?: (project: unknown) => void;
 }
 
-
-
-export default function CreateTask({
+export default function CreateProject({
   open,
   onOpenChange,
-  projectId,
-  onTaskCreated,
-}: CreateTaskProps) {
-  const boundCreateTask = createTask.bind(null, projectId);
-  const [state, action, pending] = useActionState(boundCreateTask, undefined);
-  const [selectedStatus, setSelectedStatus] = useState<Status>(Status.TODO)
+  onProjectCreated,
+}: CreateProjectProps) {
+  const [state, action, pending] = useActionState(createProject, undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
-
-  const status : Status[] = [Status.TODO, Status.IN_PROGRESS, Status.DONE]
 
   // Fonction de réinitialisation du formulaire
   const resetForm = () => {
     setFieldErrors({});
     setTouchedFields(new Set());
     setIsFormValid(false);
-    setSelectedStatus(Status.TODO);
     formRef.current?.reset();
   };
 
   useEffect(() => {
     if (state?.ok && state?.shouldClose) {
-      onTaskCreated?.(state.data);
+      onProjectCreated?.(state.data);
       onOpenChange(false);
     }
     if (state?.formValidationError || state?.apiValidationError) {
       console.error('Erreurs de validation:', state?.message);
     }
-  }, [state?.shouldClose, state?.data, onTaskCreated, onOpenChange, state?.ok, state?.formValidationError, state?.apiValidationError, state?.message]);
+  }, [state?.shouldClose, state?.data, onProjectCreated, onOpenChange, state?.ok, state?.formValidationError, state?.apiValidationError, state?.message]);
 
   // Nettoyer quand le modal se ferme
   const handleOpenChange = (isOpen: boolean) => {
@@ -76,13 +58,6 @@ export default function CreateTask({
     onOpenChange(isOpen);
   };
 
-
-
-  const handleStatusSelection = (newStatus: Status) => {
-    console.log("Bouton cliqué :", newStatus);
-    setSelectedStatus(newStatus);
-  }
-
   const validateForm = (fieldName?: string) => {
     // Marquer le champ comme touché
     if (fieldName) {
@@ -90,15 +65,19 @@ export default function CreateTask({
     }
 
     const formData = new FormData(formRef.current!);
-    const result = CreateTaskSchema.safeParse({
-      title: formData.get('title'),
+    
+    // Parser les contributeurs : split la string en array
+    const contributorsString = formData.get('contributors') as string;
+    const contributors = contributorsString && contributorsString.trim() 
+      ? contributorsString.split(',').map(email => email.trim())
+      : [];
+    
+    const result = CreateProjectSchema.safeParse({
+      name: formData.get('name'),
       description: formData.get('description'),
-      dueDate: formData.get('dueDate'),
-      assignees: formData.getAll('assignees'),
-      status: formData.get('status'),
-      priority: formData.get('priority'),
+      contributors: contributors,
     });
-
+    
     if (!result.success) {
       // Transformer les erreurs Zod en objet { champ: message }
       const errors: Record<string, string> = {};
@@ -151,13 +130,11 @@ export default function CreateTask({
     return touchedFields.has(fieldName) ? fieldErrors[fieldName] : undefined;
   };
 
-
-
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75">
         <DialogHeader>
-          <DialogTitle>Créer une tâche</DialogTitle>
+          <DialogTitle>Créer un projet</DialogTitle>
         </DialogHeader>
 
 
@@ -177,14 +154,13 @@ export default function CreateTask({
           onChange={handleFormChange}
           ref={formRef}
         >
-          <input type="hidden" name="projectId" value={projectId} />
           {/* Titre */}
           <CustomInput
             label="Titre*"
             type="text"
-            inputID="title"
+            inputID="name"
             required={true}
-            error={getFieldError('title')}
+            error={getFieldError('name')}
           />
           {/* Description */}
           <CustomInput
@@ -194,68 +170,17 @@ export default function CreateTask({
             required={true}
             error={getFieldError('description')}
           />
-          {/* Date d'échéance */}
+          {/* Contributeurs */}
           <CustomInput
-            label="Echéance*"
-            type="DatePicker"
-            inputID="dueDate"
-            required={true}
-            onValueChange={handleCustomFieldChange('dueDate')}
-            error={getFieldError('dueDate')}
+            label="Contributeurs"
+            type="Contributor"
+            inputID="contributors"
+            onValueChange={handleCustomFieldChange('contributors')}
+            error={getFieldError('contributors')}
           />
-          {/* Assignees */}
-          <CustomInput
-            label="Assigné à:"
-            type="Assignee"
-            inputID="assignees"
-            onValueChange={handleCustomFieldChange('assignees')}
-            error={getFieldError('assignees')}
-          />
-           {/* Priority */}
-          <CustomInput
-            label="Priorité :"
-            type="Priority"
-            inputID="priority"
-            onValueChange={handleCustomFieldChange('priority')}
-            error={getFieldError('priority')}
-          />
-          {/* Status */}
-          <div className='flex flex-col gap-4'>
-            <p className='body-s'>Statut :</p>
-            <>
-            <input
-              type="hidden"
-              name='status'
-              value={selectedStatus}
-            />
-            <div className='flex gap-2'>
-            {
-              status.map((s)=>{
-                const isSelected = selectedStatus === s;
-                return (
-                  <button
-                    key={s}
-                    type='button'
-                    onClick={() => handleStatusSelection(s)}
-                    className={`cursor-pointer rounded p-1 transition-all ${
-                      isSelected ? 'ring-2 ring-offset-1 ring-blue-500 bg-gray-50 rounded-2xl' : 'opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <Tags
-                      label={mapStatusLabel[s]}
-                      color={mapStatusColor[s]}
-                    />
-                  </button>
-                )
-              })
-            }
-            </div>
-            </>
-          </div>
-
           <DialogFooter className="gap-2 w-61 flex justify-start">
             <CustomButton
-              label='+ Ajouter une tâche'
+              label='Ajouter un projet'
               pending={pending}
               disabled={!isFormValid}
               buttonType="submit"

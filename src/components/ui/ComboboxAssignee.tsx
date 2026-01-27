@@ -49,7 +49,6 @@ export default function ComboboxAssignee({onValueChange, name = "assignees", req
           value={value.map(u => u.id).join(',')}
           required={required}
         />
-
           <Combobox
             multiple
             autoHighlight
@@ -76,8 +75,6 @@ export default function ComboboxAssignee({onValueChange, name = "assignees", req
               />
               <ChevronDown strokeWidth={1}/>
             </ComboboxChips>
-
-
             <ComboboxContent
               anchor={anchor}
               className="text-black z-100 bg-white shadow-lg"

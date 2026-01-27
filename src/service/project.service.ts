@@ -15,13 +15,16 @@ const Tasks = z.object({
     tasks: z.array(Task),
 })
 
-
+const Projectobj = z.object({
+  project: Project
+})
+type ProjectResponse = z.infer<typeof Projectobj>;
 type PostResponse = z.infer<typeof Project>;
 type ProjectsResponse = z.infer<typeof Projects>;
 type TaksResponse = z.infer<typeof Tasks>;
 
 export const ProjectService = {
-    createProject: async (token: string, payload: z.infer<typeof CreateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+    createProject: async (token: string, payload: z.infer<typeof CreateProjectSchema>): Promise<ApiResult<ProjectResponse>> => {
         // 1. Vérifier rate limit (utiliser token comme identifiant unique)
         if (!checkRateLimit(token, 500, 1)) {
           return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
@@ -45,7 +48,7 @@ export const ProjectService = {
             }),
             3000
           );
-          return await handleFetch(res, Project);
+          return await handleFetch(res, Projectobj);
         } catch (error) {
           if (error instanceof Error && error.message.includes("pris trop de temps")) {
             return { ok: false, status: 408, message: error.message };
@@ -96,6 +99,7 @@ export const ProjectService = {
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${token}`
                 },
+                next: { tags: ['projects'] }
             }),
             3000
           );
@@ -117,6 +121,7 @@ export const ProjectService = {
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${token}`
                 },
+                next: { tags: ['projects'] }
             }),
             3000
           );

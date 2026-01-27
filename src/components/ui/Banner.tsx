@@ -1,7 +1,8 @@
 'use client';
 import { usePathname } from "next/navigation";
-
+import { useState } from "react";
 import CustomButton from "./CustomButton"
+import CreateProject from "../Projects/Modal/CreateProject";
 
 interface BannerProps {
   title: string;
@@ -10,7 +11,9 @@ interface BannerProps {
 
 export default function Banner (props: BannerProps){
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
   const isProject = pathname.includes('projects');
+  
 
   return (
     <section className="flex justify-between" aria-label="Banniere">
@@ -27,8 +30,13 @@ export default function Banner (props: BannerProps){
           pending={false}
           disabled={false}
           buttonType="button"
+          onClick={() => setIsOpen(true)}
         />
       </div>
+      <CreateProject
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      />
     </section>
   )
 }

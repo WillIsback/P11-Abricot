@@ -4,7 +4,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -16,14 +15,13 @@ import { useActionState, useEffect, useState, useRef } from 'react';
 import Tags from '@/components/ui/Tags';
 import { mapStatusLabel, mapStatusColor } from '@/lib/client.lib';
 import { UpdateTaskSchema } from "@/schemas/frontend.schemas";
-import { AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { AlertCircle} from 'lucide-react';
 
 enum Status {
   'TODO'='TODO',
   'IN_PROGRESS'='IN_PROGRESS',
   'DONE'='DONE'
 }
-
 
 interface UpdateTaskProps {
   open: boolean;
@@ -32,8 +30,6 @@ interface UpdateTaskProps {
   taskId: string,
   onTaskUpdated?: (task: unknown) => void;
 }
-
-
 
 export default function UpdateTask({
   open,
@@ -79,8 +75,6 @@ export default function UpdateTask({
     onOpenChange(isOpen);
   };
 
-
-
   const handleStatusSelection = (newStatus: Status) => {
     console.log("Bouton cliqué :", newStatus);
     setSelectedStatus(newStatus);
@@ -91,17 +85,18 @@ export default function UpdateTask({
     if (fieldName) {
       setTouchedFields(prev => new Set(prev).add(fieldName));
     }
-
     const formData = new FormData(formRef.current!);
+    const toUndefinedIfEmpty = (v: FormDataEntryValue | null) =>
+      typeof v === "string" && v.trim() === "" ? undefined : v;
+    
     const result = UpdateTaskSchema.safeParse({
-      title: formData.get('title'),
-      description: formData.get('description'),
-      dueDate: formData.get('dueDate'),
-      assignees: formData.getAll('assignees'),
-      status: formData.get('status'),
-      priority: formData.get('priority'),
+      title: toUndefinedIfEmpty(formData.get('title')),
+      description: toUndefinedIfEmpty(formData.get('description')),
+      dueDate: toUndefinedIfEmpty(formData.get('dueDate')),
+      assignees: formData.getAll('assignees').filter(Boolean),
+      status: toUndefinedIfEmpty(formData.get('status')),
+      priority: toUndefinedIfEmpty(formData.get('priority')),
     });
-
     if (!result.success) {
       // Transformer les erreurs Zod en objet { champ: message }
       const errors: Record<string, string> = {};
@@ -160,16 +155,13 @@ export default function UpdateTask({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75">
         <DialogHeader>
-          <DialogTitle>Créer une tâche</DialogTitle>
-          <DialogDescription>
-            Ajoutez une tâche à votre projet. Remplissez au minimum le titre.
-          </DialogDescription>
+          <DialogTitle>Modifier</DialogTitle>
         </DialogHeader>
 
 
         {!state?.ok && !state?.formValidationError && state?.message && (
           <div className="flex items-start gap-3 p-4 rounded-lg bg-red-50 border border-red-200">
-            <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+            <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
             <div className="flex flex-col gap-1">
               <p className="text-red-700 font-medium text-sm">Erreur</p>
               <p className="text-red-600 text-sm">{state.message}</p>
@@ -189,7 +181,6 @@ export default function UpdateTask({
             label="Titre*"
             type="text"
             inputID="title"
-            required={true}
             error={getFieldError('title')}
           />
           {/* Description */}
@@ -197,7 +188,6 @@ export default function UpdateTask({
             label="Description*"
             type="text"
             inputID="description"
-            required={true}
             error={getFieldError('description')}
           />
           {/* Date d'échéance */}
@@ -205,7 +195,6 @@ export default function UpdateTask({
             label="Echéance*"
             type="DatePicker"
             inputID="dueDate"
-            required={true}
             onValueChange={handleCustomFieldChange('dueDate')}
             error={getFieldError('dueDate')}
           />

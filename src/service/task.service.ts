@@ -48,7 +48,8 @@ export const TaskService = {
         }
     },
 
-    updateTask: async (token: string, projectId: string, taskId: string ,payload: z.infer<typeof UpdateTaskSchema>): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
+    updateTask: async (token: string, projectId: string, taskId: string ,payload: z.infer<typeof UpdateTaskSchema>):
+     Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
       // 1. Vérifier rate limit (utiliser token comme identifiant unique)
       if (!checkRateLimit(token, 500, 1)) {
         return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
@@ -62,7 +63,7 @@ export const TaskService = {
         // 2. Ajouter timeout de 3s
         const res = await withTimeout(
           fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}`, {
-              method: 'POST',
+              method: 'PUT',
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`

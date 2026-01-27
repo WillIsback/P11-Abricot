@@ -11,8 +11,10 @@ import {
 
 import { PencilIcon, TrashIcon, Ellipsis, MoveLeft } from "lucide-react";
 import { deleteTask } from "@/action/task.action";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
+import UpdateTask from "../Tasks/Modal/UpdateTask";
+
 
 type buttonType = 'MoveLeft' | 'Ellipsis';
 
@@ -23,6 +25,7 @@ interface IconButtonProps {
 }
 export default function IconButton ({ type, projectId, taskId }  : IconButtonProps){
   const [, startTransition] = useTransition();
+  const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
     const routeur = useRouter();
 
     const handleTrashClick = () => {
@@ -38,18 +41,25 @@ export default function IconButton ({ type, projectId, taskId }  : IconButtonPro
     }
     const handlePencilClick = () => {
         console.log('Pencil Click');
+        setIsCreateTaskOpen(true);
     }
 
     const handleBackButton = () => {
-        routeur.back();
+        routeur.push('/projects');
     }
     return (
-
         <>
-        { type==='MoveLeft'
-            ?<RouterBackButton handleBackButton={handleBackButton} />
-            :<DropdownMenuDestructive handleTrashClick={handleTrashClick} handlePencilClick={handlePencilClick} />
-        }
+            { type==='MoveLeft'
+                ?<RouterBackButton handleBackButton={handleBackButton} />
+                :<DropdownMenuDestructive handleTrashClick={handleTrashClick} handlePencilClick={handlePencilClick} />
+            }
+            {/* Modal de création de tâche */}
+            <UpdateTask
+                open={isCreateTaskOpen}
+                onOpenChange={setIsCreateTaskOpen}
+                projectId={projectId||''}
+                taskId={taskId||''}
+            />
         </>
     )
 }

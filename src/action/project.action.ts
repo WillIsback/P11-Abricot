@@ -4,8 +4,9 @@ import { ProjectService } from '@/service/project.service';
 import { verifySession } from '@/lib/dal.lib';
 import { Project } from '@/schemas/backend.schemas';
 import { CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
-
+import { revalidateTag } from 'next/cache';
 import * as z from "zod";
+
 
 /***************************************************************
  * GET ACTIONS
@@ -90,7 +91,6 @@ export type ProjectActionState = {
 export type State = ProjectActionState | undefined;
 
 export async function createProject(
-  projectId: string,
   state: State,
   formData: FormData,
 ): Promise<State> {
@@ -101,11 +101,17 @@ export async function createProject(
       message: "Session not verified",
     }
   }
+
+  // Parser les contributeurs : split la string en array
+  const contributorsString = formData.get('contributors') as string;
+  const contributors = contributorsString && contributorsString.trim() 
+    ? contributorsString.split(',').map(email => email.trim())
+    : [];
   // 1. Validate form fields
   const validatedFields = CreateProjectSchema.safeParse({
     name: formData.get('name'),
     description: formData.get('description'),
-    contributors: formData.get('contributors'),
+    contributors: contributors,
   })
 
   // If any form fields are invalid, return early
@@ -127,15 +133,16 @@ export async function createProject(
   } as z.infer<typeof CreateProjectSchema>
   // 3. Insert the user into the database or call an Library API
   const response = await ProjectService.createProject(session.token as string, payload)
-
+  console.log('res : ', response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
+    revalidateTag('projects', "max");
     return {
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data,  // ← les données de la tâche créée
+      data: response.data.project,  
     };
   }
 
@@ -191,6 +198,7 @@ export async function updateProject(
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
+    revalidateTag('projects', "max");
     return {
       ok: true,
       shouldClose: true,

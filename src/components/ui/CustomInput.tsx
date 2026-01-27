@@ -1,8 +1,9 @@
 import DatePicker from "./DatePicker";
 import ComboboxAssignee from "./ComboboxAssignee"
 import ComboboxPriority from "./ComboboxPriority";
+import ComboboxContributor from "./ComboboxContributor";
 
-type InputType = 'DatePicker' | 'Assignee' | 'email' | 'password' | 'text' | 'Priority';
+type InputType = 'DatePicker' | 'Assignee' | 'email' | 'password' | 'text' | 'Priority' | 'Contributor';
 
 interface CustomInputProps {
   label: string,
@@ -42,6 +43,7 @@ const INPUT_COMPONENTS = {
   password: DefaultInput,
   DatePicker: DatePicker,
   Assignee: ComboboxAssignee,
+  Contributor: ComboboxContributor,
   Priority: ComboboxPriority,
 } as const;
 

@@ -5,7 +5,6 @@ import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
 import { apiErrorToState, validationErrorToState, ActionState } from "@/lib/server.lib";
 import { revalidatePath } from 'next/cache';
-import { redirect } from "next/navigation";
 
 export async function createTask(
   projectId: string,
@@ -71,15 +70,17 @@ export async function updateTask(
     }
   }
   // 1. Validate form fields
+  const toUndefinedIfEmpty = (v: FormDataEntryValue | null) =>
+    typeof v === "string" && v.trim() === "" ? undefined : v;
+  
   const validatedFields = UpdateTaskSchema.safeParse({
-    title: formData.get('title'),
-    description: formData.get('description'),
-    dueDate: formData.get('dueDate'),
-    assignees: formData.getAll('assignees'),
-    status: formData.get('status'),
-    priority: formData.get('priority')
-  })
-
+    title: toUndefinedIfEmpty(formData.get('title')),
+    description: toUndefinedIfEmpty(formData.get('description')),
+    dueDate: toUndefinedIfEmpty(formData.get('dueDate')),
+    assignees: formData.getAll('assignees').filter(Boolean),
+    status: toUndefinedIfEmpty(formData.get('status')),
+    priority: toUndefinedIfEmpty(formData.get('priority')),
+  });
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
@@ -93,6 +94,7 @@ export async function updateTask(
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
+    revalidatePath(`/projects/${projectId}`);
     return {
       ok: true,
       shouldClose: true,
@@ -120,6 +122,7 @@ export async function deleteTask(
 
   const response = await TaskService.deleteTask(session.token as string, projectId, taskId)
   if(response.ok){
+    
     return {
       ok: true,
       message: response.message,

@@ -1,13 +1,73 @@
 import Gauge from "./Gauge";
 import Team from "../Team/Team";
-import { ProjectWithTasks } from "@/schemas/backend.schemas";
-
-import * as z from "zod"
 
 
+interface CardProjectProps {
+    name: string;
+    description: string;
+    owner: {
+        id: string;
+        email: string;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+    };
+    members: {
+        id: string;
+        role: "OWNER" | "ADMIN" | "CONTRIBUTOR";
+        user: {
+            id: string;
+            email: string;
+            name: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+        joinedAt: string;
+    }[],
+    tasks: {
+        id: string;
+        title: string;
+        description: string;
+        status: "DONE" | "TODO" | "IN_PROGRESS" | "CANCELED";
+        priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+        dueDate: string;
+        projectId: string;
+        creatorId: string;
+        assignees: {
+            id: string;
+            userId: string;
+            taskId: string;
+            user: {
+                id: string;
+                email: string;
+                name: string;
+                createdAt: string;
+                updatedAt: string;
+            };
+            assignedAt: string;
+        }[];
+        comments: {
+            id: string;
+            content: string;
+            taskId: string;
+            authorId: string;
+            author: {
+                id: string;
+                email: string;
+                name: string;
+                createdAt: string;
+                updatedAt: string;
+            };
+            createdAt: string;
+            updatedAt: string;
+        }[];
+        createdAt: string;
+        updatedAt: string;
+    }[]
+}
 
-export default function CardProject (props: z.infer<typeof ProjectWithTasks>){
-    const { name, description, owner, members, tasks } = props;
+export default function CardProject ({ name, description, owner, members, tasks }: CardProjectProps){
+    // const { name, description, owner, members, tasks } = props;
     const totalTeamMembers = members.length + 1
     const completed = tasks.filter((t)=>t.status==='DONE').length;
     const todo = tasks.filter((t)=>t.status==='TODO').length;
