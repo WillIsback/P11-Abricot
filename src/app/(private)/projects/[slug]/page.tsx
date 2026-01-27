@@ -69,7 +69,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
                   {filteredTasks.map((task)=>{
                       return (
                           <li key={task.id}>
-                              <TaskProject task={task} projectOwner={project.ownerId}/>
+                              <TaskProject task={task} projectOwner={project.ownerId} projectId={slug}/>
                           </li>
                       )
                   })}

@@ -17,10 +17,11 @@ import * as z from "zod";
 interface TaskProjectProps {
   task: z.infer<typeof Task>,
   projectOwner: string
+  projectId: string;
 }
 
 
-export default function TaskProject ({task, projectOwner} : TaskProjectProps){
+export default function TaskProject ({task, projectOwner, projectId} : TaskProjectProps){
   const [isCollapse, setIsCollapse] = useState(true)
   const formattedDate = format(new Date(task.dueDate), 'd MMMM', { locale: fr });
 
@@ -40,7 +41,11 @@ export default function TaskProject ({task, projectOwner} : TaskProjectProps){
           </div>
           {/*Bloc bouton paramètre*/}
           <div>
-            <IconButton button="Ellipsis"/>
+            <IconButton 
+              type="Ellipsis"
+              taskId={task.id}
+              projectId={projectId}
+            />
           </div>
         </div>
       {/* Bloc de corps */}

@@ -5,6 +5,7 @@ import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
 import { apiErrorToState, validationErrorToState, ActionState } from "@/lib/server.lib";
 import { revalidatePath } from 'next/cache';
+import { redirect } from "next/navigation";
 
 export async function createTask(
   projectId: string,
@@ -100,6 +101,31 @@ export async function updateTask(
     };
   }
 
+  // Si erreur API
+  return apiErrorToState(response);
+}
+
+
+export async function deleteTask(
+  projectId: string,
+  taskId: string,
+): Promise<ActionState> {
+  const session = await verifySession();
+  if(!session.isAuth || !session.token){
+    return {
+      ok: false,
+      message: "Session not verified",
+    }
+  }
+
+  const response = await TaskService.deleteTask(session.token as string, projectId, taskId)
+  if(response.ok){
+    return {
+      ok: true,
+      message: response.message,
+      status: response.status,
+    };
+  }
   // Si erreur API
   return apiErrorToState(response);
 }
