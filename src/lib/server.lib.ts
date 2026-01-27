@@ -56,7 +56,7 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
     };
   }
 
-  console.log(parsedSuccessEnvelope.data.data)
+
   const parsedData = schema.safeParse(parsedSuccessEnvelope.data.data);
   if (!parsedData.success) {
     return {

@@ -6,7 +6,6 @@ import Link from "next/link"
 export default function CustomLink ({ label, link } : {label : string, link: string}){
     const pathname = usePathname();
     const isCurrent = pathname === link;
-    console.log(pathname)
 
     return (
         <Link

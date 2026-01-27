@@ -34,13 +34,15 @@ export const LoginFormSchema = z.object({
 export const CreateTaskSchema = z.object({
     title: z
         .string()
-        .min(2, { error: 'firstName must be at least 2 characters long.' })
-        .trim(),
+        .min(2, { error: 'title must be at least 2 characters long.' }),
     description: z
         .string()
-        .min(2, { error: 'lastName must be at least 2 characters long.' })
-        .trim(),
+        .min(2, { error: 'description must be at least 2 characters long.' }),
     dueDate: z.iso.datetime(),
-    assignees: z.array(TaskAssignee),
-    status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']),
+    assignees: z.string()
+        .transform((val) => val ? val.split(',') : [])
+        .pipe(z.array(z.string()))
+        .optional(),
+    priority: z.enum(['LOW','MEDIUM','HIGH','URGENT']).optional(),
+    status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']).optional(),
 })

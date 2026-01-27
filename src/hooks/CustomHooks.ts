@@ -1,7 +1,8 @@
-
-
 import  { useEffect, useState, useTransition } from 'react'
 import { getProjectDetail } from '@/lib/dto.lib';
+import { ProjectMember } from '@/schemas/backend.schemas';
+
+import * as z from 'zod';
 
 export function useProjectName(projectId: string) {
     const [isPending, startTransition] = useTransition();
@@ -20,3 +21,26 @@ export function useProjectName(projectId: string) {
     }, [projectId]);
     return [isPending, projectName]
 }
+
+type ProjectMembers = z.infer<typeof ProjectMember>[] | null;
+
+
+export function useProjectMembers(projectId: string) {
+    const [isPending, startTransition] = useTransition();
+    const [projetMembers, setprojetMembers] = useState<ProjectMembers>(null);
+    useEffect(()=>{
+        startTransition(async()=>{
+            const project = await getProjectDetail(projectId);
+            if(!project){
+                console.log(`Impossible de retrouvé le project name correspondant à cet ID : ${projectId}`)
+                setprojetMembers(null)
+            }
+            else{
+                setprojetMembers(project.members)
+            }
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [projectId]);
+    return [isPending, projetMembers]
+}
+

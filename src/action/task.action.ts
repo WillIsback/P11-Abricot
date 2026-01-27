@@ -41,7 +41,8 @@ export async function createTask(
     description: formData.get('description'),
     dueDate: formData.get('dueDate'),
     assignees: formData.get('assignees'),
-    status: formData.get('status')
+    status: formData.get('status'),
+    priority: formData.get('priority')
   })
 
   // If any form fields are invalid, return early
@@ -60,7 +61,8 @@ export async function createTask(
     description : validatedFields.data.description,
     dueDate: validatedFields.data.dueDate,
     assignees: validatedFields.data.assignees,
-    status: validatedFields.data.status
+    status: validatedFields.data.status,
+    priority: validatedFields.data.priority
 
   } as z.infer<typeof CreateTaskPayload>
   // 3. Insert the user into the database or call an Library API

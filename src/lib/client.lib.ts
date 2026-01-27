@@ -34,4 +34,11 @@ const isUserOwner = (userId: string, OwnerId: string) : boolean => {
 }
 
 
-export { getInitialsFromName, mapStatusColor, mapStatusLabel, isUserOwner }
+
+const isRequired = (schema: z.ZodObject, key: string) => {
+    const field = schema.shape[key];
+    // Vérifie si le champ existe et s'il n'est PAS optionnel
+    return field && !(field instanceof z.ZodOptional) && !(field instanceof z.ZodNullable);
+}
+
+export { getInitialsFromName, mapStatusColor, mapStatusLabel, isUserOwner, isRequired}
