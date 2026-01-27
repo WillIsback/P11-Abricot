@@ -38,10 +38,10 @@ const CreateTaskSchema = z.object({
         .string()
         .min(2, { error: 'description must be at least 2 characters long.' }),
     dueDate: z.iso.datetime(),
-    assignees: z.string()
-        .transform((val) => val ? val.split(',') : [])
-        .pipe(z.array(z.string()))
-        .optional(),
+    assignees: z.preprocess(
+        (val) => typeof val === 'string' ? (val ? val.split(',').filter(Boolean) : []) : val,
+        z.array(z.string())
+    ).optional(),
     priority: z.enum(['LOW','MEDIUM','HIGH','URGENT']).optional(),
     status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']).optional(),
 })
@@ -57,10 +57,10 @@ const UpdateTaskSchema = z.object({
         .optional(),
     dueDate: z.iso.datetime()
         .optional(),
-    assignees: z.string()
-        .transform((val) => val ? val.split(',') : [])
-        .pipe(z.array(z.string()))
-        .optional(),
+    assignees: z.preprocess(
+        (val) => typeof val === 'string' ? (val ? val.split(',').filter(Boolean) : []) : val,
+        z.array(z.string())
+    ).optional(),
     priority: z.enum(['LOW','MEDIUM','HIGH','URGENT']).optional(),
     status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']).optional(),
 })
@@ -88,7 +88,10 @@ const UpdatePasswordSchema = z.object({
 const CreateProjectSchema = z.object({
     name: z.string(),
     description: z.string().optional(),
-    contributors: z.string().optional(), // Array d'emails des contributeurs
+    contributors: z.preprocess(
+        (val) => typeof val === 'string' ? (val ? val.split(',').filter(Boolean) : []) : val,
+        z.array(z.string())
+    ).optional(), // Array d'emails des contributeurs
 })
   
 const UpdateProjectSchema = z.object({

@@ -3,29 +3,13 @@
 import { TaskService } from "@/service/task.service";
 import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
-import { Task } from "@/schemas/backend.schemas";
-
-import * as z from 'zod';
-
-
-export type TaskActionState = {
-  ok: boolean;
-  shouldClose?: boolean;
-  message?: string;
-  data?: z.infer<typeof Task>;
-  status?: number;
-  formValidationError?: unknown;
-  apiValidationError?: unknown;
-}
-
-export type State = TaskActionState | undefined;
-
+import { apiErrorToState, validationErrorToState, ActionState } from "@/lib/server.lib";
 
 export async function createTask(
   projectId: string,
-  state: State,
+  state: ActionState,
   formData: FormData,
-): Promise<State> {
+): Promise<ActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -33,6 +17,7 @@ export async function createTask(
       message: "Session not verified",
     }
   }
+  
   // 1. Validate form fields
   const validatedFields = CreateTaskSchema.safeParse({
     title: formData.get('title'),
@@ -42,30 +27,18 @@ export async function createTask(
     status: formData.get('status'),
     priority: formData.get('priority')
   })
-
+ 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
+    
   }
 
   // 2. Prepare data for insertion into database
-  const payload = {
-    title: validatedFields.data.title,
-    description : validatedFields.data.description,
-    dueDate: validatedFields.data.dueDate,
-    assignees: validatedFields.data.assignees,
-    status: validatedFields.data.status,
-    priority: validatedFields.data.priority
 
-  } as z.infer<typeof CreateTaskSchema>
   // 3. Insert the user into the database or call an Library API
-  const response = await TaskService.createTask(session.token as string,projectId,payload)
-
+  const response = await TaskService.createTask(session.token as string,projectId,validatedFields.data)
+  console.log("Appel validatedFields", response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
@@ -78,20 +51,15 @@ export async function createTask(
   }
 
   // Si erreur API
-  return {
-    ok: false,
-    status: response.status,
-    message: response.message,
-    apiValidationError: response.validationError
-  };
+  return apiErrorToState(response);
 }
 
 
 export async function updateTask(
   projectId: string,
-  state: State,
+  state: ActionState,
   formData: FormData,
-): Promise<State> {
+): Promise<ActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -100,7 +68,7 @@ export async function updateTask(
     }
   }
   // 1. Validate form fields
-  const validatedFields = CreateTaskSchema.safeParse({
+  const validatedFields = UpdateTaskSchema.safeParse({
     title: formData.get('title'),
     description: formData.get('description'),
     dueDate: formData.get('dueDate'),
@@ -111,26 +79,13 @@ export async function updateTask(
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
+    
   }
 
   // 2. Prepare data for insertion into database
-  const payload = {
-    title: validatedFields.data.title,
-    description : validatedFields.data.description,
-    dueDate: validatedFields.data.dueDate,
-    assignees: validatedFields.data.assignees,
-    status: validatedFields.data.status,
-    priority: validatedFields.data.priority
-
-  } as z.infer<typeof UpdateTaskSchema>
   // 3. Insert the user into the database or call an Library API
-  const response = await TaskService.updateTask(session.token as string,projectId,payload)
+  const response = await TaskService.updateTask(session.token as string,projectId,validatedFields.data)
 
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
@@ -144,10 +99,5 @@ export async function updateTask(
   }
 
   // Si erreur API
-  return {
-    ok: false,
-    status: response.status,
-    message: response.message,
-    apiValidationError: response.validationError
-  };
+  return apiErrorToState(response);
 }

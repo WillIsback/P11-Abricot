@@ -49,7 +49,7 @@ export default function ComboboxAssignee({onValueChange, name = "assignees", req
       <input 
         type="hidden" 
         name={name}
-        value={(value.map(u => u.id))}
+        value={value.map(u => u.id).join(',')}
         required={required}
       />
       

@@ -1,3 +1,5 @@
+import 'server-only'
+
 import * as z from "zod";
 
 import { Error, Success } from "@/schemas/backend.schemas";
@@ -17,6 +19,16 @@ type ApiFailure = {
   details?: z.infer<typeof Error>["details"];
   validationError?: z.ZodError;
 };
+
+type ActionState<T = unknown> = {
+  ok: boolean;
+  shouldClose?: boolean;
+  message?: string;
+  data?: T;
+  status?: number;
+  formValidationError?: unknown;
+  apiValidationError?: unknown;
+} | undefined;
 
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
@@ -75,4 +87,19 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
   };
 };
 
-export { handleFetch }
+// server.lib.ts
+const apiErrorToState = <T>(response: ApiFailure): ActionState<T> => ({
+  ok: false,
+  status: response.status,
+  message: response.message,
+  apiValidationError: response.validationError
+});
+
+const validationErrorToState = <T>(validatedFields: z.ZodSafeParseError<T>): ActionState<T> => ({
+      ok: false,
+      status: 430,
+      message: validatedFields?.error.message,
+      formValidationError: z.treeifyError(validatedFields?.error)
+});
+
+export { handleFetch, apiErrorToState, validationErrorToState, type ActionState }
