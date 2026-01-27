@@ -8,6 +8,7 @@ import { getProjectTask } from "@/action/project.action";
 import { getProjectDetail } from "@/lib/dto.lib";
 import { redirect } from "next/navigation"
 import ProjetFilterBar from "@/components/ui/ProjectFilterBar";
+import { ProjectProvider } from '@/contexts/ProjectProvider'
 
 type ProjetPageProps = {
   searchParams: Promise<{
@@ -52,28 +53,30 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
     <div className="flex h-screen bg-gray-50">
       <div className="w-360 m-auto mt-0">
         <Menu />
-        <div className="flex pl-11 pr-25 mt-19.5">
-          <ProjectBanner
-              title={name}
-              description={description}
-              projectId={slug}
-            />
-        </div>
-        <main className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto">
-          <Workers owner={owner} members={members} variant="Default"/>
-          <div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10 gap-10.25">
-            <ProjetFilterBar />
-            <ul className="flex flex-col gap-4.25">
-                {filteredTasks.map((task)=>{
-                    return (
-                        <li key={task.id}>
-                            <TaskProject task={task} projectOwner={project.ownerId}/>
-                        </li>
-                    )
-                })}
-            </ul>
+        <ProjectProvider data={project}>
+          <div className="flex pl-11 pr-25 mt-19.5">
+            <ProjectBanner
+                title={name}
+                description={description}
+                projectId={slug}
+              />
           </div>
-        </main>
+          <main className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto">
+            <Workers owner={owner} members={members} variant="Default"/>
+            <div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10 gap-10.25">
+              <ProjetFilterBar />
+              <ul className="flex flex-col gap-4.25">
+                  {filteredTasks.map((task)=>{
+                      return (
+                          <li key={task.id}>
+                              <TaskProject task={task} projectOwner={project.ownerId}/>
+                          </li>
+                      )
+                  })}
+              </ul>
+            </div>
+          </main>
+        </ProjectProvider>
         <Footer />
       </div>
     </div>

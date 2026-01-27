@@ -4,6 +4,7 @@ import { TaskService } from "@/service/task.service";
 import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
 import { apiErrorToState, validationErrorToState, ActionState } from "@/lib/server.lib";
+import { revalidatePath } from 'next/cache';
 
 export async function createTask(
   projectId: string,
@@ -17,31 +18,32 @@ export async function createTask(
       message: "Session not verified",
     }
   }
-  
+
   // 1. Validate form fields
   const validatedFields = CreateTaskSchema.safeParse({
     title: formData.get('title'),
     description: formData.get('description'),
     dueDate: formData.get('dueDate'),
-    assignees: formData.get('assignees'),
+    assignees: formData.getAll('assignees'),
     status: formData.get('status'),
     priority: formData.get('priority')
   })
- 
+
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
-    
+
   }
 
   // 2. Prepare data for insertion into database
 
   // 3. Insert the user into the database or call an Library API
-  const response = await TaskService.createTask(session.token as string,projectId,validatedFields.data)
+  const response = await TaskService.createTask(session.token as string, projectId, validatedFields.data)
   console.log("Appel validatedFields", response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
+    revalidatePath(`/projects/${projectId}`);
     return {
       ok: true,
       shouldClose: true,
@@ -72,7 +74,7 @@ export async function updateTask(
     title: formData.get('title'),
     description: formData.get('description'),
     dueDate: formData.get('dueDate'),
-    assignees: formData.get('assignees'),
+    assignees: formData.getAll('assignees'),
     status: formData.get('status'),
     priority: formData.get('priority')
   })
@@ -80,12 +82,12 @@ export async function updateTask(
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
-    
+
   }
 
   // 2. Prepare data for insertion into database
   // 3. Insert the user into the database or call an Library API
-  const response = await TaskService.updateTask(session.token as string,projectId,validatedFields.data)
+  const response = await TaskService.updateTask(session.token as string, projectId, validatedFields.data)
 
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data

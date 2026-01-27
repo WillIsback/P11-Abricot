@@ -9,7 +9,7 @@ import * as z from "zod";
 
 /***************************************************************
  * GET ACTIONS
- * @returns 
+ * @returns
  ****************************************************************
  */
 export async function getAllProjects(){
@@ -34,7 +34,7 @@ export async function getAllProjects(){
     }
   }
 
-  
+
 
   // 4. return the data
     return {
@@ -66,7 +66,7 @@ export async function getProjectTask(projectId: string){
     }
   }
 
-  
+
 
   // 4. return the data
     return {
@@ -78,7 +78,7 @@ export async function getProjectTask(projectId: string){
 
 /***************************************************************
  * POST ACTIONS
- * @returns 
+ * @returns
  ****************************************************************
  */
 export type ProjectActionState = {
@@ -130,6 +130,7 @@ export async function createProject(
 
   } as z.infer<typeof CreateProjectSchema>
   // 3. Insert the user into the database or call an Library API
+  // ✨ Passer juste le token (utilisé pour auth ET rate limit)
   const response = await ProjectService.createProject(session.token as string, payload)
 
   // 4. verify and log errors
@@ -188,7 +189,10 @@ export async function updateProject(
     description : validatedFields.data.description,
   } as z.infer<typeof UpdateProjectSchema>
   // 3. Insert the user into the database or call an Library API
-  const response = await ProjectService.updateProject(session.token as string,payload)
+
+  // 3. Insert the user into the database or call an Library API
+  // ✨ Passer juste le token (utilisé pour auth ET rate limit)
+  const response = await ProjectService.updateProject(session.token as string, payload)
 
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data

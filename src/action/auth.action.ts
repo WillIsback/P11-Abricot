@@ -31,14 +31,13 @@ export async function logout() {
 
 export async function signup(state: State, formData: FormData) {
   // 1. Validate form fields
-  // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     email: formData.get('email'),
     password: formData.get('password'),
   })
-  
+
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
@@ -57,7 +56,8 @@ export async function signup(state: State, formData: FormData) {
     password: sanitizeString(validatedFields.data.password),
   }
   // 3. Insert the user into the database or call an Library API
-  const result = await AuthService.register(payload)
+
+  const result = await AuthService.register(payload, sanitizeString(validatedFields.data.email))
 
 
   if(!result.ok){
@@ -71,7 +71,7 @@ export async function signup(state: State, formData: FormData) {
       apiValidationError: result.validationError
     };
   }
-  
+
   // 4. Create user session
   const session = await createSession(result.data.user.id, result.data.token)
 
@@ -84,7 +84,6 @@ export async function signup(state: State, formData: FormData) {
 
 export async function login(state: State, formData: FormData) {
   // 1. Validate form fields
-  // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
@@ -104,7 +103,8 @@ export async function login(state: State, formData: FormData) {
     password: sanitizeString(validatedFields.data.password),
   }
   // 3. Insert the user into the database or call an Library API
-  const result = await AuthService.login(payload)
+
+  const result = await AuthService.login(payload, sanitizeString(validatedFields.data.email))
 
   if(!result.ok){
     console.error("AuthService error : ",result.message)
@@ -154,5 +154,5 @@ export async function profile() {
       message: profile.message,
       data: profile.data
   }
-  
+
 }

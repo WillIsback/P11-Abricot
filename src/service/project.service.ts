@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { cache } from "react";
 import { Project, Task } from "@/schemas/backend.schemas";
-import { ApiResult, handleFetch } from "@/lib/server.lib";
+import { ApiResult, handleFetch, withTimeout, checkRateLimit } from "@/lib/server.lib";
 import { UpdateProjectSchema, CreateProjectSchema } from "@/schemas/frontend.schemas";
 
 const BASE_URL = process.env.API_URL || 'http://localhost:8000';
@@ -21,56 +21,111 @@ type ProjectsResponse = z.infer<typeof Projects>;
 type TaksResponse = z.infer<typeof Tasks>;
 
 export const ProjectService = {
-    createProject: cache(async (token: string, payload: z.infer<typeof CreateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+    createProject: async (token: string, payload: z.infer<typeof CreateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+        // 1. Vérifier rate limit (utiliser token comme identifiant unique)
+        if (!checkRateLimit(token, 500, 1)) {
+          return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
+        }
+
         const validated = CreateProjectSchema.safeParse(payload);
         if (!validated.success) {
           return { ok: false, status: 400, message: "Invalid payload", validationError: validated.error };
         }
-        const res = await fetch(`${BASE_URL}/projects`, {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(payload),
-        });
-        return await handleFetch(res, Project);
-    }),
-    updateProject: cache(async (token: string, payload: z.infer<typeof UpdateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+
+        try {
+          // 2. Ajouter timeout de 3s
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/projects`, {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(payload),
+            }),
+            3000
+          );
+          return await handleFetch(res, Project);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
+    },
+
+    updateProject: async (token: string, payload: z.infer<typeof UpdateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+        // 1. Vérifier rate limit (utiliser token comme identifiant unique)
+        if (!checkRateLimit(token, 500, 1)) {
+          return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
+        }
+
         const validated = UpdateProjectSchema.safeParse(payload);
         if (!validated.success) {
           return { ok: false, status: 400, message: "Invalid payload", validationError: validated.error };
         }
-        const res = await fetch(`${BASE_URL}/projects`, {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(payload),
-        });
-        return await handleFetch(res, Project);
-    }),
+
+        try {
+          // 2. Ajouter timeout de 3s
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/projects`, {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(payload),
+            }),
+            3000
+          );
+          return await handleFetch(res, Project);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
+    },
 
     getProjects: cache(async (token: string): Promise<ApiResult<ProjectsResponse>> => {
-        const res = await fetch(`${BASE_URL}/projects`, {
-            method: 'GET',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-        });
-        return await handleFetch(res, Projects);  
+        try {
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/projects`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+            }),
+            3000
+          );
+          return await handleFetch(res, Projects);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
     }),
 
     getProjectTask: cache(async (token: string, projectId: string): Promise<ApiResult<TaksResponse>> => {
-        const res = await fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
-            method: 'GET',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-        });
-        return await handleFetch(res, Tasks);  
+        try {
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+            }),
+            3000
+          );
+          return await handleFetch(res, Tasks);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
     }),
 };

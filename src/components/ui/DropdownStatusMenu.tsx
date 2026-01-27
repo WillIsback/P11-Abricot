@@ -10,18 +10,16 @@ import {
     DropdownMenuRadioItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-
+import { mapStatusString } from "@/lib/client.lib"
 const enum Status {
     TODO='TODO',
     IN_PROGRESS='IN_PROGRESS',
     DONE='DONE',
     CANCELED='CANCELED'
-} 
+}
 
-
-export default function DropdownMenuRadioGroupDemo() {
+export default function DropdownStatusMenu() {
     const [selectedStatus, setSelectedStatus] = React.useState<Status>(Status.TODO)
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -30,7 +28,7 @@ export default function DropdownMenuRadioGroupDemo() {
         (name: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
         params.set(name, value)
-    
+
         return params.toString()
         },
         [searchParams]
@@ -47,6 +45,7 @@ export default function DropdownMenuRadioGroupDemo() {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="group">
+                        <p className="body-s">{mapStatusString[selectedStatus]}</p>
                         <ChevronDown
                             strokeWidth={1}
                             className="h-4 w-4 text-gray-500 transition-transform duration-200 group-data-[state=open]:rotate-180"
@@ -59,7 +58,7 @@ export default function DropdownMenuRadioGroupDemo() {
                             value={selectedStatus}
                             onValueChange={(value) => setSelectedStatus(value as Status)}
                         >
-                            <DropdownMenuRadioItem value="TODO">A faire</DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem value="TODO">À faire</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="IN_PROGRESS">En cours</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="DONE">Terminée</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="CANCELED">Abandonnée</DropdownMenuRadioItem>

@@ -1,6 +1,7 @@
-import  { useEffect, useState, useTransition } from 'react'
+import  { useEffect, useState, useTransition, use } from 'react'
 import { getProjectDetail } from '@/lib/dto.lib';
 import { ProjectMember } from '@/schemas/backend.schemas';
+import { ProjectContext } from '@/contexts/ProjectContext'
 
 import * as z from 'zod';
 
@@ -44,3 +45,12 @@ export function useProjectMembers(projectId: string) {
     return [isPending, projetMembers]
 }
 
+
+
+export function useProject() {
+  const context = use(ProjectContext)
+  if (!context) {
+    throw new Error('useProject must be used within ProjectProvider')
+  }
+  return context
+}

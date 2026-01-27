@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { cache } from "react";
 import { Task, ProjectWithTasks } from "@/schemas/backend.schemas";
-import { ApiResult, handleFetch } from "@/lib/server.lib";
+import { ApiResult, handleFetch, withTimeout } from "@/lib/server.lib";
 
 
 const BASE_URL = process.env.API_URL || 'http://localhost:8000';
@@ -20,23 +20,43 @@ type ProjectsWithTasksResponse = z.infer<typeof ProjectsWithTasks>;
 
 export const DashboardService = {
     getAssignedTasks: cache(async (token: string): Promise<ApiResult<TaksResponse>> => {
-        const res = await fetch(`${BASE_URL}/dashboard/assigned-tasks`, {
-            method: 'GET',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-        });
-        return await handleFetch(res, Tasks);  
+        try {
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/dashboard/assigned-tasks`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+            }),
+            3000
+          );
+          return await handleFetch(res, Tasks);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
     }),
     getProjectWithTasks: cache(async (token: string): Promise<ApiResult<ProjectsWithTasksResponse>> => {
-        const res = await fetch(`${BASE_URL}/dashboard/projects-with-tasks`, {
-            method: 'GET',
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-        });
-        return await handleFetch(res, ProjectsWithTasks);  
+        try {
+          const res = await withTimeout(
+            fetch(`${BASE_URL}/dashboard/projects-with-tasks`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+            }),
+            3000
+          );
+          return await handleFetch(res, ProjectsWithTasks);
+        } catch (error) {
+          if (error instanceof Error && error.message.includes("pris trop de temps")) {
+            return { ok: false, status: 408, message: error.message };
+          }
+          throw error;
+        }
     }),
 };

@@ -1,6 +1,6 @@
 'use client';
 import Chips from "./Chips";
-import DropdownMenuRadioGroupDemo from "./DropdownMenuRadioGroup";
+import DropdownStatusMenu from "./DropdownStatusMenu";
 import SearchBar from "./SearchBar";
 
 export default function ProjetFilterBar({}){
@@ -15,7 +15,7 @@ export default function ProjetFilterBar({}){
                     <Chips type='task'/>
                     <Chips type="kanban"/>
                 </div>
-                <DropdownMenuRadioGroupDemo />
+                <DropdownStatusMenu />
                 <SearchBar />
             </div>
         </div>
