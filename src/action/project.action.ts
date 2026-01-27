@@ -26,8 +26,6 @@ export async function getAllProjects(){
   const allProjects = await ProjectService.getProjects(session.token as string)
   // 3. verify and log errors
   if(!allProjects.ok){
-    console.log(allProjects.message)
-    if(allProjects.details)console.log(allProjects.details)
     return {
         ok: false,
         message: allProjects.message
@@ -58,8 +56,6 @@ export async function getProjectTask(projectId: string){
   const ProjectTask = await ProjectService.getProjectTask(session.token as string, projectId)
   // 3. verify and log errors
   if(!ProjectTask.ok){
-    console.log(ProjectTask.message)
-    if(ProjectTask.details)console.log(ProjectTask.details)
     return {
         ok: false,
         message: ProjectTask.message
@@ -88,7 +84,7 @@ export type ProjectActionState = {
   data?: z.infer<typeof Project>;
   status?: number;
   formValidationError?: unknown;
-  apiValidationError?: unknown;
+  apiValidationError?: z.ZodError;
 }
 
 export type State = ProjectActionState | undefined;
@@ -130,7 +126,6 @@ export async function createProject(
 
   } as z.infer<typeof CreateProjectSchema>
   // 3. Insert the user into the database or call an Library API
-  // ✨ Passer juste le token (utilisé pour auth ET rate limit)
   const response = await ProjectService.createProject(session.token as string, payload)
 
   // 4. verify and log errors
@@ -191,7 +186,6 @@ export async function updateProject(
   // 3. Insert the user into the database or call an Library API
 
   // 3. Insert the user into the database or call an Library API
-  // ✨ Passer juste le token (utilisé pour auth ET rate limit)
   const response = await ProjectService.updateProject(session.token as string, payload)
 
   // 4. verify and log errors

@@ -30,3 +30,25 @@ export const sanitizeRichText = (value: string): string => {
     ALLOWED_ATTR: ['href', 'target']
   });
 };
+
+// ============================================
+// LOGGER CENTRALISÉ (usage simple)
+// ============================================
+// Utilise console.* mais centralise pour pouvoir plugger un provider plus tard.
+
+type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+
+const logFn: Record<LogLevel, (...args: unknown[]) => void> = {
+  debug: (...args) => console.debug('[DEBUG]', ...args),
+  info: (...args) => console.info('[INFO]', ...args),
+  warn: (...args) => console.warn('[WARN]', ...args),
+  error: (...args) => console.error('[ERROR]', ...args),
+};
+
+export const logger = {
+  debug: (...args: unknown[]) => logFn.debug(...args),
+  info: (...args: unknown[]) => logFn.info(...args),
+  warn: (...args: unknown[]) => logFn.warn(...args),
+  error: (...args: unknown[]) => logFn.error(...args),
+};
+

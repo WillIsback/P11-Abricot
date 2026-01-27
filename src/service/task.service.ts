@@ -21,8 +21,6 @@ export const TaskService = {
         if (!validated.success) {
           return { ok: false, status: 400, message: validated.error.message};
         }
-        console.log('payload : ',payload)
-
         try {
           // 2. Ajouter timeout de 3s
           const res = await withTimeout(
@@ -42,11 +40,11 @@ export const TaskService = {
           if (error instanceof Error && error.message.includes("pris trop de temps")) {
             return { ok: false, status: 408, message: error.message };
           }
-          throw error;
+          return { ok: false, status: 500, message: "Une erreur inattendue est survenue" };
         }
     },
 
-    updateTask: async (token: string, projectId: string, payload: z.infer<typeof UpdateTaskSchema>): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
+    updateTask: async (token: string, projectId: string, taskId: string ,payload: z.infer<typeof UpdateTaskSchema>): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
       // 1. Vérifier rate limit (utiliser token comme identifiant unique)
       if (!checkRateLimit(token, 500, 1)) {
         return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
@@ -56,12 +54,10 @@ export const TaskService = {
       if (!validated.success) {
         return { ok: false, status: 400, message: validated.error.message};
       }
-      console.log('payload : ',payload)
-
       try {
         // 2. Ajouter timeout de 3s
         const res = await withTimeout(
-          fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
+          fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}`, {
               method: 'POST',
               headers: {
                 "Content-Type": "application/json",
@@ -77,7 +73,7 @@ export const TaskService = {
         if (error instanceof Error && error.message.includes("pris trop de temps")) {
           return { ok: false, status: 408, message: error.message };
         }
-        throw error;
+        return { ok: false, status: 500, message: "Une erreur inattendue est survenue" };
       }
   },
 

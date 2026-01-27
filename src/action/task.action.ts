@@ -39,7 +39,6 @@ export async function createTask(
 
   // 3. Insert the user into the database or call an Library API
   const response = await TaskService.createTask(session.token as string, projectId, validatedFields.data)
-  console.log("Appel validatedFields", response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
@@ -59,6 +58,7 @@ export async function createTask(
 
 export async function updateTask(
   projectId: string,
+  taskId: string,
   state: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
@@ -87,7 +87,7 @@ export async function updateTask(
 
   // 2. Prepare data for insertion into database
   // 3. Insert the user into the database or call an Library API
-  const response = await TaskService.updateTask(session.token as string, projectId, validatedFields.data)
+  const response = await TaskService.updateTask(session.token as string, projectId, taskId, validatedFields.data)
 
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data

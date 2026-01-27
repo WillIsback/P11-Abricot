@@ -26,15 +26,14 @@ type ActionState<T = unknown> = {
   message?: string;
   data?: T;
   status?: number;
-  formValidationError?: unknown;
-  apiValidationError?: unknown;
+  formValidationError?: z.ZodError | z.ZodFormattedError<unknown>;
+  apiValidationError?: z.ZodError;
 } | undefined;
 
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
 const validateResponse = async <T>(res: Response, schema: z.ZodType<T>) => {
   const responseData = await res.json();
-  console.log("responseData : ",responseData)
   return schema.safeParse(responseData);
 };
 
@@ -99,7 +98,7 @@ const validationErrorToState = <T>(validatedFields: z.ZodSafeParseError<T>): Act
       ok: false,
       status: 430,
       message: validatedFields?.error.message,
-      formValidationError: z.treeifyError(validatedFields?.error)
+  formValidationError: validatedFields?.error
 });
 
 // ===== TIMEOUT & RATE LIMIT =====
