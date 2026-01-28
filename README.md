@@ -52,8 +52,11 @@ Abricot.co est une plateforme SaaS innovante de gestion de projet collaboratif a
 
 ## Installation et Démarrage
 
+Le project fonctionne avec un [fork](https://github.com/WillIsback/dev-react-P11.git) du backend original qui a été largement modifié. [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WillIsback/dev-react-P11.git)
+
 ### Prérequis
 
+- backend `git clone https://github.com/WillIsback/dev-react-P11.git`
 - Node.js 18+
 - pnpm
 
