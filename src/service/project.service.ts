@@ -19,7 +19,6 @@ const Projectobj = z.object({
   project: Project
 })
 type ProjectResponse = z.infer<typeof Projectobj>;
-type PostResponse = z.infer<typeof Project>;
 type ProjectsResponse = z.infer<typeof Projects>;
 type TaksResponse = z.infer<typeof Tasks>;
 
@@ -57,7 +56,7 @@ export const ProjectService = {
         }
     },
 
-    updateProject: async (token: string, payload: z.infer<typeof UpdateProjectSchema>): Promise<ApiResult<PostResponse>> => {
+    updateProject: async (token: string, projectId: string, payload: z.infer<typeof UpdateProjectSchema>): Promise<ApiResult<ProjectResponse>> => {
         // 1. Vérifier rate limit (utiliser token comme identifiant unique)
         if (!checkRateLimit(token, 500, 1)) {
           return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
@@ -71,8 +70,8 @@ export const ProjectService = {
         try {
           // 2. Ajouter timeout de 3s
           const res = await withTimeout(
-            fetch(`${BASE_URL}/projects`, {
-                method: 'POST',
+            fetch(`${BASE_URL}/projects/${projectId}`, {
+                method: 'PUT',
                 headers: {
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${token}`
@@ -81,7 +80,7 @@ export const ProjectService = {
             }),
             3000
           );
-          return await handleFetch(res, Project);
+          return await handleFetch(res, Projectobj);
         } catch (error) {
           if (error instanceof Error && error.message.includes("pris trop de temps")) {
             return { ok: false, status: 408, message: error.message };

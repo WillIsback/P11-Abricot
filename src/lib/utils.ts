@@ -52,3 +52,24 @@ export const logger = {
   error: (...args: unknown[]) => logFn.error(...args),
 };
 
+export const formDataToObject = (formData: FormData, arrayFields?: string[]) => {
+  const result: Record<string, unknown> = {};
+  const keys = Array.from(formData.keys());
+  
+  for (const key of keys) {
+    const values = formData.getAll(key);
+    let value = values.length === 1 ? values[0] : values;
+    
+    // Si c'est un champ à transformer en array (toujours, pas juste avec virgules)
+    if (arrayFields?.includes(key) && typeof value === 'string') {
+      // Split par virgule, trim les items, et filter les strings vides
+      value = value
+        .split(',')
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
+    }
+    
+    result[key] = value;
+  }
+  return result;
+}

@@ -2,9 +2,10 @@
 
 import { ProjectService } from '@/service/project.service';
 import { verifySession } from '@/lib/dal.lib';
-import { CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
+import { CreateCommentSchema, CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
 import { FormActionState, FetchResult, apiErrorToState, validationErrorToState } from '@/lib/server.lib';
 import { revalidateTag } from 'next/cache';
+import { formDataToObject } from "@/lib/utils";
 import * as z from "zod";
 
 
@@ -88,32 +89,14 @@ export async function createProject(
     }
   }
 
-  // Parser les contributeurs : split la string en array
-  const contributorsString = formData.get('contributors') as string;
-  const contributors = contributorsString && contributorsString.trim() 
-    ? contributorsString.split(',').map(email => email.trim())
-    : [];
-  // 1. Validate form fields
-  const validatedFields = CreateProjectSchema.safeParse({
-    name: formData.get('name'),
-    description: formData.get('description'),
-    contributors: contributors,
-  })
-
+  const formObject = formDataToObject(formData, ['contributors']);
+  const validatedFields = CreateProjectSchema.safeParse(formObject);
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
   }
-
-  // 2. Prepare data for insertion into database
-  const payload = {
-    name: validatedFields.data.name,
-    description : validatedFields.data.description,
-    contributors: validatedFields.data.contributors,
-
-  } as z.infer<typeof CreateProjectSchema>
   // 3. Insert the user into the database or call an Library API
-  const response = await ProjectService.createProject(session.token as string, payload)
+  const response = await ProjectService.createProject(session.token as string, validatedFields.data)
   console.log('res : ', response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
@@ -143,40 +126,21 @@ export async function updateProject(
       message: "Session not verified",
     }
   }
-  // 1. Validate form fields
-  const validatedFields = UpdateProjectSchema.safeParse({
-    name: formData.get('name'),
-    description: formData.get('description'),
-  })
-
-  // If any form fields are invalid, return early
+  const formObject = formDataToObject(formData, ['contributors']);
+  const validatedFields = UpdateProjectSchema.safeParse(formObject);
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
   }
-
-  // 2. Prepare data for insertion into database
-  const payload = {
-    name: validatedFields.data.name,
-    description : validatedFields.data.description,
-  } as z.infer<typeof UpdateProjectSchema>
-  // 3. Insert the user into the database or call an Library API
-
-  // 3. Insert the user into the database or call an Library API
-  const response = await ProjectService.updateProject(session.token as string, payload)
-
-  // 4. verify and log errors
-  // Si succès : ajouter shouldClose et data
+  const response = await ProjectService.updateProject(session.token as string, projectId, validatedFields.data)
   if(response.ok){
     revalidateTag('projects', "max");
     return {
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data,  // ← les données de la tâche créée
+      data: response.data,  
     };
   }
-
-  // Si erreur API
   return {
     ok: false,
     status: response.status,

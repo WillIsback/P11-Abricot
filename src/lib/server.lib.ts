@@ -48,6 +48,7 @@ export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
 const validateResponse = async <T>(res: Response, schema: z.ZodType<T>) => {
   const responseData = await res.json();
+  console.log("responseData : ", responseData)
   return schema.safeParse(responseData);
 };
 

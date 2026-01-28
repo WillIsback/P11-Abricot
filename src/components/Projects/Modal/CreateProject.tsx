@@ -11,10 +11,10 @@ import {
 import CustomInput from '@/components/ui/CustomInput';
 import CustomButton from '@/components/ui/CustomButton';
 import { createProject } from '@/action/project.action';
-import { useActionState, useEffect, useState, useRef } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { CreateProjectSchema } from "@/schemas/frontend.schemas";
 import { AlertCircle } from 'lucide-react';
-
+import { useFormValidation } from '@/hooks/CustomHooks';
 interface CreateProjectProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -28,17 +28,8 @@ export default function CreateProject({
 }: CreateProjectProps) {
   const [state, action, pending] = useActionState(createProject, undefined);
   const formRef = useRef<HTMLFormElement>(null);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
+  const [isFormValid, resetForm, handleFormChange, handleCustomFieldChange, getFieldError]  = useFormValidation(formRef,CreateProjectSchema,['contributors'])
 
-  // Fonction de réinitialisation du formulaire
-  const resetForm = () => {
-    setFieldErrors({});
-    setTouchedFields(new Set());
-    setIsFormValid(false);
-    formRef.current?.reset();
-  };
 
   useEffect(() => {
     if (state?.ok && state?.shouldClose) {
@@ -58,77 +49,6 @@ export default function CreateProject({
     onOpenChange(isOpen);
   };
 
-  const validateForm = (fieldName?: string) => {
-    // Marquer le champ comme touché
-    if (fieldName) {
-      setTouchedFields(prev => new Set(prev).add(fieldName));
-    }
-
-    const formData = new FormData(formRef.current!);
-    
-    // Parser les contributeurs : split la string en array
-    const contributorsString = formData.get('contributors') as string;
-    const contributors = contributorsString && contributorsString.trim() 
-      ? contributorsString.split(',').map(email => email.trim())
-      : [];
-    
-    const result = CreateProjectSchema.safeParse({
-      name: formData.get('name'),
-      description: formData.get('description'),
-      contributors: contributors,
-    });
-    
-    if (!result.success) {
-      // Transformer les erreurs Zod en objet { champ: message }
-      const errors: Record<string, string> = {};
-      result.error.issues.forEach((issue) => {
-        const field = issue.path[0] as string;
-        if (!errors[field]) {
-          errors[field] = issue.message;
-        }
-      });
-      setFieldErrors(errors);
-    } else {
-      setFieldErrors({});  // Pas d'erreurs
-    }
-
-    setIsFormValid(result.success);
-  };
-
-  // Handler pour onChange du formulaire - détecte le champ modifié
-  const handleFormChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const target = e.target as HTMLInputElement;
-    const fieldName = target.name;
-    const value = target.value;
-
-    if (fieldName) {
-      // Si le champ est vidé, on efface l'erreur et on retire des touchedFields
-      if (!value || value === '') {
-        setFieldErrors(prev => {
-          const newErrors = { ...prev };
-          delete newErrors[fieldName];
-          return newErrors;
-        });
-        setTouchedFields(prev => {
-          const newTouched = new Set(prev);
-          newTouched.delete(fieldName);
-          return newTouched;
-        });
-      } else {
-        validateForm(fieldName);
-      }
-    }
-  };
-
-  // Handler pour les composants custom (DatePicker, Combobox)
-  const handleCustomFieldChange = (fieldName: string) => () => {
-    setTimeout(() => validateForm(fieldName), 0);
-  };
-
-  // Helper pour n'afficher l'erreur que si le champ a été touché
-  const getFieldError = (fieldName: string) => {
-    return touchedFields.has(fieldName) ? fieldErrors[fieldName] : undefined;
-  };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

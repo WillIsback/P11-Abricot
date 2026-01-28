@@ -13,7 +13,7 @@ const SignupFormSchema = z.object({
     email: z.email({ error: 'Please enter a valid email.' }).trim(),
     password: z
         .string()
-        .min(3, { error: 'Be at least 3 characters long' })
+        .min(8, { error: 'Be at least 8 characters long' })
         .regex(/[a-zA-Z]/, { error: 'Contain at least one letter.' })
         .regex(/[0-9]/, { error: 'Contain at least one number.' })
         .trim(),
@@ -23,9 +23,6 @@ const LoginFormSchema = z.object({
     email: z.email({ error: 'Please enter a valid email.' }).trim(),
     password: z
         .string()
-        .min(3, { error: 'Be at least 3 characters long' })
-        .regex(/[a-zA-Z]/, { error: 'Contain at least one letter.' })
-        .regex(/[0-9]/, { error: 'Contain at least one number.' })
         .trim(),
 })
 
@@ -38,7 +35,7 @@ const CreateTaskSchema = z.object({
         .string()
         .min(2, { error: 'description must be at least 2 characters long.' }),
     dueDate: z.iso.datetime(),
-    assignees: z.array(z.string()).optional(),
+    assigneeIds: z.array(z.string()).optional(),
     priority: z.enum(['LOW','MEDIUM','HIGH','URGENT']).optional(),
     status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']).optional(),
 })
@@ -54,7 +51,7 @@ const UpdateTaskSchema = z.object({
         .optional(),
     dueDate: z.iso.datetime()
         .optional(),
-    assignees: z.array(z.string()).optional(),
+    assigneeIds: z.array(z.string()).optional(),
     priority: z.enum(['LOW','MEDIUM','HIGH','URGENT']).optional(),
     status: z.enum(['TODO', 'IN_PROGRESS', 'DONE', 'CANCELED']).optional(),
 })

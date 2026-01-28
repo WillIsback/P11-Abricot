@@ -5,6 +5,7 @@ import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
 import { apiErrorToState, validationErrorToState, FormActionState } from "@/lib/server.lib";
 import { revalidatePath } from 'next/cache';
+import { formDataToObject } from "@/lib/utils";
 
 export async function createTask(
   projectId: string,
@@ -20,38 +21,23 @@ export async function createTask(
   }
 
   // 1. Validate form fields
-  const validatedFields = CreateTaskSchema.safeParse({
-    title: formData.get('title'),
-    description: formData.get('description'),
-    dueDate: formData.get('dueDate'),
-    assignees: formData.getAll('assignees'),
-    status: formData.get('status'),
-    priority: formData.get('priority')
-  })
-
+  const formObject = formDataToObject(formData, ['assigneeIds']);
+  const validatedFields = CreateTaskSchema.safeParse(formObject);
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
 
   }
-
-  // 2. Prepare data for insertion into database
-
-  // 3. Insert the user into the database or call an Library API
   const response = await TaskService.createTask(session.token as string, projectId, validatedFields.data)
-  // 4. verify and log errors
-  // Si succès : ajouter shouldClose et data
   if(response.ok){
     revalidatePath(`/projects/${projectId}`);
     return {
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data.task,  // ← les données de la tâche créée
+      data: response.data.task,  
     };
   }
-
-  // Si erreur API
   return apiErrorToState(response);
 }
 
@@ -69,41 +55,23 @@ export async function updateTask(
       message: "Session not verified",
     }
   }
-  // 1. Validate form fields
-  const toUndefinedIfEmpty = (v: FormDataEntryValue | null) =>
-    typeof v === "string" && v.trim() === "" ? undefined : v;
-  
-  const validatedFields = UpdateTaskSchema.safeParse({
-    title: toUndefinedIfEmpty(formData.get('title')),
-    description: toUndefinedIfEmpty(formData.get('description')),
-    dueDate: toUndefinedIfEmpty(formData.get('dueDate')),
-    assignees: formData.getAll('assignees').filter(Boolean),
-    status: toUndefinedIfEmpty(formData.get('status')),
-    priority: toUndefinedIfEmpty(formData.get('priority')),
-  });
-  // If any form fields are invalid, return early
+  const formObject = formDataToObject(formData, ['assigneeIds']);
+  const validatedFields = UpdateTaskSchema.safeParse(formObject);
   if (!validatedFields.success) {
     return validationErrorToState(validatedFields);
 
   }
-
-  // 2. Prepare data for insertion into database
-  // 3. Insert the user into the database or call an Library API
   const response = await TaskService.updateTask(session.token as string, projectId, taskId, validatedFields.data)
 
-  // 4. verify and log errors
-  // Si succès : ajouter shouldClose et data
   if(response.ok){
     revalidatePath(`/projects/${projectId}`);
     return {
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data.task,  // ← les données de la tâche créée
+      data: response.data.task, 
     };
   }
-
-  // Si erreur API
   return apiErrorToState(response);
 }
 
@@ -119,7 +87,6 @@ export async function deleteTask(
       message: "Session not verified",
     }
   }
-
   const response = await TaskService.deleteTask(session.token as string, projectId, taskId)
   if(response.ok){
     

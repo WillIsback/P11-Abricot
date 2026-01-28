@@ -1,7 +1,8 @@
-import  { useEffect, useState, useTransition, use, DependencyList } from 'react'
+import  React, { useEffect, useState, useTransition, use, DependencyList } from 'react'
 import { getProjectDetail } from '@/lib/dto.lib';
 import { ProjectContext } from '@/contexts/ProjectContext'
-
+import { formDataToObject } from '@/lib/utils';
+import * as z from 'zod';
 
 
 
@@ -58,3 +59,90 @@ export function useProject() {
   return context
 }
 
+
+/*
+** Form Validation Hook
+**
+*/
+export function useFormValidation(
+  formRef: React.RefObject<HTMLFormElement | null> | null,
+  formSchema: z.ZodType,
+  arrayFields?: string[],
+
+) {
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
+
+  if(!formRef)throw Error("le formRef est null")
+  // Fonction de réinitialisation du formulaire
+  const resetForm = () => {
+    setFieldErrors({});
+    setTouchedFields(new Set());
+    setIsFormValid(false);
+    formRef.current?.reset();
+  };
+
+
+  const validateForm = (fieldName?: string) => {
+    // Marquer le champ comme touché
+    if (fieldName) {
+      setTouchedFields(prev => new Set(prev).add(fieldName));
+    }
+
+    const formData = new FormData(formRef.current!);
+    const formObject = formDataToObject(formData, arrayFields);
+    const result = formSchema.safeParse(formObject);
+    if (!result.success) {
+      // Transformer les erreurs Zod en objet { champ: message }
+      const errors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as string;
+        if (!errors[field]) {
+          errors[field] = issue.message;
+        }
+      });
+      setFieldErrors(errors);
+    } else {
+      setFieldErrors({});  // Pas d'erreurs
+    }
+
+    setIsFormValid(result.success);
+  };
+
+  // Handler pour onChange du formulaire - détecte le champ modifié
+  const handleFormChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const target = e.target as HTMLInputElement;
+    const fieldName = target.name;
+    const value = target.value;
+
+    if (fieldName) {
+      // Si le champ est vidé, on efface l'erreur et on retire des touchedFields
+      if (!value || value === '') {
+        setFieldErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[fieldName];
+          return newErrors;
+        });
+        setTouchedFields(prev => {
+          const newTouched = new Set(prev);
+          newTouched.delete(fieldName);
+          return newTouched;
+        });
+      } else {
+        validateForm(fieldName);
+      }
+    }
+  };
+
+  // Handler pour les composants custom (DatePicker, Combobox)
+  const handleCustomFieldChange = (fieldName: string) => () => {
+    setTimeout(() => validateForm(fieldName), 0);
+  };
+
+  // Helper pour n'afficher l'erreur que si le champ a été touché
+  const getFieldError = (fieldName: string) => {
+    return touchedFields.has(fieldName) ? fieldErrors[fieldName] : undefined;
+  };
+  return [isFormValid, resetForm, handleFormChange, handleCustomFieldChange, getFieldError] as const
+}

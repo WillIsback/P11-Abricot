@@ -20,7 +20,6 @@ export const TaskService = {
         if (!checkRateLimit(token, 500, 1)) {
           return { ok: false, status: 429, message: "Trop de demandes, patiente 500ms avant de réessayer" };
         }
-
         const validated = CreateTaskSchema.safeParse(payload);
         if (!validated.success) {
           return { ok: false, status: 400, message: validated.error.message};

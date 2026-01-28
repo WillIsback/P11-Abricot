@@ -16,7 +16,7 @@ import Tags from '@/components/ui/Tags';
 import { mapStatusLabel, mapStatusColor } from '@/lib/client.lib';
 import { UpdateTaskSchema } from "@/schemas/frontend.schemas";
 import { AlertCircle} from 'lucide-react';
-
+import { useFormValidation } from '@/hooks/CustomHooks';
 enum Status {
   'TODO'='TODO',
   'IN_PROGRESS'='IN_PROGRESS',
@@ -42,20 +42,10 @@ export default function UpdateTask({
   const [state, action, pending] = useActionState(boundUpdateTask, undefined);
   const [selectedStatus, setSelectedStatus] = useState<Status>(Status.TODO)
   const formRef = useRef<HTMLFormElement>(null);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
-
+  const [isFormValid, resetForm, handleFormChange, handleCustomFieldChange, getFieldError]  = useFormValidation(formRef, UpdateTaskSchema, ['assigneeIds'])
   const status : Status[] = [Status.TODO, Status.IN_PROGRESS, Status.DONE]
 
-  // Fonction de réinitialisation du formulaire
-  const resetForm = () => {
-    setFieldErrors({});
-    setTouchedFields(new Set());
-    setIsFormValid(false);
-    setSelectedStatus(Status.TODO);
-    formRef.current?.reset();
-  };
+
 
   useEffect(() => {
     if (state?.ok && state?.shouldClose) {
@@ -79,75 +69,6 @@ export default function UpdateTask({
     console.log("Bouton cliqué :", newStatus);
     setSelectedStatus(newStatus);
   }
-
-  const validateForm = (fieldName?: string) => {
-    // Marquer le champ comme touché
-    if (fieldName) {
-      setTouchedFields(prev => new Set(prev).add(fieldName));
-    }
-    const formData = new FormData(formRef.current!);
-    const toUndefinedIfEmpty = (v: FormDataEntryValue | null) =>
-      typeof v === "string" && v.trim() === "" ? undefined : v;
-    
-    const result = UpdateTaskSchema.safeParse({
-      title: toUndefinedIfEmpty(formData.get('title')),
-      description: toUndefinedIfEmpty(formData.get('description')),
-      dueDate: toUndefinedIfEmpty(formData.get('dueDate')),
-      assignees: formData.getAll('assignees').filter(Boolean),
-      status: toUndefinedIfEmpty(formData.get('status')),
-      priority: toUndefinedIfEmpty(formData.get('priority')),
-    });
-    if (!result.success) {
-      // Transformer les erreurs Zod en objet { champ: message }
-      const errors: Record<string, string> = {};
-      result.error.issues.forEach((issue) => {
-        const field = issue.path[0] as string;
-        if (!errors[field]) {
-          errors[field] = issue.message;
-        }
-      });
-      setFieldErrors(errors);
-    } else {
-      setFieldErrors({});  // Pas d'erreurs
-    }
-
-    setIsFormValid(result.success);
-  };
-
-  // Handler pour onChange du formulaire - détecte le champ modifié
-  const handleFormChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const target = e.target as HTMLInputElement;
-    const fieldName = target.name;
-    const value = target.value;
-
-    if (fieldName) {
-      // Si le champ est vidé, on efface l'erreur et on retire des touchedFields
-      if (!value || value === '') {
-        setFieldErrors(prev => {
-          const newErrors = { ...prev };
-          delete newErrors[fieldName];
-          return newErrors;
-        });
-        setTouchedFields(prev => {
-          const newTouched = new Set(prev);
-          newTouched.delete(fieldName);
-          return newTouched;
-        });
-      } else {
-        validateForm(fieldName);
-      }
-    }
-  };
-
-  // Handler pour les composants custom (DatePicker, Combobox)
-  const handleCustomFieldChange = (fieldName: string) => () => {
-    setTimeout(() => validateForm(fieldName), 0);
-  };
-
-  // Helper pour n'afficher l'erreur que si le champ a été touché
-  const getFieldError = (fieldName: string) => {
-    return touchedFields.has(fieldName) ? fieldErrors[fieldName] : undefined;
-  };
 
 
 
@@ -202,9 +123,9 @@ export default function UpdateTask({
           <CustomInput
             label="Assigné à:"
             type="Assignee"
-            inputID="assignees"
-            onValueChange={handleCustomFieldChange('assignees')}
-            error={getFieldError('assignees')}
+            inputID="assigneeIds"
+            onValueChange={handleCustomFieldChange('assigneeIds')}
+            error={getFieldError('assigneeIds')}
           />
            {/* Priority */}
           <CustomInput

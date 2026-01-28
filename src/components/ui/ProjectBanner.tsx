@@ -5,7 +5,7 @@ import CustomLink from "./CustomLink";
 import IconButton from "./IconButton";
 import { useState } from "react";
 import CreateTask from "../Tasks/Modal/CreateTask";
-
+import UpdateProject from "../Projects/Modal/UpdateProject";
 
 
 interface ProjectBannerProps {
@@ -17,7 +17,7 @@ interface ProjectBannerProps {
 
 export default function ProjectBanner (props: ProjectBannerProps){
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
-
+  const [isUpdateProject, setIsUpdateTaskOpen] = useState(false);
   return (
     <section className="flex justify-between w-full" aria-label="Banniere">
       <div className="flex gap-4">
@@ -25,7 +25,11 @@ export default function ProjectBanner (props: ProjectBannerProps){
         <div className="flex flex-col gap-3.5 justify-center">
           <div className="flex justify-between gap-4 w-57.75 items-center">
             <h4 className="whitespace-nowrap">{props.title}</h4>
-            <CustomLink label='Modifier' link="#edit"/>
+            <CustomLink
+              label='Modifier' 
+              type='Opener'
+              onClickHandler={()=> setIsUpdateTaskOpen(true)}
+            />
           </div>
           <p>{props.description}</p>
         </div>
@@ -44,6 +48,12 @@ export default function ProjectBanner (props: ProjectBannerProps){
       <CreateTask
         open={isCreateTaskOpen}
         onOpenChange={setIsCreateTaskOpen}
+        projectId={props.projectId}
+      />
+      {/* Modal de modification de projet */}
+      <UpdateProject
+        open={isUpdateProject}
+        onOpenChange={setIsUpdateTaskOpen}
         projectId={props.projectId}
       />
     </section>
