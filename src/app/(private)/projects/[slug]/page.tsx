@@ -9,6 +9,12 @@ import { getProjectDetail } from "@/lib/dto.lib";
 import { redirect } from "next/navigation"
 import ProjetFilterBar from "@/components/ui/ProjectFilterBar";
 import { ProjectProvider } from '@/contexts/ProjectProvider'
+import { Task } from "@/schemas/backend.schemas";
+import * as z from 'zod';
+
+interface Tasks {
+  tasks: z.infer<typeof Task>[]
+}
 
 type ProjetPageProps = {
   searchParams: Promise<{
@@ -27,7 +33,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
 
   const projectTask = await getProjectTask(slug);
   if(!slug || !projectTask.ok || !projectTask?.data) return notFound();
-  const { tasks } = projectTask.data
+  const { tasks } = projectTask.data as Tasks
   const project = await getProjectDetail(slug)
   if(!project) return notFound();
   const { name, description, owner, members } = project;
