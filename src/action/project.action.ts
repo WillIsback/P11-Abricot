@@ -2,18 +2,17 @@
 
 import { ProjectService } from '@/service/project.service';
 import { verifySession } from '@/lib/dal.lib';
-import { Project } from '@/schemas/backend.schemas';
 import { CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
+import { FormActionState, FetchResult, apiErrorToState, validationErrorToState } from '@/lib/server.lib';
 import { revalidateTag } from 'next/cache';
 import * as z from "zod";
 
 
 /***************************************************************
- * GET ACTIONS
- * @returns
+ * GET ACTIONS (simples)
  ****************************************************************
  */
-export async function getAllProjects(){
+export async function getAllProjects(): Promise<FetchResult> {
   // 1. Verify session
   const session = await verifySession();
   if(!session.isAuth || !session.token){
@@ -43,7 +42,7 @@ export async function getAllProjects(){
     }
 }
 
-export async function getProjectTask(projectId: string){
+export async function getProjectTask(projectId: string): Promise<FetchResult> {
   // 1. Verify session
   const session = await verifySession();
   if(!session.isAuth || !session.token){
@@ -74,26 +73,13 @@ export async function getProjectTask(projectId: string){
 }
 
 /***************************************************************
- * POST ACTIONS
- * @returns
+ * POST/PUT ACTIONS (avec formulaire)
  ****************************************************************
  */
-export type ProjectActionState = {
-  ok: boolean;
-  shouldClose?: boolean;
-  message?: string;
-  data?: z.infer<typeof Project>;
-  status?: number;
-  formValidationError?: unknown;
-  apiValidationError?: z.ZodError;
-}
-
-export type State = ProjectActionState | undefined;
-
 export async function createProject(
-  state: State,
+  state: FormActionState,
   formData: FormData,
-): Promise<State> {
+): Promise<FormActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -116,12 +102,7 @@ export async function createProject(
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
   }
 
   // 2. Prepare data for insertion into database
@@ -147,21 +128,14 @@ export async function createProject(
   }
 
   // Si erreur API
-  return {
-    ok: false,
-    status: response.status,
-    message: response.message,
-    apiValidationError: response.validationError
-  };
+  return apiErrorToState(response);
 }
-
-
 
 export async function updateProject(
   projectId: string,
-  state: State,
+  state: FormActionState,
   formData: FormData,
-): Promise<State> {
+): Promise<FormActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -177,12 +151,7 @@ export async function updateProject(
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
   }
 
   // 2. Prepare data for insertion into database

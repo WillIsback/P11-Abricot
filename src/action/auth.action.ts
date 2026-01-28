@@ -6,18 +6,7 @@ import { redirect } from 'next/navigation';
 import { sanitizeString } from '@/lib/utils';
 import { SignupFormSchema, LoginFormSchema } from '@/schemas/frontend.schemas';
 import { verifySession } from '@/lib/dal.lib';
-
-import * as z from 'zod'
-
-export type State =
-  | {
-      ok : boolean,
-      status?: number,
-      message?: string,
-      formValidationError?: unknown,
-      apiValidationError?: unknown
-    }
-  | undefined
+import { FormActionState, FetchResult, apiErrorToState, validationErrorToState } from '@/lib/server.lib';
 
 
 export async function logout() {
@@ -29,7 +18,7 @@ export async function logout() {
  * Les composants clients appellent ces actions, pas directement les services.
  */
 
-export async function signup(state: State, formData: FormData) {
+export async function signup(state: FormActionState, formData: FormData): Promise<FormActionState> {
   // 1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     firstName: formData.get('firstName'),
@@ -40,12 +29,7 @@ export async function signup(state: State, formData: FormData) {
 
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
   }
 
   // 2. Prepare data for insertion into database
@@ -64,12 +48,7 @@ export async function signup(state: State, formData: FormData) {
     console.error("AuthService error : ",result.message)
     if(result.validationError)console.error("AuthService validation error : ", result.validationError)
     if(result.details)console.error("AuthService error details : ", result.details)
-    return {
-      ok: false,
-      status: result.status,
-      message: result.message,
-      apiValidationError: result.validationError
-    };
+    return apiErrorToState(result);
   }
 
   // 4. Create user session
@@ -80,9 +59,7 @@ export async function signup(state: State, formData: FormData) {
   redirect('/dashboard')
 }
 
-
-
-export async function login(state: State, formData: FormData) {
+export async function login(state: FormActionState, formData: FormData): Promise<FormActionState> {
   // 1. Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
@@ -90,12 +67,7 @@ export async function login(state: State, formData: FormData) {
   })
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      ok: false,
-      status: 430,
-      message: validatedFields.error.message,
-      formValidationError: z.treeifyError(validatedFields.error)
-    }
+    return validationErrorToState(validatedFields);
   }
   // 2. Prepare data for insertion into database
   const payload = {
@@ -110,12 +82,7 @@ export async function login(state: State, formData: FormData) {
     console.error("AuthService error : ",result.message)
     if(result.validationError)console.error("AuthService validation error : ", result.validationError)
     if(result.details)console.error("AuthService error details : ", result.details)
-    return {
-      ok: false,
-      status: result.status,
-      message: result.message,
-      apiValidationError: result.validationError
-    };
+    return apiErrorToState(result);
   }
   // 4. Create user session
   const session = await createSession(result.data.user.id, result.data.token)
@@ -126,7 +93,7 @@ export async function login(state: State, formData: FormData) {
 
 
 
-export async function profile() {
+export async function profile(): Promise<FetchResult> {
   // 1. Verify session
   const session = await verifySession();
   if(!session.isAuth || !session.token){

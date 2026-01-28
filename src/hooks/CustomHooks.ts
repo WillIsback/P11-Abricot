@@ -1,47 +1,51 @@
-import  { useEffect, useState, useTransition, use } from 'react'
+import  { useEffect, useState, useTransition, use, DependencyList } from 'react'
 import { getProjectDetail } from '@/lib/dto.lib';
-import { ProjectMember, User } from '@/schemas/backend.schemas';
 import { ProjectContext } from '@/contexts/ProjectContext'
-import { searchUser } from '@/action/user.action';
-import * as z from 'zod';
 
-export function useProjectName(projectId: string) {
-    const [isPending, startTransition] = useTransition();
-    const [projectName, setProjectName] = useState('');
-    useEffect(()=>{
-        startTransition(async()=>{
-            const project = await getProjectDetail(projectId);
-            if(!project){
-                console.log(`Impossible de retrouvé le project name correspondant à cet ID : ${projectId}`)
-                setProjectName('')
-            }
-            else{
-                setProjectName(project.name)
-            }
-        });
-    }, [projectId]);
-    return [isPending, projectName]
+
+
+
+/**
+ * Hook générique pour les requêtes async
+ * Gère loading, data et erreur simplement
+ */
+function useFetch<T>(
+  fetchFn: () => Promise<T | null>,
+  dependencies: DependencyList
+): [boolean, T | null] {
+  const [isPending, startTransition] = useTransition();
+  const [data, setData] = useState<T | null>(null);
+
+  useEffect(() => {
+    startTransition(async () => {
+      try {
+        const result = await fetchFn();
+        setData(result ?? null);
+      } catch (err) {
+        console.error(err);
+        setData(null);
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependencies);
+
+  return [isPending, data];
 }
 
-type ProjectMembers = z.infer<typeof ProjectMember>[] | null;
-
+export function useProjectName(projectId: string) {
+  const [isPending, project] = useFetch(
+    () => getProjectDetail(projectId),
+    [projectId]
+  );
+  return [isPending, project?.name ?? ''] as const;
+}
 
 export function useProjectMembers(projectId: string) {
-    const [isPending, startTransition] = useTransition();
-    const [projetMembers, setprojetMembers] = useState<ProjectMembers>(null);
-    useEffect(()=>{
-        startTransition(async()=>{
-            const project = await getProjectDetail(projectId);
-            if(!project){
-                console.log(`Impossible de retrouvé le project name correspondant à cet ID : ${projectId}`)
-                setprojetMembers(null)
-            }
-            else{
-                setprojetMembers(project.members)
-            }
-        });
-    }, [projectId]);
-    return [isPending, projetMembers]
+  const [isPending, project] = useFetch(
+    () => getProjectDetail(projectId),
+    [projectId]
+  );
+  return [isPending, project?.members ?? null] as const;
 }
 
 
@@ -54,30 +58,3 @@ export function useProject() {
   return context
 }
 
-// Type simplifié pour les utilisateurs retournés par la recherche (sans createdAt/updatedAt)
-type SearchUser = Pick<z.infer<typeof User>, 'id' | 'email' | 'name'>;
-
-export function useSearchUser(query: string): [boolean, SearchUser[]] {
-  const [isPending, startTransition] = useTransition();
-  const [users, setUsers] = useState<SearchUser[]>([]);
-
-  useEffect(() => {
-    // Ne pas lancer de recherche si query est vide ou trop court
-    if (!query || query.trim().length < 2) {
-      startTransition(() => setUsers([]));
-      return;
-    }
-
-    startTransition(async () => {
-      const res = await searchUser(query);
-      if (!res?.ok) {
-        console.warn(`Aucun utilisateur trouvé pour : "${query}"`);
-        setUsers([]);
-      } else if (res.data) {
-        setUsers(res.data);
-      }
-    });
-  }, [query]);
-
-  return [isPending, users];
-}

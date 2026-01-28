@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react'
 import { ProjectContext, ProjectContextType } from './ProjectContext'
 
 export function ProjectProvider({
@@ -9,8 +10,10 @@ export function ProjectProvider({
   children: React.ReactNode
   data: ProjectContextType
 }) {
+  const value = useMemo(() => data, [data])
+
   return (
-    <ProjectContext.Provider value={data}>
+    <ProjectContext.Provider value={value}>
       {children}
     </ProjectContext.Provider>
   )

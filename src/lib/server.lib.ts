@@ -20,7 +20,11 @@ type ApiFailure = {
   validationError?: z.ZodError;
 };
 
-type ActionState<T = unknown> = {
+/**
+ * Pour les actions avec formulaires (useActionState)
+ * Contient les infos pour la validation et la gestion du formulaire
+ */
+type FormActionState<T = unknown> = {
   ok: boolean;
   shouldClose?: boolean;
   message?: string;
@@ -29,6 +33,16 @@ type ActionState<T = unknown> = {
   formValidationError?: unknown;
   apiValidationError?: z.ZodError;
 } | undefined;
+
+/**
+ * Pour les actions simples (fetch, sans formulaire)
+ * Minimaliste et directe
+ */
+type FetchResult<T = unknown> = {
+  ok: boolean;
+  data?: T;
+  message?: string;
+};
 
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
@@ -86,15 +100,16 @@ const handleFetch = async <T>(res: Response, schema: z.ZodType<T>): Promise<ApiR
   };
 };
 
-// server.lib.ts
-const apiErrorToState = (response: ApiFailure): ActionState => ({
+// ===== HELPERS =====
+
+const apiErrorToState = (response: ApiFailure): FormActionState => ({
   ok: false,
   status: response.status,
   message: response.message,
   apiValidationError: response.validationError
 });
 
-const validationErrorToState = (validatedFields: z.ZodSafeParseError<unknown>): ActionState => ({
+const validationErrorToState = (validatedFields: z.ZodSafeParseError<unknown>): FormActionState => ({
   ok: false,
   status: 430,
   message: validatedFields?.error.message,
@@ -158,4 +173,4 @@ export function checkRateLimit(
   return true
 }
 
-export { handleFetch, apiErrorToState, validationErrorToState, type ActionState }
+export { handleFetch, apiErrorToState, validationErrorToState, type FormActionState, type FetchResult }

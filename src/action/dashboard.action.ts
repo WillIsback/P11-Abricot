@@ -2,16 +2,14 @@
 
 import { verifySession } from '@/lib/dal.lib';
 import { DashboardService } from '@/service/dashboard.service';
+import { FetchResult } from '@/lib/server.lib';
+
 /**
  * Data Access Layer (DAL) - Server Actions
- * 
- * Ces actions utilisent automatiquement le bon service (mock ou backend)
- * selon la variable d'environnement USE_MOCK.
- * 
- * Les composants clients appellent ces actions, pas directement les services.
+ * Fetch simples, pas de formulaires
  */
 
-export async function getAllTasks() {
+export async function getAllTasks(): Promise<FetchResult> {
   // 1. Verify session
   const session = await verifySession();
   if(!session.isAuth || !session.token){
@@ -44,7 +42,7 @@ export async function getAllTasks() {
 }
 
 
-export async function getAllTasksAllProjects() {
+export async function getAllTasksAllProjects(): Promise<FetchResult> {
   // 1. Verify session
   const session = await verifySession();
   if(!session.isAuth || !session.token){

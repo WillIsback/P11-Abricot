@@ -8,7 +8,10 @@
     "dev:api": "USE_MOCK=false next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:perf": "playwright test tests/performance",
+    "test:perf:ui": "playwright test tests/performance --ui",
+    "test:perf:report": "playwright show-report"
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
@@ -32,6 +35,7 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

@@ -3,14 +3,14 @@
 import { TaskService } from "@/service/task.service";
 import { verifySession } from '@/lib/dal.lib';
 import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
-import { apiErrorToState, validationErrorToState, ActionState } from "@/lib/server.lib";
+import { apiErrorToState, validationErrorToState, FormActionState } from "@/lib/server.lib";
 import { revalidatePath } from 'next/cache';
 
 export async function createTask(
   projectId: string,
-  state: ActionState,
+  state: FormActionState,
   formData: FormData,
-): Promise<ActionState> {
+): Promise<FormActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -59,9 +59,9 @@ export async function createTask(
 export async function updateTask(
   projectId: string,
   taskId: string,
-  state: ActionState,
+  state: FormActionState,
   formData: FormData,
-): Promise<ActionState> {
+): Promise<FormActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
@@ -111,7 +111,7 @@ export async function updateTask(
 export async function deleteTask(
   projectId: string,
   taskId: string,
-): Promise<ActionState> {
+): Promise<FormActionState> {
   const session = await verifySession();
   if(!session.isAuth || !session.token){
     return {
