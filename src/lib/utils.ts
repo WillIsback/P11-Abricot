@@ -24,14 +24,24 @@ export const sanitizeString = (value: string): string => {
 };
 
 /**
- * Nettoie un texte riche (permet le HTML sûr pour les descriptions)
+ * Nettoie et sécurise un prompt utilisateur pour l'envoi à un LLM.
  */
-export const sanitizeRichText = (value: string): string => {
+export const sanitizeUserPrompt = (value: string, maxLength: number = 4000): string => {
   if (typeof value !== 'string') return '';
-  return DOMPurify.sanitize(value.trim(), {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'br', 'p', 'a'],
-    ALLOWED_ATTR: ['href', 'target']
+  // 1. Suppression totale du HTML
+  // On utilise DOMPurify pour retirer toutes les balises et ne garder que le texte brut.
+  let clean = DOMPurify.sanitize(value, {
+    ALLOWED_TAGS: [], // Aucune balise autorisée
+    ALLOWED_ATTR: [], // Aucun attribut
+    KEEP_CONTENT: true // On garde le texte à l'intérieur des balises
   });
+  const injectionPatterns = /(\[INST\]|\[\/INST\]|<<SYS>>|<\/s>|### Instruction|### User)/gi;
+  clean = clean.replace(injectionPatterns, '');
+  clean = clean.replace(/\s+/g, ' ').trim();
+  if (clean.length > maxLength) {
+    clean = clean.substring(0, maxLength);
+  }
+  return clean;
 };
 
 // ============================================
