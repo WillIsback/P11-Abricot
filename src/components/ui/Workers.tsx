@@ -1,4 +1,4 @@
-import Team from "../Team/Team"
+import Team from "./Team"
 
 
 export default function Workers ( { owner, members, variant= 'Default' }: React.ComponentProps<typeof Team>){

@@ -69,13 +69,16 @@ const UpdateProfileSchema = z.object({
 })
 
 const UpdatePasswordSchema = z.object({
-    password: z
+    currentPassword: z.string().trim(),
+    newPassword : z
         .string()
-        .min(3, { error: 'Be at least 3 characters long' })
+        .min(8, { error: 'Be at least 8 characters long' })
         .regex(/[a-zA-Z]/, { error: 'Contain at least one letter.' })
         .regex(/[0-9]/, { error: 'Contain at least one number.' })
         .trim(),
 })
+
+
 const CreateProjectSchema = z.object({
     name: z.string()
             .min(2, { error: 'Project name must be at least 2 characters long.' }),

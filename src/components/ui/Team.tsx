@@ -1,4 +1,4 @@
-import Contributors from "../ui/Contributors";
+import Contributors from "./Contributors";
 import { getInitialsFromName } from "@/lib/client.lib";
 import { User, ProjectMember } from "@/schemas/backend.schemas";
 
@@ -18,12 +18,12 @@ export default function Team ({ owner, members, variant='Default' }: TeamProps){
             <div className="flex gap-1.5">
                 <p className="w-6.75 h-6.75 rounded-full bg-brand-light text-gray-950 body-2xs flex items-center justify-center">
                 {ownerInitials}
-                </p> 
+                </p>
                 <p className="rounded-full bg-brand-light text-brand-dark body-s flex items-center justify-center px-4 py-1">
                     Propriétaire
                 </p>
             </div>
-            {variant==='Short' 
+            {variant==='Short'
                 ?
                 <ul className="flex items-center">
                     {contributors.map((c, index) => (

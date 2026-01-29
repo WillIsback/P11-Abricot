@@ -10,6 +10,10 @@ import { redirect } from "next/navigation"
 import ProjetFilterBar from "@/components/ui/ProjectFilterBar";
 import { ProjectProvider } from '@/contexts/ProjectProvider'
 import { Task } from "@/schemas/backend.schemas";
+import { profile } from "@/action/auth.action"
+import { isUser } from "@/lib/utils"
+import { getInitialsFromName } from "@/lib/client.lib"
+
 import * as z from 'zod';
 
 interface Tasks {
@@ -40,6 +44,10 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
   if (!chips) {
     redirect(`/projects/${slug}?chips=task`)
   }
+  const profileData = await profile();
+  if(!profileData.ok) return <p>Une erreur est apparue : {profileData.message}</p>
+  if(!isUser(profileData.data)) return <p>Une erreur est apparue : {profileData.message}</p>
+  const userInitial = getInitialsFromName(profileData.data.user.name)
 
   const q = search?.toLowerCase() ?? "";
 
@@ -58,7 +66,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
   return (
     <div className="flex h-screen bg-gray-50">
       <div className="w-360 m-auto mt-0">
-        <Menu />
+        <Menu userInitial={userInitial}/>
         <ProjectProvider data={project}>
           <div className="flex pl-11 pr-25 mt-19.5">
             <ProjectBanner

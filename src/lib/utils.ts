@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import DOMPurify from "isomorphic-dompurify";
+import { User } from "@/schemas/backend.schemas";
+import * as z from 'zod';
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -55,11 +58,11 @@ export const logger = {
 export const formDataToObject = (formData: FormData, arrayFields?: string[]) => {
   const result: Record<string, unknown> = {};
   const keys = Array.from(formData.keys());
-  
+
   for (const key of keys) {
     const values = formData.getAll(key);
     let value = values.length === 1 ? values[0] : values;
-    
+
     // Si c'est un champ à transformer en array (toujours, pas juste avec virgules)
     if (arrayFields?.includes(key) && typeof value === 'string') {
       // Split par virgule, trim les items, et filter les strings vides
@@ -68,8 +71,20 @@ export const formDataToObject = (formData: FormData, arrayFields?: string[]) => 
         .map(item => item.trim())
         .filter(item => item.length > 0);
     }
-    
+
     result[key] = value;
   }
   return result;
+}
+
+
+
+interface UserType {
+  user: z.infer<typeof User>
+}
+const UserSchema = z.object({
+  user: User
+})
+export const isUser = (user: unknown): user is UserType => {
+  return UserSchema.safeParse(user).success;
 }

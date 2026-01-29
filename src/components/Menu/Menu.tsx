@@ -1,8 +1,9 @@
 import LogoBrandDark from "@/assets/logo/loge_brand_dark.svg"
 import MenuItems from "../ui/MenuItems"
-import UserIcon from "../UserIcon/UserIcon"
+import UserIcon from "../ui/UserIcon"
 
-export default function Menu ({}){
+
+export default function Menu ({userInitial}:{userInitial : string}){
     return (
         <header className="flex flex-row max-w-1440 px-25 items-center justify-between py-2 ">
             <LogoBrandDark
@@ -12,7 +13,7 @@ export default function Menu ({}){
                 height={undefined}
             />
             <MenuItems />
-            <UserIcon user="AD" />
+            <UserIcon user={userInitial}/>
         </header>
     )
 }

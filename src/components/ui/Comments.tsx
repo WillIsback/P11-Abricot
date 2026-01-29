@@ -1,4 +1,4 @@
-import UserIcon from "../UserIcon/UserIcon"
+import UserIcon from "./UserIcon"
 import { Comment } from "@/schemas/backend.schemas"
 import { getInitialsFromName } from "@/lib/client.lib";
 import { isUserOwner } from "@/lib/client.lib";
@@ -14,9 +14,9 @@ export default function Comments ({ comments, projectOwner }: { comments?: Comme
       { comments?.map((c)=>{
         return (
           <li className="min-w-190 flex gap-9.5" key={c.id}>
-            <UserIcon 
-              user={getInitialsFromName(c.author.name)} 
-              variant="Comment" 
+            <UserIcon
+              user={getInitialsFromName(c.author.name)}
+              variant="Comment"
               bg={isUserOwner(c.authorId,projectOwner)?'bg-brand-light':'bg-gray-200'}
             />
             <div className="flex flex-col px-3.5 py-4.5 bg-gray-100 gap-4.5 rounded-[10px]">

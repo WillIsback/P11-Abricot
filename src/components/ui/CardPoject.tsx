@@ -1,5 +1,5 @@
 import Gauge from "./Gauge";
-import Team from "../Team/Team";
+import Team from "./Team";
 
 
 interface CardProjectProps {
