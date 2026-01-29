@@ -12,12 +12,14 @@ import { updateProfile, updatePassword } from "@/action/user.action";
 export default function AccountForm({userName}:{userName: string}){
 
   return (
-      <div className="flex flex-col gap-7.5  justify-center items-center">
-
-        <h1 className="text-brand-dark">Mon Compte</h1>
-        <p>{userName}</p>
-        <div className="flex flex-row gap-10">
+      <div className="flex flex-col gap-7.5 ">
+        <div className="flex flex-col gap-2">
+          <h5>Mon Compte</h5>
+          <p className="body-m text-gray-600">{userName}</p>
+        </div>
+        <div className="flex flex-col gap-2">
           <ProfileForm />
+          <hr/>
           <PasswordForm />
         </div>
       </div>
@@ -27,8 +29,9 @@ export default function AccountForm({userName}:{userName: string}){
 
 const ProfileForm = () => {
   const [state, action, pending] = useActionState(updateProfile, undefined)
-  const profileFormRef = useRef<HTMLFormElement>(null);
-  const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(profileFormRef,UpdateProfileSchema)
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(formRef,UpdateProfileSchema)
+
   return (
     <>
         {!state?.ok && !state?.formValidationError && state?.message && (
@@ -42,9 +45,9 @@ const ProfileForm = () => {
         )}
         <form
           action={action}
-          className="flex flex-col gap-7.25 items-center border-r border-gray-400 rounded-[10px] px-4 py-4 shadow-md"
+          className="flex flex-col gap-7.25 px-4 py-4"
           onChange={handleFormChange}
-          ref={profileFormRef}
+          ref={formRef}
         >
           <div className="flex flex-col gap-7.25">
             <CustomInput
@@ -68,7 +71,7 @@ const ProfileForm = () => {
               error={getFieldError('email')}
             />
           </div>
-          <div className="flex w-249/282">
+          <div className="flex w-fit">
             <CustomButton
               label="Modifier les informations"
               pending={pending}
@@ -83,8 +86,8 @@ const ProfileForm = () => {
 
 const PasswordForm = () => {
   const [state, action, pending] = useActionState(updatePassword, undefined)
-  const passFromRef = useRef<HTMLFormElement>(null);
-  const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(passFromRef,UpdatePasswordSchema)
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(formRef,UpdatePasswordSchema)
   return (
     <>
         {!state?.ok && !state?.formValidationError && state?.message && (
@@ -99,16 +102,16 @@ const PasswordForm = () => {
 
         <form
           action={action}
-          className="flex flex-col gap-7.25 items-center border-l border-gray-400 rounded-[10px] px-4 py-4 justify-between shadow-md"
+          className="flex flex-col gap-7.25 px-4 py-4"
           onChange={handleFormChange}
-          ref={passFromRef}
+          ref={formRef}
         >
           <div className="flex flex-col gap-7.25">
             <CustomInput
               label="Mot de passe actuel"
               type="password"
-              inputID="actualPassword"
-              error={getFieldError('actualPassword')}
+              inputID="currentPassword"
+              error={getFieldError('currentPassword')}
             />
 
             <CustomInput
@@ -118,7 +121,7 @@ const PasswordForm = () => {
               error={getFieldError('newPassword')}
             />
           </div>
-          <div className="flex w-249/282">
+          <div className="flex w-fit">
             <CustomButton
               label="Mettre à jour le mot de passe"
               pending={pending}

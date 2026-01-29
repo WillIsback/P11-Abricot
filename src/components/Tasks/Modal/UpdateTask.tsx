@@ -66,7 +66,6 @@ export default function UpdateTask({
   };
 
   const handleStatusSelection = (newStatus: Status) => {
-    console.log("Bouton cliqué :", newStatus);
     setSelectedStatus(newStatus);
   }
 

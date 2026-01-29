@@ -24,8 +24,6 @@ export async function getAllTasks(): Promise<FetchResult> {
   const allTasks = await DashboardService.getAssignedTasks(session.token as string)
   // 3. verify and log errors
   if(!allTasks.ok){
-    console.log(allTasks.message)
-    if(allTasks.details)console.log(allTasks.details)
     return {
         ok: false,
         message: allTasks.message
@@ -57,8 +55,6 @@ export async function getAllTasksAllProjects(): Promise<FetchResult> {
   const projectsWithTasks = await DashboardService.getProjectWithTasks(session.token as string)
   // 3. verify and log errors
   if(!projectsWithTasks.ok){
-    console.log(projectsWithTasks.message)
-    if(projectsWithTasks.details)console.log(projectsWithTasks.details)
     return {
         ok: false,
         message: projectsWithTasks.message

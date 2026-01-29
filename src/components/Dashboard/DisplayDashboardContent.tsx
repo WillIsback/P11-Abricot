@@ -1,51 +1,34 @@
 'use client';
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState, useTransition } from "react";
-
+import { useMemo } from "react";
 import Chips from "../ui/Chips";
 import DashBoardTasks from "./DashboardTasks";
 import DashBoardKanban from "./DashboardKanban";
-
-import { getAllTasks } from "@/action/dashboard.action";
-import { Task as TaskSchema } from "@/schemas/backend.schemas";
-import * as z from "zod";
-
+import { useTasks } from "@/hooks/CustomHooks";
+import { isTasks } from "@/lib/utils";
 import { LoaderCircle } from 'lucide-react';
 
-
-type Task = z.infer<typeof TaskSchema>;
-type Tasks = Task[];
 
 export default function DisplayDashboardContent ({}){
   const searchParams = useSearchParams()
   const chips = searchParams.get('chips')
   const search = searchParams.get('search')
-  const [isPending, startTransition] = useTransition();
-  const [tasks, setTasks] = useState([] as Tasks);
+  const [isPending, state ] = useTasks();
 
-  useEffect(()=>{
-    startTransition(async () => {
-      const currentTasks = await getAllTasks();
-      if(!currentTasks.ok){
-        console.log(currentTasks.message)
-      } else {
-        if(currentTasks.data?.tasks){
-          setTasks(currentTasks.data.tasks)
-        }
-      }
-    });
-  },[]);
+  if(isPending)return <LoaderCircle/>
+  if(!isTasks(state?.data))return<p>error</p>
+  
+  const q = search?.toLowerCase() ?? "";
 
-  const taskSearchFilter = useMemo(() => {
-    const term = (search || "").toLowerCase().trim();
-    if (term.length < 3) return tasks;
-    return tasks.filter((t) =>
-      t.title.toLowerCase().includes(term) || t.description.toLowerCase().includes(term)
-    );
-  }, [search, tasks])
-
-  console.log(tasks)
-
+  const filteredTasks = state?.data.tasks.filter((t) => {
+    const okSearch =
+      !q ||
+      t.title.toLowerCase().includes(q) ||
+      t.description.toLowerCase().includes(q) ||
+      t.comments.some((c) => c.content.toLowerCase().includes(q)) ||
+      t.assignees.some((a) => a.user.name.toLowerCase().includes(q));
+    return okSearch;
+  });
 
   return (
     <div className="flex flex-col mt-15">
@@ -54,8 +37,8 @@ export default function DisplayDashboardContent ({}){
         <Chips type="kanban"/>
       </div>
       {chips==='task'
-        ? <DashBoardTasks tasks={taskSearchFilter}/>
-        : <DashBoardKanban tasks={taskSearchFilter}/>
+        ? <DashBoardTasks tasks={filteredTasks}/>
+        : <DashBoardKanban tasks={state?.data.tasks}/>
       }
       {isPending && <LoaderCircle />}
     </div>

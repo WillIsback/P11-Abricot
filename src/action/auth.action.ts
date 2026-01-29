@@ -107,8 +107,6 @@ export async function profile(): Promise<FetchResult> {
   const profile = await AuthService.profile(session.token as string)
   // 3. verify and log errors
   if(!profile.ok){
-    console.log("Profile not ok :", profile.message)
-    if(profile.details)console.log("Profile errors details :", profile.details)
     return {
         ok: false,
         message: profile.message

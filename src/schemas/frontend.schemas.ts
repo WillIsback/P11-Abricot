@@ -60,12 +60,17 @@ const UpdateProfileSchema = z.object({
     firstName: z
         .string()
         .min(2, { error: 'firstName must be at least 2 characters long.' })
-        .trim(),
+        .trim()
+        .optional(),
     lastName: z
         .string()
         .min(2, { error: 'lastName must be at least 2 characters long.' })
-        .trim(),
-    email: z.email({ error: 'Please enter a valid email.' }).trim(),
+        .trim()
+        .optional(),
+    email: z
+        .email({ error: 'Please enter a valid email.' })
+        .trim()
+        .optional(),
 })
 
 const UpdatePasswordSchema = z.object({

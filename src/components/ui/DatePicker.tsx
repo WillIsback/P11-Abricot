@@ -17,7 +17,6 @@ import { fr } from 'date-fns/locale';
 
 export default function DatePicker({ name, onValueChange, required = false }: {name: string, onValueChange?: ()=>void ,required?: boolean}) {
   const [date, setDate] = React.useState<Date>()
-  // console.log("dueDate :",date)
   return (
     <>
       <input 

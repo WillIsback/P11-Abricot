@@ -1,6 +1,7 @@
 import  React, { useEffect, useState, useTransition, use, DependencyList } from 'react'
 import { getProjectDetail } from '@/lib/dto.lib';
 import { ProjectContext } from '@/contexts/ProjectContext'
+import { getAllTasks } from '@/action/dashboard.action';
 import { formDataToObject } from '@/lib/utils';
 import * as z from 'zod';
 
@@ -49,6 +50,13 @@ export function useProjectMembers(projectId: string) {
   return [isPending, project?.members ?? null] as const;
 }
 
+export function useTasks() {
+  const [isPending, tasks] = useFetch(
+    () => getAllTasks(),
+    []
+  );
+  return [isPending, tasks ?? null] as const;
+}
 
 
 export function useProject() {
@@ -106,7 +114,6 @@ export function useFormValidation(
     } else {
       setFieldErrors({});  // Pas d'erreurs
     }
-
     setIsFormValid(result.success);
   };
 

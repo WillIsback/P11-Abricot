@@ -56,7 +56,7 @@ export default function Chips({ type }: { type: "task" | "kanban" | "project" })
             label = "Mes projets"
             break;
         default:
-            console.log(`Chips Type not found ${type}`);
+            
     }
 
     return (

@@ -18,7 +18,6 @@ export async function searchUserStream(query: string) {
 
   try {
     const response = await userService.getUsersSearch(session.token as string, query);
-    console.log(response)
     if (response.ok && response.data) {
       return response.data.users;
     }

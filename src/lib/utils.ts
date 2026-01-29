@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import DOMPurify from "isomorphic-dompurify";
-import { User } from "@/schemas/backend.schemas";
+import { User, Task, Project } from "@/schemas/backend.schemas";
 import * as z from 'zod';
 
 
@@ -71,8 +71,11 @@ export const formDataToObject = (formData: FormData, arrayFields?: string[]) => 
         .map(item => item.trim())
         .filter(item => item.length > 0);
     }
-
-    result[key] = value;
+    if (typeof value === 'string' && value.trim() === '') {
+      result[key] = undefined;
+    } else {
+      result[key] = value;
+    }
   }
   return result;
 }
@@ -87,4 +90,20 @@ const UserSchema = z.object({
 })
 export const isUser = (user: unknown): user is UserType => {
   return UserSchema.safeParse(user).success;
+}
+
+type TasksType = z.infer<typeof TasksSchema>;
+const TasksSchema = z.object({
+  tasks: z.array(Task)
+}) 
+export const isTasks = (tasks: unknown): tasks is TasksType => {
+  return TasksSchema.safeParse(tasks).success;
+}
+
+type ProjectsType = z.infer<typeof ProjectSchema>;
+const ProjectSchema = z.object({
+  projects: z.array(Project)
+}) 
+export const isProjects = (projects : unknown): projects is ProjectsType => {
+  return ProjectSchema.safeParse(projects).success;
 }

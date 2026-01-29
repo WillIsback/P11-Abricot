@@ -2,11 +2,11 @@
 
 import { ProjectService } from '@/service/project.service';
 import { verifySession } from '@/lib/dal.lib';
-import { CreateCommentSchema, CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
+import { CreateProjectSchema, UpdateProjectSchema } from '@/schemas/frontend.schemas';
 import { FormActionState, FetchResult, apiErrorToState, validationErrorToState } from '@/lib/server.lib';
 import { revalidateTag } from 'next/cache';
 import { formDataToObject } from "@/lib/utils";
-import * as z from "zod";
+
 
 
 /***************************************************************
@@ -97,7 +97,6 @@ export async function createProject(
   }
   // 3. Insert the user into the database or call an Library API
   const response = await ProjectService.createProject(session.token as string, validatedFields.data)
-  console.log('res : ', response)
   // 4. verify and log errors
   // Si succès : ajouter shouldClose et data
   if(response.ok){
