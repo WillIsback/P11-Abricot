@@ -73,6 +73,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
                 title={name}
                 description={description}
                 projectId={slug}
+                tasks={tasks}
               />
           </div>
           <main className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto">

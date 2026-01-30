@@ -6,18 +6,26 @@ import IconButton from "./IconButton";
 import { useState } from "react";
 import CreateTask from "../Tasks/Modal/CreateTask";
 import UpdateProject from "../Projects/Modal/UpdateProject";
+import CreateAiTask from "../Tasks/Modal/CreateAiTask";
+import { Task } from "@/schemas/backend.schemas";
+import * as z from 'zod';
 
+const tasksZodSchema = z.array(Task)
+type TasksType = z.infer<typeof tasksZodSchema>
 
 interface ProjectBannerProps {
   title: string;
   description: string;
   projectId: string;
+  tasks: TasksType
 }
 
 
 export default function ProjectBanner (props: ProjectBannerProps){
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateProject, setIsUpdateTaskOpen] = useState(false);
+  const [isCreateAiTaskOpen, setIsCreateAiTaskOpen] = useState(false);
+
   return (
     <section className="flex justify-between w-full" aria-label="Banniere">
       <div className="flex gap-4">
@@ -26,7 +34,7 @@ export default function ProjectBanner (props: ProjectBannerProps){
           <div className="flex justify-between gap-4 w-57.75 items-center">
             <h4 className="whitespace-nowrap">{props.title}</h4>
             <CustomLink
-              label='Modifier' 
+              label='Modifier'
               type='Opener'
               onClickHandler={()=> setIsUpdateTaskOpen(true)}
             />
@@ -42,7 +50,9 @@ export default function ProjectBanner (props: ProjectBannerProps){
           disabled={false}
           buttonType="button"
         />
-        <IAButtonSquare />
+        <IAButtonSquare
+          onClick={()=>setIsCreateAiTaskOpen(true)}
+        />
       </div>
       {/* Modal de création de tâche */}
       <CreateTask
@@ -55,6 +65,13 @@ export default function ProjectBanner (props: ProjectBannerProps){
         open={isUpdateProject}
         onOpenChange={setIsUpdateTaskOpen}
         projectId={props.projectId}
+      />
+      {/* Modal de création de tâche assisté par IA*/}
+      <CreateAiTask
+        open={isCreateAiTaskOpen}
+        onOpenChange={setIsCreateAiTaskOpen}
+        projectId={props.projectId}
+        tasks={props.tasks}
       />
     </section>
   )

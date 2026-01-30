@@ -5,9 +5,8 @@ import { MistralService } from "@/service/mistral.service";
 import { Task } from '@/schemas/backend.schemas';
 import * as z from 'zod';
 
-type TasksType = z.infer<typeof Task>[
 
-]
+type TasksType = z.infer<typeof Task>[]
 export async function generateAiTask(
   tasks: TasksType,
   prevState: unknown,
@@ -20,7 +19,7 @@ export async function generateAiTask(
       message: "Session not verified",
     }
   }
-  
+
   const query = formData.get('prompt')
   if(!(typeof query === 'string')) return {
     ok: false,
