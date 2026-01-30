@@ -66,7 +66,7 @@ export default function TaskKanban (props: PropsType){
   return (
     <div className='flex flex-col rounded-[10px] bg-white px-10 py-6.25 gap-8 border border-gray-200'>
       <div className='flex flex-col gap-8'>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between'>
           <div className='flex flex-col gap-1.75'>
             <h5>{props.title}</h5>
             <p className='body-s text-gray-600'>{props.description}</p>

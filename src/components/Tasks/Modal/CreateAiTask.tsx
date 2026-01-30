@@ -4,7 +4,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -91,30 +90,35 @@ export default function CreateAiTask({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="m-auto flex flex-col justify-between
-        bg-white rounded-[10px] items-center gap-14
-        w-full mt-19.75
+        className="
+        px-18.25 pt-19.75 pb-9.75
+        m-auto flex flex-col justify-between
+        bg-white rounded-[10px] items-center gap-14 
+        [&_[data-slot=dialog-close]_svg]:stroke-gray-600
+        **:data-[slot=dialog-close]:top-6    
+        **:data-[slot=dialog-close]:right-6
+        min-w-5/12
         "
       >
         <div className="flex flex-col flex-1 gap-10">
-          <DialogHeader className="flex gap-2 items-center">
+          <DialogHeader className="flex gap-2">
             <div className="flex gap-2 items-center">
               <Sparkle className="fill-brand-dark stroke-0"/>
-              <DialogTitle>Créer une tâche</DialogTitle>
+              <DialogTitle>{!ok ? "Créer une tâche" : "Vos tâches..."}</DialogTitle>
             </div>
           </DialogHeader>
           {isAddingTasks && <LoaderPinwheel/>}
-            {!ok && (
+            {!ok || (!state?.ok && state?.message) && (
               <div className="flex items-start gap-3 p-4 rounded-lg bg-red-50 border border-red-200">
                 <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
                 <div className="flex flex-col gap-1">
                   <p className="text-red-700 font-medium text-sm">Erreur</p>
-                  <p className="text-red-600 text-sm">{message}</p>
+                  <p className="text-red-600 text-sm">{message || state?.message}</p>
                 </div>
               </div>
             )}
               <div className="flex flex-col gap-10">
-                <div className="flex flex-col gap-6 min-h-130.75 w-full">
+                <div className="flex flex-col gap-6 min-h-130.75 max-h-130.75 w-full overflow-auto">
                   {isPending ? (
                       // Skeleton de chargement
                       <div className="animate-pulse space-y-4">
@@ -122,40 +126,46 @@ export default function CreateAiTask({
                         <div className="h-4 bg-gray-200 rounded w-full"></div>
                         <div className="h-4 bg-gray-200 rounded w-1/2"></div>
                       </div>
-                    ) : state?.ok ? (
-                        state?.data?.tasks.map((task, index) => (
+                    ) : mockData && (
+                        mockData.tasks.map((task) => (
                           <TaskAI
                             key={crypto.randomUUID()}
                             title={task.title}
                             description={task.description}
                           />
-                        ))) : (
-                          <p></p>
-                        )
+                      )))
                   }
                 </div>
                 {mockData && (
+                  <div className='flex w-45.25 place-self-center'>
                   <CustomButton
                     label='+ Ajouter les tâches'
                     pending={isAddingTasks}
                     disabled={false}
                     buttonType='button'
                     onClick={() => handleClickAddTasks(mockData.tasks)}
+                    className='whitespace-nowrap'
                   />
+                  </div>
                 )}
+
               </div>
+
               <form
                 action={formAction}
-                className="flex w-full gap-3.5 px-8 py-4.5 rounded-[80px] bg-gray-50 justify-between"
+                className='flex flex-col gap-6 flex-1'
               >
+                <hr className='-mx-18.25 w-[calc(100%+8)]'/>
+                <div className="flex flex-1 gap-3.5 px-8 py-4.5 rounded-[80px] bg-gray-50 justify-between">
                   <input
                     type="text"
                     name='prompt'
                     id="prompt"
                     placeholder="Décrivez les tâches que vous souhaitez ajouter..."
-                    className="flex-1 focus:outline-0"
+                    className="flex-1 focus:outline-0 placeholder:text-black body-2xs"
                   />
                   <IAButton />
+                </div>
               </form>
           </div>
       </DialogContent>

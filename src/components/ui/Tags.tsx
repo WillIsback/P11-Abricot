@@ -26,6 +26,9 @@ export default function Tags({ label, color }: TagsProps){
             body-s
             px-4
             py-1
+            w-fit
+            h-fit
+            whitespace-nowrap
             ${colorStyles[color]}
         `}>
             {label}

@@ -39,7 +39,6 @@ export async function generateAiTask(
     ok: false,
     message: "echec de l'action",
   }
-
 }
 
 

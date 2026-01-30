@@ -17,7 +17,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
 
     return (
         <div className="flex row py-10 gap-x-5.5 w-full">
-            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white">
+            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white w-1/3">
                 <div className="flex gap-2 items-center">
                     <h5>{'A faire'}</h5>
                     <span className="rounded-[50px] bg-gray-200 px-4 py-1 text-gray-600 body-s">{nbTodo}</span>
@@ -33,7 +33,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
 
                 </ul>
             </section>
-            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white">
+            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white w-1/3">
                 <div className="flex gap-2 items-center">
                     <h5>{'En cours'}</h5>
                     <span className="rounded-[50px] bg-gray-200 px-4 py-1 text-gray-600 body-s">{nbInProgress}</span>
@@ -49,7 +49,7 @@ export default function DashBoardKanban ({ tasks }: PropsType){
 
                 </ul>
             </section>
-            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white">
+            <section className="flex flex-col px-6 py-10 gap-10.25 rounded-[10px] bg-white w-1/3">
                 <div className="flex gap-2 items-center">
                     <h5>{'Terminées'}</h5>
                     <span className="rounded-[50px] bg-gray-200 px-4 py-1 text-gray-600 body-s">{nbDone}</span>

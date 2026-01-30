@@ -32,8 +32,8 @@ export default function RootLayout({
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`antialiased`}>
         <div
-          className="mx-auto w-full md:max-w-[960px]
-           lg:max-w-[1200px] xl:max-w-[1440px]"
+          className="mx-auto w-full md:max-w-240
+           lg:max-w-300 xl:max-w-360 h-fit"
         >
         {children}
         </div>
