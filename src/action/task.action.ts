@@ -35,7 +35,7 @@ export async function createTask(
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data.task,  
+      data: response.data.task,
     };
   }
   return apiErrorToState(response);
@@ -69,7 +69,7 @@ export async function updateTask(
       ok: true,
       shouldClose: true,
       message: response.message,
-      data: response.data.task, 
+      data: response.data.task,
     };
   }
   return apiErrorToState(response);
@@ -89,7 +89,7 @@ export async function deleteTask(
   }
   const response = await TaskService.deleteTask(session.token as string, projectId, taskId)
   if(response.ok){
-    
+
     return {
       ok: true,
       message: response.message,
@@ -99,3 +99,5 @@ export async function deleteTask(
   // Si erreur API
   return apiErrorToState(response);
 }
+
+

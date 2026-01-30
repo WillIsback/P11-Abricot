@@ -34,10 +34,13 @@ export default function Banner (props: BannerProps){
           className="whitespace-nowrap"
         />
       </div>
-      <CreateProject
-        open={isOpen}
-        onOpenChange={setIsOpen}
-      />
+      {isOpen && (
+        <CreateProject
+          open={isOpen}
+          onOpenChange={setIsOpen}
+        />
+      )}
+
     </section>
   )
 }

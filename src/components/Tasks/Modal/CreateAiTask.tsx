@@ -10,12 +10,17 @@ import {
 } from '@/components/ui/dialog';
 
 import { generateAiTask } from '@/action/mistral.action';
-import { useActionState, useEffect} from 'react';
+import { useActionState} from 'react';
 import { Task } from '@/schemas/backend.schemas';
-import { Sparkle } from 'lucide-react';
+import { Sparkle, AlertCircle, LoaderPinwheel } from 'lucide-react';
 import * as z from 'zod';
 import IAButton from "@/components/ui/IAButton";
 import TaskAI from '../TaskAi';
+import CustomButton from '@/components/ui/CustomButton';
+
+import { useTransition, useState } from 'react';
+import { createAiTask } from '@/action/mistral.action';
+
 const tasksZodSchema = z.array(Task)
 type TasksType = z.infer<typeof tasksZodSchema>
 
@@ -25,6 +30,12 @@ interface CreateAiTaskProps {
   projectId: string;
   tasks: TasksType,
   onTaskCreated?: (task: unknown) => void;
+}
+
+interface AiTask {
+  title: string;
+  description: string;
+  dueDate: string;
 }
 
 
@@ -38,6 +49,38 @@ export default function CreateAiTask({
 }: CreateAiTaskProps) {
   const boundGenerateAiTask = generateAiTask.bind(null, tasks);
   const [state, formAction, isPending] = useActionState(boundGenerateAiTask, undefined);
+
+  const [isAddingTasks, startTransition] = useTransition()
+  const [message, setMessage] = useState('')
+  const [ok, setOk] = useState(true)
+
+  const handleClickAddTasks = (tasks : AiTask[]) => {
+    tasks.forEach((task)=> {
+        startTransition(async () => {
+          // Convertir la date en ISO datetime avec millisecondes
+          const isoDate = `${task.dueDate}T00:00:00.000Z`;
+
+          const response = await createAiTask(
+            projectId,
+            task.title,
+            task.description,
+            isoDate,
+          )
+          // Gérer la réponse ici sans la retourner
+          if(!response.ok) {
+            console.error(response.message)
+            setMessage(response?.message || 'erreur')
+            setOk(false)
+          } else {
+            console.log('Tâche créée:', response.data)
+            setMessage(`Tâche créée: ${response.data}`)
+            setOk(true)
+
+          }
+        })
+      })
+    onOpenChange(!ok)
+  }
 
   // Nettoyer quand le modal se ferme
   const handleOpenChange = (isOpen: boolean) => {
@@ -60,6 +103,16 @@ export default function CreateAiTask({
               <DialogTitle>Créer une tâche</DialogTitle>
             </div>
           </DialogHeader>
+          {isAddingTasks && <LoaderPinwheel/>}
+            {!ok && (
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-red-50 border border-red-200">
+                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
+                <div className="flex flex-col gap-1">
+                  <p className="text-red-700 font-medium text-sm">Erreur</p>
+                  <p className="text-red-600 text-sm">{message}</p>
+                </div>
+              </div>
+            )}
               <div className="flex flex-col gap-10">
                 <div className="flex flex-col gap-6 min-h-130.75 w-full">
                   {isPending ? (
@@ -81,6 +134,15 @@ export default function CreateAiTask({
                         )
                   }
                 </div>
+                {mockData && (
+                  <CustomButton
+                    label='+ Ajouter les tâches'
+                    pending={isAddingTasks}
+                    disabled={false}
+                    buttonType='button'
+                    onClick={() => handleClickAddTasks(mockData.tasks)}
+                  />
+                )}
               </div>
               <form
                 action={formAction}
@@ -99,4 +161,35 @@ export default function CreateAiTask({
       </DialogContent>
     </Dialog>
   );
+}
+
+
+const mockData = {
+  "tasks": [
+    {
+      "title": "Analyse des données RAG pour le projet",
+      "description": "Analyse des données pour déterminer le niveau de risque, d'achèvement et de gestion du projet en utilisant le modèle RAG.",
+      "dueDate": "2026-02-15"
+    },
+    {
+      "title": "Établir les objectifs RAG pour le projet",
+      "description": "Établir les objectifs RAG pour chaque phase du projet en fonction des données collectées.",
+      "dueDate": "2026-02-20"
+    },
+    {
+      "title": "Évaluer les risques RAG pour le projet",
+      "description": "Évaluer les risques associés au projet en utilisant le modèle RAG et proposer des solutions pour les réduire.",
+      "dueDate": "2026-03-05"
+    },
+    {
+      "title": "Mise en place de la stratégie RAG pour le projet",
+      "description": "Mettre en place une stratégie RAG pour le projet en fonction des objectifs et des risques identifiés.",
+      "dueDate": "2026-03-15"
+    },
+    {
+      "title": "Suivi du projet RAG",
+      "description": "Suivre le projet en utilisant le modèle RAG pour s'assurer que les objectifs sont atteints et que les risques sont maîtrisés.",
+      "dueDate": "2026-04-01"
+    }
+  ]
 }

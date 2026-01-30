@@ -17,9 +17,7 @@ export default function DashBoardTasks ( { tasks } : PropsType){
                     <h5>Mes tâches assignées</h5>
                     <p className="body-m text-gray-600">Par ordre de priorité</p>
                 </div>
-                <div>
-                    <SearchBar />
-                </div>
+                <SearchBar />
             </div>
             <ul className="flex flex-col gap-4.25">
                 {tasks.map((task)=>{

@@ -55,24 +55,30 @@ export default function ProjectBanner (props: ProjectBannerProps){
         />
       </div>
       {/* Modal de création de tâche */}
-      <CreateTask
-        open={isCreateTaskOpen}
-        onOpenChange={setIsCreateTaskOpen}
-        projectId={props.projectId}
-      />
+      {isCreateTaskOpen && (
+        <CreateTask
+          open={isCreateTaskOpen}
+          onOpenChange={setIsCreateTaskOpen}
+          projectId={props.projectId}
+        />
+      )}
       {/* Modal de modification de projet */}
-      <UpdateProject
-        open={isUpdateProject}
-        onOpenChange={setIsUpdateTaskOpen}
-        projectId={props.projectId}
-      />
+      {isUpdateProject && (
+        <UpdateProject
+          open={isUpdateProject}
+          onOpenChange={setIsUpdateTaskOpen}
+          projectId={props.projectId}
+        />
+      )}
       {/* Modal de création de tâche assisté par IA*/}
-      <CreateAiTask
-        open={isCreateAiTaskOpen}
-        onOpenChange={setIsCreateAiTaskOpen}
-        projectId={props.projectId}
-        tasks={props.tasks}
-      />
+      {isCreateAiTaskOpen && (
+        <CreateAiTask
+          open={isCreateAiTaskOpen}
+          onOpenChange={setIsCreateAiTaskOpen}
+          projectId={props.projectId}
+          tasks={props.tasks}
+        />
+      )}
     </section>
   )
 }

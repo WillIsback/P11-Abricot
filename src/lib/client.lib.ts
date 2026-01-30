@@ -28,11 +28,12 @@ const mapStatusLabel: Record<z.infer<typeof Task>['status'], string> = {
     'CANCELED': 'Abandonnée'
 }
 
-const mapStatusString: Record<z.infer<typeof Task>['status'], string> = {
+const mapStatusString: Record<z.infer<typeof Task>['status'] | 'ALL', string> = {
     'TODO': 'À faire',
     'IN_PROGRESS': 'En cours',
     'DONE': 'Terminée',
-    'CANCELED': 'Abandonnée'
+    'CANCELED': 'Abandonnée',
+    'ALL': 'Tous',
 }
 const isUserOwner = (userId: string, OwnerId: string) : boolean => {
     return (userId===OwnerId)

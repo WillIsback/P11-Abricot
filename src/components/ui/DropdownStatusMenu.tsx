@@ -16,27 +16,37 @@ const enum Status {
     TODO='TODO',
     IN_PROGRESS='IN_PROGRESS',
     DONE='DONE',
-    CANCELED='CANCELED'
+    CANCELED='CANCELED',
+    ALL='ALL'
 }
 
 export default function DropdownStatusMenu() {
-    const [selectedStatus, setSelectedStatus] = React.useState<Status>(Status.TODO)
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const router = useRouter()
-    const createQueryString = React.useCallback(
-        (name: string, value: string) => {
-        const params = new URLSearchParams(searchParams.toString())
-        params.set(name, value)
 
-        return params.toString()
-        },
-        [searchParams]
-    )
-    React.useEffect(()=>{
-        router.push(pathname+'?'+createQueryString('status',selectedStatus))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[selectedStatus])
+    // Initialiser depuis l'URL, ou "ALL" par défaut
+    const currentStatus = searchParams.get('status') || 'ALL'
+    const [selectedStatus, setSelectedStatus] = React.useState<string>(currentStatus)
+
+    // Synchroniser l'état avec l'URL quand elle change (navigation back/forward)
+    React.useEffect(() => {
+        const urlStatus = searchParams.get('status') || 'ALL'
+        setSelectedStatus(urlStatus)
+    }, [searchParams])
+
+    const handleStatusChange = (value: string) => {
+        setSelectedStatus(value)
+        const params = new URLSearchParams(searchParams.toString())
+
+        if (value === 'ALL') {
+            params.delete('status')
+        } else {
+            params.set('status', value)
+        }
+
+        router.push(`${pathname}?${params.toString()}`)
+    }
 
     return (
         <div className="flex w-fit gap-4 items-center justify-center border
@@ -45,7 +55,9 @@ export default function DropdownStatusMenu() {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="group">
-                        <p className="body-s">{mapStatusString[selectedStatus]}</p>
+                        <p className="body-s">
+                            {selectedStatus === 'ALL' ? 'Tous' : mapStatusString[selectedStatus as Status]}
+                        </p>
                         <ChevronDown
                             strokeWidth={1}
                             className="h-4 w-4 text-gray-500 transition-transform duration-200 group-data-[state=open]:rotate-180"
@@ -56,8 +68,9 @@ export default function DropdownStatusMenu() {
                     <DropdownMenuGroup>
                         <DropdownMenuRadioGroup
                             value={selectedStatus}
-                            onValueChange={(value) => setSelectedStatus(value as Status)}
+                            onValueChange={handleStatusChange}
                         >
+                            <DropdownMenuRadioItem value="ALL">Tous</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="TODO">À faire</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="IN_PROGRESS">En cours</DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="DONE">Terminée</DropdownMenuRadioItem>

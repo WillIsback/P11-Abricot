@@ -3,6 +3,9 @@
 import { verifySession } from '@/lib/dal.lib';
 import { MistralService } from "@/service/mistral.service";
 import { Task } from '@/schemas/backend.schemas';
+import { CreateTaskSchema } from '@/schemas/frontend.schemas';
+import { TaskService } from '@/service/task.service';
+import { revalidatePath } from 'next/cache';
 import * as z from 'zod';
 
 
@@ -37,4 +40,47 @@ export async function generateAiTask(
     message: "echec de l'action",
   }
 
+}
+
+
+export async function createAiTask(
+  projectId: string,
+  title: string,
+  description: string,
+  dueDate: string
+){
+  const session = await verifySession();
+  if(!session.isAuth || !session.token){
+    return {
+      ok: false,
+      message: "Session not verified",
+    }
+  }
+  const task = {
+    title: title,
+    description: description,
+    dueDate: dueDate,
+    priority: 'MEDIUM',
+    assigneeIds: [],
+  }
+  const validatedFields = CreateTaskSchema.safeParse(task);
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) return {
+    ok: false,
+    message: validatedFields.error.message,
+  }
+  const response = await TaskService.createMultipleTask(session.token as string, projectId, validatedFields.data)
+  if(response.ok){
+    revalidatePath(`/projects/${projectId}`);
+    return {
+      ok: true,
+      shouldClose: true,
+      message: response.message,
+      data: response.data.task,
+    };
+  }
+  return {
+    ok: false,
+    message: `eche de l'action : ${response.message}`,
+  }
 }

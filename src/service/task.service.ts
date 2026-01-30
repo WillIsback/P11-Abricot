@@ -107,6 +107,34 @@ export const TaskService = {
       }
       return { ok: false, status: 500, message: "Une erreur inattendue est survenue" };
     }
-},
-
+  },
+  createMultipleTask: async (token: string, projectId: string, payload: z.infer<typeof CreateTaskSchema>): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
+      const validated = CreateTaskSchema.safeParse(payload);
+      if (!validated.success) {
+        return { ok: false, status: 400, message: validated.error.message};
+      }
+      try {
+        // 2. Ajouter timeout de 3s
+        const res = await withTimeout(
+          fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify(payload),
+          }),
+          3000
+        );
+        console.log(res.status)
+        console.log(res.body)
+        return await handleFetch(res, CreateTaskResponse);
+      } catch (error) {
+        // Capturer les erreurs de timeout
+        if (error instanceof Error && error.message.includes("pris trop de temps")) {
+          return { ok: false, status: 408, message: error.message };
+        }
+        return { ok: false, status: 500, message: "Une erreur inattendue est survenue" };
+      }
+  },
 };

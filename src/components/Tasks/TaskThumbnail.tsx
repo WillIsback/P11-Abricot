@@ -10,16 +10,18 @@ import { useProjectName } from '@/hooks/CustomHooks';
 import { LoaderCircle } from 'lucide-react';
 import { Task } from '@/schemas/backend.schemas';
 import { mapStatusColor, mapStatusLabel } from '@/lib/client.lib';
+import { useRouter } from 'next/navigation';
 import * as z from "zod";
 
 type PropType = z.infer<typeof Task>
 
 export default function TaskThumbnail (props: PropType){
+  const router = useRouter()
   const [isPending, projectName] = useProjectName(props.projectId)
   const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
-  
+  const href = `/projects/${props.projectId}?chips=task&status=${props.status}&search=${props.title}`
   return (
-      <div className="flex justify-between items-center w-255.5 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">
+      <div className="flex justify-between items-center flex-1 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">
         <div className="flex flex-col gap-8">
           <div className='flex flex-col gap-1.75'>
             <h5>{props.title}</h5>
@@ -50,6 +52,7 @@ export default function TaskThumbnail (props: PropType){
             pending={false}
             disabled={false}
             buttonType='button'
+            onClick={() => router.push(href)}
           />
         </div>
 
