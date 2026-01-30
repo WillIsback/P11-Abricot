@@ -13,7 +13,7 @@ export default function Banner (props: BannerProps){
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const isProject = pathname.includes('projects');
-  
+
 
   return (
     <section className="flex justify-between" aria-label="Banniere">
@@ -24,13 +24,14 @@ export default function Banner (props: BannerProps){
           : <p>Bonjour {props.name}, voici un aperçu de vos projets et tâches</p>
         }
       </div>
-      <div className="flex items-center w-45.25">
+      <div className="flex items-center w-[181px]">
         <CustomButton
           label="+ Créer un projet"
           pending={false}
           disabled={false}
           buttonType="button"
           onClick={() => setIsOpen(true)}
+          className="whitespace-nowrap"
         />
       </div>
       <CreateProject

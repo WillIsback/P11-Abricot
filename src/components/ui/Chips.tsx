@@ -45,7 +45,7 @@ export default function Chips({ type }: { type: "task" | "kanban" | "project" })
     switch (type) {
         case "task":
             icon = TaskIco;
-            label = "Mes tâches";
+            label = "Liste";
             break;
         case "kanban":
             icon = KanbanICO;
@@ -56,7 +56,7 @@ export default function Chips({ type }: { type: "task" | "kanban" | "project" })
             label = "Mes projets"
             break;
         default:
-            
+
     }
 
     return (

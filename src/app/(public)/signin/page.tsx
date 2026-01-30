@@ -18,10 +18,13 @@ export default function SignIn() {
 
   return (
     <div className="flex h-screen">
-      <div className="flex m-auto h-256 w-360 bg-[url('/images/SignIn.png')] bg-contain bg-center">
-        <main className="flex items-center justify-center w-2/5 h-256 flex-col px-35 py-13.75 gap-50.5 relative z-10 bg-gray-50">
+      <div className="flex flex-1 m-auto bg-[url('/images/SignIn.png')] bg-content bg-center">
+        <main
+          className="flex flex-col items-center justify-center
+            relative z-10 bg-gray-50 px-35 py-13.75 gap-30"
+          >
           <LogoBrandDark />
-          <div className="flex flex-col gap-7.5  justify-center items-center">
+          <div className="flex flex-col gap-7.5 w-full h-fit">
             {!state?.ok && !state?.formValidationError && state?.message && (
               <div className="flex items-start gap-3 p-4 rounded-lg bg-red-50 border border-red-200">
                 <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
@@ -31,52 +34,54 @@ export default function SignIn() {
                 </div>
               </div>
             )}
-            <h1 className="text-brand-dark">Inscription</h1>
-            <form 
-              action={action}
-              className="flex flex-col gap-7.25 items-center"
-              onChange={handleFormChange}
-              ref={formRef}
-            >
-              <div className="flex flex-col gap-7.25">
-                <CustomInput
-                  label="Prénom"
-                  type="text"
-                  inputID="firstName"
-                  error={getFieldError('firstName')}
-                />
+            <h1 className="text-brand-dark text-center">Inscription</h1>
+            <div className="flex flex-col gap-5.25 w-full h-fit">
+              <form
+                action={action}
+                className="flex flex-col gap-7.25"
+                onChange={handleFormChange}
+                ref={formRef}
+              >
+                <div className="flex flex-col gap-7.25">
+                  <CustomInput
+                    label="Prénom"
+                    type="text"
+                    inputID="firstName"
+                    error={getFieldError('firstName')}
+                  />
 
-                <CustomInput
-                  label="Nom"
-                  type="text"
-                  inputID="lastName"
-                  error={getFieldError('lastName')}
-                />
+                  <CustomInput
+                    label="Nom"
+                    type="text"
+                    inputID="lastName"
+                    error={getFieldError('lastName')}
+                  />
 
-                <CustomInput
-                  label="Email"
-                  type="email"
-                  inputID="email"
-                  error={getFieldError('email')}
-                />
+                  <CustomInput
+                    label="Email"
+                    type="email"
+                    inputID="email"
+                    error={getFieldError('email')}
+                  />
 
-                <CustomInput
-                  label="Mot de passe"
-                  type="password"
-                  inputID="password"
-                  error={getFieldError('password')}
-                />
-        
-              </div>
-              <div className="flex w-249/282">
-                <CustomButton
-                  label="S'inscrire"
-                  pending={pending}
-                  disabled={!isFormValid}
-                  buttonType= "submit"
-                />
-              </div>
-            </form>
+                  <CustomInput
+                    label="Mot de passe"
+                    type="password"
+                    inputID="password"
+                    error={getFieldError('password')}
+                  />
+
+                </div>
+                <div className="flex w-fit place-self-center">
+                  <CustomButton
+                    label="S'inscrire"
+                    pending={pending}
+                    disabled={!isFormValid}
+                    buttonType= "submit"
+                  />
+                </div>
+              </form>
+            </div>
           </div>
           <div className="flex whitespace-nowrap gap-2.5 justify-center items-center">
             <p className="body-s">Déjà inscrit ?</p>

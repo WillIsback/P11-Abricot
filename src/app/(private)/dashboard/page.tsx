@@ -27,8 +27,8 @@ export default async function DashBoard({ searchParams }: DashboardPageProps){
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <div className="w-360 m-auto mt-0">
+    <div className="flex w-full bg-gray-50">
+      <div className="w-full m-auto mt-0">
         <Menu userInitial={userInitial}/>
         <main className="px-25 py-22.25">
           <Banner

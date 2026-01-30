@@ -8,25 +8,28 @@ interface CustomLinkProps {
     label: string,
     type: 'Routeur' | 'Opener',
     href?: string,
-    onClickHandler?: ()=> void
+    onClickHandler?: ()=> void,
+    className?: string,
 
 }
 
-export default function CustomLink ({ label, href, type, onClickHandler } : CustomLinkProps){
+export default function CustomLink ({ label, href, type, onClickHandler, className } : CustomLinkProps){
     return (
         <>
             {type==='Routeur'
-                ? <CustomLinkRouteur 
-                    href={href || ''} 
+                ? <CustomLinkRouteur
+                    href={href || ''}
                     label={label}
+                    className={className}
                 />
                 : (!onClickHandler)
                     ?<p>CustomClickHandler undefined</p>
-                    :<CustomLinkOpener 
+                    :<CustomLinkOpener
                             label={label}
                             onClickHandler={onClickHandler}
+                            className={className}
                     />
-            }   
+            }
         </>
 
     )
@@ -35,13 +38,13 @@ export default function CustomLink ({ label, href, type, onClickHandler } : Cust
 
 
 
-const CustomLinkRouteur = ({ href, label }: { href: string; label: string }) =>{
+const CustomLinkRouteur = ({ href, label, className }: { href: string; label: string, className?: string }) =>{
     const pathname = usePathname();
     const isCurrent = pathname === href;
     return (
         <Link
             href={href}
-            className="body-s text-brand-dark underline focus:text-gray-950 aria-disabled:text-gray-400 "
+            className={`body-s text-brand-dark underline focus:text-gray-950 aria-disabled:text-gray-400 ${className}`}
             aria-disabled={isCurrent}
             onClick={(e) => isCurrent && e.preventDefault()}
         >
@@ -52,19 +55,21 @@ const CustomLinkRouteur = ({ href, label }: { href: string; label: string }) =>{
 }
 
 const CustomLinkOpener = (
-    { 
+    {
         label,
-        onClickHandler
+        onClickHandler,
+        className
 
     }: {
-        label: string 
+        label: string
         onClickHandler: () => void | undefined
+        className?: string
     })  => {
 
     return (
         <Button
             variant='link'
-            className="body-s text-brand-dark underline focus:text-gray-950"
+            className={`body-s text-brand-dark underline focus:text-gray-950 ${className}`}
             onClick={onClickHandler}
         >
             {label}

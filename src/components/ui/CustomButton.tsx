@@ -8,13 +8,15 @@ export default function CustomButton ({
     buttonType,
     onClick,
     ref,
+    className,
 } : {
     label: string,
     pending: boolean,
     disabled: boolean,
     buttonType: "submit" | "reset" | "button" | undefined,
     onClick?: () => void,
-    ref?: React.Ref<HTMLButtonElement>
+    ref?: React.Ref<HTMLButtonElement>,
+    className?: string
 }) {
 
     return (
@@ -22,13 +24,15 @@ export default function CustomButton ({
                 type={buttonType}
                 onClick={onClick}
                 className={`
+                    ${className}
                     flex
                     justify-center
                     items-center
                     h-12.5
                     w-full
                     py-3.25
-                    px-4
+                    gap-2.5
+                    px-18.5
                     rounded-[10px]
                     ${pending
                         ? 'bg-white text-brand-dark border border-brand-dark'

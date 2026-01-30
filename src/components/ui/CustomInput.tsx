@@ -31,7 +31,7 @@ const DefaultInput = ({
       id={inputID}
       name={inputID}
       type={type}
-      className={`rounded-lg min-h-13.25 bg-white body-xs focus:outline-none px-4.25 py-4.75 border ${error ? 'border-red-500' : ''}`}
+      className={`rounded-lg w-full min-h-13.25 bg-white body-xs focus:outline-none px-4.25 py-4.75 border ${error ? 'border-red-500' : ''}`}
       required={required}
     />
   )

@@ -10,12 +10,12 @@ export default function MenuItems (){
     const isDashboard = pathname==="/dashboard";
     const isProjects = pathname==="/projects"
     return (
-        <nav>
+        <nav className="flex w-fit h-fit">
             <ul className="flex gap-4">
                 <li className="">
                     <Link
                         href="/dashboard"
-                        className="flex  flex-row group w-62 rounded-[10px] py-6 gap-4 justify-center items-center bg-white aria-disabled:bg-gray-950 "
+                        className="flex  flex-row group w-62 rounded-[10px] py-6.75 gap-4 justify-center items-center bg-white aria-disabled:bg-gray-950 "
                         aria-disabled={isDashboard}
                         onClick={(e) => isDashboard && e.preventDefault()}
                     >
@@ -26,7 +26,7 @@ export default function MenuItems (){
                 <li className="">
                     <Link
                         href="/projects"
-                        className="flex  flex-row group w-62 rounded-[10px] py-6 gap-4 justify-center items-center bg-white aria-disabled:bg-gray-950 "
+                        className="flex  flex-row group w-62 rounded-[10px] py-6.75 gap-4 justify-center items-center bg-white aria-disabled:bg-gray-950 "
                         aria-disabled={isProjects}
                         onClick={(e) => isProjects && e.preventDefault()}
                     >
