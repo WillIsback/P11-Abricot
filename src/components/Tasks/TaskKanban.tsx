@@ -1,3 +1,4 @@
+'use client';
 import { MessageSquareText } from 'lucide-react';
 import { FolderOpen } from 'lucide-react';
 import SVGCalendar from '@/assets/icons/calendar.svg'
@@ -5,6 +6,7 @@ import Tags from '../ui/Tags';
 import CustomButton from '../ui/CustomButton';
 import { fr } from 'date-fns/locale';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface PropsType {
     id: string;
@@ -50,6 +52,7 @@ interface PropsType {
 type TagColor = 'gray' | 'orange' | 'info' | 'warning' | 'error' | 'success';
 
 export default function TaskKanban (props: PropsType){
+  const router = useRouter()
   const formattedDate = format(new Date(props.dueDate), 'd MMMM', { locale: fr });
   const statusColor: Record<PropsType['status'], TagColor> = {
     'TODO': 'error',
@@ -63,6 +66,7 @@ export default function TaskKanban (props: PropsType){
     'DONE': 'Terminée',
     'CANCELED': 'Abandonnée'
   }
+  const href = `/projects/${props.projectId}?chips=task&status=${props.status}&search=${props.title}`
   return (
     <div className='flex flex-col rounded-[10px] bg-white px-10 py-6.25 gap-8 border border-gray-200'>
       <div className='flex flex-col gap-8'>
@@ -96,6 +100,7 @@ export default function TaskKanban (props: PropsType){
             pending={false}
             disabled={false}
             buttonType='button'
+            onClick={() => router.push(href)}
           />
         </div>
     </div>

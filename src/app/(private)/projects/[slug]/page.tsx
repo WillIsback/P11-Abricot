@@ -13,7 +13,7 @@ import { Task } from "@/schemas/backend.schemas";
 import { profile } from "@/action/auth.action"
 import { isUser } from "@/lib/utils"
 import { getInitialsFromName } from "@/lib/client.lib"
-
+import DisplayEventCalendar from "@/components/EventCalendar/DisplayEventCalendar";
 import * as z from 'zod';
 
 interface Tasks {
@@ -64,7 +64,7 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
 
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex  bg-gray-50">
       <div className="w-360 m-auto mt-0">
         <Menu userInitial={userInitial}/>
         <ProjectProvider data={project}>
@@ -80,15 +80,20 @@ export default async function Projet({ searchParams, params }: ProjetPageProps) 
             <Workers owner={owner} members={members} variant="Default"/>
             <div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10 gap-10.25">
               <ProjetFilterBar />
-              <ul className="flex flex-col gap-4.25">
-                  {filteredTasks.map((task)=>{
-                      return (
-                          <li key={task.id}>
-                              <TaskProject task={task} projectOwner={project.ownerId} projectId={slug}/>
-                          </li>
-                      )
-                  })}
-              </ul>
+              {chips==='task' ? (
+                <ul className="flex flex-col gap-4.25">
+                {filteredTasks.map((task)=>{
+                    return (
+                        <li key={task.id}>
+                            <TaskProject task={task} projectOwner={project.ownerId} projectId={slug}/>
+                        </li>
+                )})}
+                </ul>
+              ) : (
+
+                  <DisplayEventCalendar tasks={tasks}/>
+              )}
+ 
             </div>
           </main>
         </ProjectProvider>

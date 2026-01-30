@@ -13,7 +13,7 @@ export default function ProjetFilterBar({}){
             <div className="flex w-fit h-fit gap-4">
                 <div className="flex gap-2.5 h-45/63 w-fit m-auto">
                     <Chips type='task'/>
-                    <Chips type="kanban"/>
+                    <Chips type="calendar"/>
                 </div>
                 <DropdownStatusMenu />
                 <SearchBar />

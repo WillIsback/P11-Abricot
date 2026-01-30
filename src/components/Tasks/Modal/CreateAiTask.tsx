@@ -44,7 +44,6 @@ export default function CreateAiTask({
   onOpenChange,
   projectId,
   tasks,
-  onTaskCreated,
 }: CreateAiTaskProps) {
   const boundGenerateAiTask = generateAiTask.bind(null, tasks);
   const [state, formAction, isPending] = useActionState(boundGenerateAiTask, undefined);

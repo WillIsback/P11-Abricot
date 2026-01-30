@@ -54,7 +54,11 @@ export default function UpdateProject({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75">
+      <DialogContent className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75
+      [&_[data-slot=dialog-close]_svg]:stroke-gray-600
+        **:data-[slot=dialog-close]:top-6    
+        **:data-[slot=dialog-close]:right-6
+      ">
         <DialogHeader>
           <DialogTitle>Modifier un Projet</DialogTitle>
         </DialogHeader>

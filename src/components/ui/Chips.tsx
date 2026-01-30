@@ -25,7 +25,7 @@ const ProjectICO = (
 )
 
 
-export default function Chips({ type }: { type: "task" | "kanban" | "project" }) {
+export default function Chips({ type }: { type: "task" | "kanban" | "project" | "calendar" }) {
     const pathname = usePathname()
     const searchParams = useSearchParams()
 
@@ -54,6 +54,10 @@ export default function Chips({ type }: { type: "task" | "kanban" | "project" })
         case "project":
             icon = ProjectICO;
             label = "Mes projets"
+            break;
+        case "calendar":
+            icon = KanbanICO;
+            label = "Calendrier"
             break;
         default:
 
