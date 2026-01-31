@@ -2,7 +2,7 @@ import ComboboxAssignee from "./ComboboxAssignee";
 import ComboboxContributor from "./ComboboxContributor";
 import ComboboxPriority from "./ComboboxPriority";
 import DatePicker from "./DatePicker";
-
+import type { SearchUser } from "./ComboboxContributor";
 type InputType =
 	| "DatePicker"
 	| "Assignee"
@@ -19,6 +19,7 @@ interface CustomInputProps {
 	required?: boolean;
 	onValueChange?: () => void;
 	error?: string;
+	defaultValue?: SearchUser[] | undefined;
 }
 
 // Composant pour les inputs par défaut
@@ -64,6 +65,7 @@ export default function CustomInput({
 	required = false,
 	onValueChange,
 	error,
+	defaultValue,
 }: CustomInputProps) {
 	const isDefaultInput =
 		type === "text" || type === "email" || type === "password";
@@ -87,6 +89,7 @@ export default function CustomInput({
 				name={inputID}
 				required={required}
 				onValueChange={onValueChange}
+				defaultValue={defaultValue}
 			/>
 		);
 	};

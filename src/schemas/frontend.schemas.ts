@@ -70,7 +70,8 @@ const UpdatePasswordSchema = z.object({
 	newPassword: z
 		.string()
 		.min(8, { error: "Be at least 8 characters long" })
-		.regex(/[a-zA-Z]/, { error: "Contain at least one letter." })
+		.regex(/[a-z]/, { error: "Contain at least one lowercase letter." })
+		.regex(/[A-Z]/, { error: "Contain at least one uppercase letter." })
 		.regex(/[0-9]/, { error: "Contain at least one number." })
 		.trim(),
 });
@@ -88,6 +89,7 @@ const CreateProjectSchema = z.object({
 const UpdateProjectSchema = z.object({
 	name: z.string().optional(),
 	description: z.string().optional(),
+	contributors: z.array(z.email()).optional(),
 });
 
 const AddContributorSchema = z.object({
@@ -100,11 +102,11 @@ const RemoveContributorSchema = z.object({
 });
 
 const CreateCommentSchema = z.object({
-	userId: z.string(),
+	content: z.string(),
 });
 
 const UpdateCommentSchema = z.object({
-	userId: z.string(),
+	content: z.string(),
 });
 
 const UserSearchQuerySchema = z.string().min(2);

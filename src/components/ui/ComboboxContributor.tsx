@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/combobox";
 
 // Type simplifié pour les utilisateurs recherchés
-type SearchUser = {
+export type SearchUser = {
 	id: string;
 	email: string;
 	name: string;
@@ -28,16 +28,18 @@ interface ComboboxContributorProps {
 	name?: string;
 	required?: boolean;
 	onValueChange?: () => void;
+	defaultValue?: SearchUser[] | undefined;
 }
 
 export default function ComboboxContributor({
 	onValueChange,
 	name = "contributors",
 	required = false,
+	defaultValue = [],
 }: ComboboxContributorProps) {
 	const anchor = useComboboxAnchor();
 	const [query, setQuery] = React.useState<string>("");
-	const [selectedUsers, setSelectedUsers] = React.useState<SearchUser[]>([]);
+	const [selectedUsers, setSelectedUsers] = React.useState<SearchUser[]>(defaultValue);
 	const [searchResults, setSearchResults] = React.useState<SearchUser[]>([]);
 	const [isPending, startTransition] = useTransition();
 
@@ -72,9 +74,13 @@ export default function ComboboxContributor({
 			<Combobox
 				multiple
 				autoHighlight
-				items={searchResults}
+				items={[...selectedUsers, ...searchResults.filter(r => !selectedUsers.some(s => s.id === r.id))]}
 				itemToStringValue={(user) => (user as SearchUser).id}
 				value={selectedUsers}
+				onValueChange={(newValue) => {
+					setSelectedUsers(newValue as SearchUser[]);
+					setTimeout(() => onValueChange?.(), 0);
+				}}
 			>
 				<ComboboxChips
 					ref={anchor}

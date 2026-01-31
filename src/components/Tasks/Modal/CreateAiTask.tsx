@@ -2,6 +2,7 @@
 "use client";
 
 import { AlertCircle, LoaderPinwheel, Sparkle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import type * as z from "zod";
 import { createAiTask, generateAiTask } from "@/action/mistral.action";
@@ -63,21 +64,34 @@ export default function CreateAiTask({
 	const [ok, setOk] = useState(true);
 	const [tasksList, setTasksList] = useState<AiTask[]>([]);
 
+	// ?test=true → utilise mockData, sinon API Mistral
+	const searchParams = useSearchParams();
+	const isTestMode = searchParams.get("test") === "true";
+
 	useEffect(() => {
-		const handleTasksListsChange = () => {
-			// if(state?.data?.tasks){
-			if (mockData) {
-				const tasksWithIds = mockData.tasks.map((task) => ({
-					...task,
-					id: crypto.randomUUID(),
-				}));
+		if (isTestMode) {
+			const tasksWithIds = mockData.tasks.map((task) => ({
+				...task,
+				id: crypto.randomUUID(),
+			}));
+			const handleMockData = () => {
+				if(tasksWithIds){
+					setTasksList(tasksWithIds);
+				}
+			}
+			handleMockData();
+			
+		} else if (state?.data?.tasks) {
+			const tasksWithIds = state.data.tasks.map((task: Omit<AiTask, "id">) => ({
+				...task,
+				id: crypto.randomUUID(),
+			}));
+			const handleMistralData = (tasksWithIds: AiTask[]) =>{
 				setTasksList(tasksWithIds);
-			} else setTasksList([]);
-		};
-		if (mockData) {
-			handleTasksListsChange();
+			}
+			handleMistralData(tasksWithIds);
 		}
-	}, []);
+	}, [isTestMode, state?.data?.tasks]);
 
 	const handleClickAddTasks = (tasks: AiTask[]) => {
 		tasks.forEach((task) => {
@@ -95,7 +109,6 @@ export default function CreateAiTask({
 					setMessage(response?.message || "erreur");
 					setOk(false);
 				} else {
-					console.log("Tâche créée:", response.data);
 					setMessage(`Tâche créée: ${response.data}`);
 					setOk(true);
 				}
@@ -103,7 +116,7 @@ export default function CreateAiTask({
 		});
 		onOpenChange(!ok);
 	};
-
+	
 	// Nettoyer quand le modal se ferme
 	const handleOpenChange = (isOpen: boolean) => {
 		onOpenChange(isOpen);
@@ -146,12 +159,12 @@ export default function CreateAiTask({
         min-w-5/12
         "
 			>
-				<div className="flex flex-col flex-1 gap-10">
+				<div className="flex flex-col w-full gap-10">
 					<DialogHeader className="flex gap-2">
 						<div className="flex gap-2 items-center">
 							<Sparkle className="fill-brand-dark stroke-0" />
 							<DialogTitle>
-								{!ok ? "Créer une tâche" : "Vos tâches..."}
+								{tasksList.length===0 ? "Créer une tâche" : "Vos tâches..."}
 							</DialogTitle>
 						</div>
 						<DialogDescription className="sr-only">
@@ -194,7 +207,7 @@ export default function CreateAiTask({
 								))
 							)}
 						</div>
-						{mockData && (
+						{tasksList.length > 0 && (
 							<div className="flex w-45.25 place-self-center">
 								<CustomButton
 									label="+ Ajouter les tâches"
@@ -209,7 +222,7 @@ export default function CreateAiTask({
 					</div>
 
 					<form action={formAction} className="flex flex-col gap-6 flex-1">
-						<hr className="-mx-18.25 w-[calc(100%+8)]" />
+						{tasksList.length > 0 &&<hr className="-mx-18.25 w-[calc(100%+8)]" />}
 						<div className="flex flex-1 gap-3.5 px-8 py-4.5 rounded-[80px] bg-gray-50 justify-between">
 							<label htmlFor="prompt" className="sr-only">
 								Décrivez les tâches à générer par IA

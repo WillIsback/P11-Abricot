@@ -52,7 +52,6 @@ export default function UpdateTask({
 		getFieldError,
 	] = useFormValidation(formRef, UpdateTaskSchema, ["assigneeIds"]);
 	const status: Status[] = [Status.TODO, Status.IN_PROGRESS, Status.DONE];
-
 	useEffect(() => {
 		if (state?.ok && state?.shouldClose) {
 			onTaskUpdated?.(state.data);
@@ -82,6 +81,8 @@ export default function UpdateTask({
 
 	const handleStatusSelection = (newStatus: Status) => {
 		setSelectedStatus(newStatus);
+		// Déclencher la validation après le changement de statut
+		handleCustomFieldChange("status")();
 	};
 
 	return (

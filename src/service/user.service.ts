@@ -18,19 +18,19 @@ const Users = z.object({
 	users: z.array(User.omit({ updatedAt: true, createdAt: true })),
 });
 
+const UpdateProfileResponse = z.object({
+	user: User
+})
+
 const UpdateProfilePayloadSchematic = z.object({
 	name: z.string().optional(),
-	email: z.email().optional,
+	email: z.email().optional(),
 });
-const UpdatePasswordResponseSchema = z.object({
-	ok: z.boolean(),
-	status: z.number(),
-	message: z.string().optional(),
-});
+const UpdatePasswordResponseSchema  = z.unknown().optional();
 
 type UpdatePasswordResponse = z.infer<typeof UpdatePasswordResponseSchema>;
 type UsersResponse = z.infer<typeof Users>;
-type UserResponse = z.infer<typeof User>;
+
 
 export const userService = {
 	getUsersSearch: cache(
@@ -71,7 +71,7 @@ export const userService = {
 	updateProfile: async (
 		token: string,
 		payload: z.infer<typeof UpdateProfilePayloadSchematic>,
-	): Promise<ApiResult<UserResponse>> => {
+	): Promise<ApiResult<z.infer<typeof UpdateProfileResponse>>> => {
 		// 1. Vérifier rate limit (utiliser token comme identifiant unique)
 		if (!checkRateLimit(token, 500, 1)) {
 			return {
@@ -98,7 +98,7 @@ export const userService = {
 				}),
 				3000,
 			);
-			return await handleFetch(res, User);
+			return await handleFetch(res, UpdateProfileResponse);
 		} catch (error) {
 			// Capturer les erreurs de timeout
 			if (

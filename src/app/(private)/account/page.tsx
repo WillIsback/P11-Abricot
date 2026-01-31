@@ -12,14 +12,13 @@ export const metadata: Metadata = {
 
 export default async function AccountPage() {
 	const profileData = await profile();
-
 	if (!profileData.ok)
 		return <p>Une erreur est apparue : {profileData.message}</p>;
 	if (!isUser(profileData.data))
 		return <p>Une erreur est apparue : {profileData.message}</p>;
 	const userInitial = getInitialsFromName(profileData.data.user.name);
 	return (
-		<div className="flex h-screen bg-gray-50">
+		<div className="flex bg-gray-50">
 			<div className="w-360 mt-0 m-auto">
 				<Menu userInitial={userInitial} />
 				<main

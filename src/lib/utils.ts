@@ -121,3 +121,26 @@ const ProjectSchema = z.object({
 export const isProjects = (projects: unknown): projects is ProjectsType => {
 	return ProjectSchema.safeParse(projects).success;
 };
+
+
+
+/**
+ * Génère un nom complet à partir du nom actuel et des modifications partielles.
+ * Gère les noms composés (ex: "Jean Pierre Dupont" → prénom: "Jean", nom: "Pierre Dupont")
+ */
+export const generateName = (
+	currentName: string,
+	firstName: string | undefined,
+	lastName: string | undefined,
+): string => {
+	// Normalise les espaces multiples et trim
+	const parts = currentName.trim().split(/\s+/);
+	const currentFirstName = parts[0] || "";
+	// Tout sauf le premier mot = nom de famille (gère les noms composés)
+	const currentLastName = parts.slice(1).join(" ") || "";
+
+	const newFirstName = firstName?.trim() || currentFirstName;
+	const newLastName = lastName?.trim() || currentLastName;
+
+	return `${newFirstName} ${newLastName}`.trim();
+}

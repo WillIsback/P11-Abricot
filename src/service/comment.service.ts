@@ -1,29 +1,27 @@
-import * as z from "zod";
 import {
 	type ApiResult,
 	checkRateLimit,
 	handleFetch,
 	withTimeout,
 } from "@/lib/server.lib";
-import { Task } from "@/schemas/backend.schemas";
-import { CreateTaskSchema, UpdateTaskSchema } from "@/schemas/frontend.schemas";
+import { CreateCommentSchema } from "@/schemas/frontend.schemas";
+import { Comment } from "@/schemas/backend.schemas";
+import * as z from 'zod';
 
 const BASE_URL = process.env.API_URL || "http://localhost:8000";
 
-const CreateTaskResponse = z.object({
-	task: Task,
-});
+const CommentResponseSchema = z.object({
+  comment: Comment
+})
+const DeleteCommentResponse = z.unknown().optional();
 
-// For DELETE, backend may return no payload under `data`.
-// Accept undefined or any shape without failing validation.
-const DeleteTaskResponse = z.unknown().optional();
-
-export const TaskService = {
-	createTask: async (
+export const CommentService = {
+	postComment: async (
 		token: string,
 		projectId: string,
-		payload: z.infer<typeof CreateTaskSchema>,
-	): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
+    taskId: string,
+		payload: z.infer<typeof CreateCommentSchema>,
+	): Promise<ApiResult<z.infer<typeof CommentResponseSchema>>> => {
 		// 1. Vérifier rate limit (utiliser token comme identifiant unique)
 		if (!checkRateLimit(token, 500, 1)) {
 			return {
@@ -32,14 +30,14 @@ export const TaskService = {
 				message: "Trop de demandes, patiente 500ms avant de réessayer",
 			};
 		}
-		const validated = CreateTaskSchema.safeParse(payload);
+		const validated = CreateCommentSchema.safeParse(payload);
 		if (!validated.success) {
 			return { ok: false, status: 400, message: validated.error.message };
 		}
 		try {
 			// 2. Ajouter timeout de 3s
 			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
+				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments`, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -49,7 +47,7 @@ export const TaskService = {
 				}),
 				3000,
 			);
-			return await handleFetch(res, CreateTaskResponse);
+			return await handleFetch(res, CommentResponseSchema);
 		} catch (error) {
 			// Capturer les erreurs de timeout
 			if (
@@ -65,13 +63,13 @@ export const TaskService = {
 			};
 		}
 	},
-
-	updateTask: async (
+	updateComment: async (
 		token: string,
 		projectId: string,
-		taskId: string,
-		payload: z.infer<typeof UpdateTaskSchema>,
-	): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
+    taskId: string,
+		commentId: string,
+		payload: z.infer<typeof CreateCommentSchema>,
+	): Promise<ApiResult<z.infer<typeof CommentResponseSchema>>> => {
 		// 1. Vérifier rate limit (utiliser token comme identifiant unique)
 		if (!checkRateLimit(token, 500, 1)) {
 			return {
@@ -80,15 +78,14 @@ export const TaskService = {
 				message: "Trop de demandes, patiente 500ms avant de réessayer",
 			};
 		}
-
-		const validated = UpdateTaskSchema.safeParse(payload);
+		const validated = CreateCommentSchema.safeParse(payload);
 		if (!validated.success) {
 			return { ok: false, status: 400, message: validated.error.message };
 		}
 		try {
 			// 2. Ajouter timeout de 3s
 			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}`, {
+				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
@@ -98,7 +95,7 @@ export const TaskService = {
 				}),
 				3000,
 			);
-			return await handleFetch(res, CreateTaskResponse);
+			return await handleFetch(res, CommentResponseSchema);
 		} catch (error) {
 			// Capturer les erreurs de timeout
 			if (
@@ -114,11 +111,11 @@ export const TaskService = {
 			};
 		}
 	},
-
-	deleteTask: async (
+	deleteComment: async (
 		token: string,
 		projectId: string,
 		taskId: string,
+		commentId: string,
 	): Promise<ApiResult<unknown>> => {
 		// 1. Vérifier rate limit (utiliser token comme identifiant unique)
 		if (!checkRateLimit(token, 500, 1)) {
@@ -132,7 +129,7 @@ export const TaskService = {
 		try {
 			// 2. Ajouter timeout de 3s
 			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}`, {
+				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`, {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
@@ -141,7 +138,7 @@ export const TaskService = {
 				}),
 				3000,
 			);
-			return await handleFetch(res, DeleteTaskResponse);
+			return await handleFetch(res, DeleteCommentResponse);
 		} catch (error) {
 			// Capturer les erreurs de timeout
 			if (
@@ -157,43 +154,4 @@ export const TaskService = {
 			};
 		}
 	},
-	
-	createMultipleTask: async (
-		token: string,
-		projectId: string,
-		payload: z.infer<typeof CreateTaskSchema>,
-	): Promise<ApiResult<z.infer<typeof CreateTaskResponse>>> => {
-		const validated = CreateTaskSchema.safeParse(payload);
-		if (!validated.success) {
-			return { ok: false, status: 400, message: validated.error.message };
-		}
-		try {
-			// 2. Ajouter timeout de 3s
-			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify(payload),
-				}),
-				3000,
-			);
-			return await handleFetch(res, CreateTaskResponse);
-		} catch (error) {
-			// Capturer les erreurs de timeout
-			if (
-				error instanceof Error &&
-				error.message.includes("pris trop de temps")
-			) {
-				return { ok: false, status: 408, message: error.message };
-			}
-			return {
-				ok: false,
-				status: 500,
-				message: "Une erreur inattendue est survenue",
-			};
-		}
-	},
-};
+}

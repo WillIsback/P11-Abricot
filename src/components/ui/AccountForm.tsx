@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle } from "lucide-react";
-import { useActionState, useRef } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { updatePassword, updateProfile } from "@/action/user.action";
 import CustomButton from "@/components/ui/CustomButton";
 import CustomInput from "@/components/ui/CustomInput";
@@ -19,7 +19,7 @@ export default function AccountForm({ userName }: { userName: string }) {
 				<p className="body-m text-gray-600">{userName}</p>
 			</div>
 			<div className="flex flex-col gap-2">
-				<ProfileForm />
+				<ProfileForm userName={userName}/>
 				<hr />
 				<PasswordForm />
 			</div>
@@ -27,13 +27,21 @@ export default function AccountForm({ userName }: { userName: string }) {
 	);
 }
 
-const ProfileForm = () => {
-	const [state, action, pending] = useActionState(updateProfile, undefined);
+const ProfileForm = ({ userName }: { userName: string }) => {
+	const boundUpdateProfile = updateProfile.bind(null, userName);
+	const [state, action, pending] = useActionState(boundUpdateProfile, undefined);
 	const formRef = useRef<HTMLFormElement>(null);
-	const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(
+	const [isFormValid, resetForm, handleFormChange, , getFieldError] = useFormValidation(
 		formRef,
 		UpdateProfileSchema,
 	);
+	useEffect(()=>{
+		const razForm= () => {
+			resetForm()
+		}
+		razForm()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[state?.ok])
 
 	return (
 		<>
@@ -93,10 +101,18 @@ const ProfileForm = () => {
 const PasswordForm = () => {
 	const [state, action, pending] = useActionState(updatePassword, undefined);
 	const formRef = useRef<HTMLFormElement>(null);
-	const [isFormValid, , handleFormChange, , getFieldError] = useFormValidation(
+	const [isFormValid, resetForm, handleFormChange, , getFieldError] = useFormValidation(
 		formRef,
 		UpdatePasswordSchema,
 	);
+	useEffect(()=>{
+		const razForm= () => {
+			resetForm()
+		}
+		razForm()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[state?.ok])
+	
 	return (
 		<>
 			{!state?.ok && !state?.formValidationError && state?.message && (

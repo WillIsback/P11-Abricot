@@ -7,7 +7,7 @@ import {
 	type FormActionState,
 	validationErrorToState,
 } from "@/lib/server.lib";
-import { formDataToObject, sanitizeString } from "@/lib/utils";
+import { formDataToObject, sanitizeString, generateName } from "@/lib/utils";
 import {
 	UpdatePasswordSchema,
 	UpdateProfileSchema,
@@ -15,6 +15,7 @@ import {
 import { userService } from "@/service/user.service";
 
 export async function updateProfile(
+	userName: string,
 	_state: FormActionState,
 	formData: FormData,
 ): Promise<FormActionState> {
@@ -26,16 +27,17 @@ export async function updateProfile(
 		};
 	}
 	const formObject = formDataToObject(formData);
-
+	console.log('formObject', formObject)
 	const validatedFields = UpdateProfileSchema.safeParse(formObject);
 	if (!validatedFields.success) {
 		return validationErrorToState(validatedFields);
 	}
-	const name = `${sanitizeString(validatedFields.data.firstName)} ${sanitizeString(validatedFields.data.lastName)}`;
+	const name = generateName(userName,validatedFields.data.firstName,validatedFields.data.lastName);
 	const payload = {
 		name: name,
-		email: sanitizeString(validatedFields.data.email),
+		email: validatedFields.data.email ? sanitizeString(validatedFields.data.email) : undefined,
 	};
+	console.log('payload', payload)
 	const response = await userService.updateProfile(
 		session.token as string,
 		payload,

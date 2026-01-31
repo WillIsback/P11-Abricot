@@ -16,6 +16,7 @@ import { getProjectDetail } from "@/lib/dto.lib";
 import { isUser } from "@/lib/utils";
 import type { Task } from "@/schemas/backend.schemas";
 
+
 interface Tasks {
 	tasks: z.infer<typeof Task>[];
 }
@@ -61,11 +62,13 @@ export default async function Projet({
 		redirect(`/projects/${slug}?chips=task`);
 	}
 	const profileData = await profile();
+
 	if (!profileData.ok)
 		return <p>Une erreur est apparue : {profileData.message}</p>;
 	if (!isUser(profileData.data))
 		return <p>Une erreur est apparue : {profileData.message}</p>;
 	const userInitial = getInitialsFromName(profileData.data.user.name);
+	const userID = profileData.data.user.id;
 
 	const q = search?.toLowerCase() ?? "";
 
@@ -109,6 +112,8 @@ export default async function Projet({
 													task={task}
 													projectOwner={project.ownerId}
 													projectId={slug}
+													currentUserId={userID}
+													userInitial={userInitial}
 												/>
 											</li>
 										);

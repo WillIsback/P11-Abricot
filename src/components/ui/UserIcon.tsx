@@ -14,7 +14,8 @@ export default function UserIcon({
 	const isAccountPage = pathname.includes("account");
 	return variant === "Default" ? (
 		<Link
-			className="group flex rounded-full w-16.25 h-16.25 justify-center items-center bg-brand-light hover:bg-brand-dark focus:bg-brand-dark aria-[current=page]:bg-brand-dark"
+			className="group flex rounded-full w-16.25 h-16.25 justify-center items-center bg-brand-light hover:bg-brand-dark
+									focus:bg-brand-dark aria-[current=page]:bg-[#9a4000]"
 			aria-current={isAccountPage ? "page" : undefined}
 			aria-label="Mon compte"
 			href="/account"

@@ -15,7 +15,6 @@ export default function TaskEventCalendar({
 	description,
 	status,
 }: TaskEventCalendarProps) {
-	console.log(status);
 	return (
 		<div className="flex flex-col py-6.25 px-10 bg-white rounded-[10px] gap-7.75 border border-gray-200">
 			<div className="flex justify-between">

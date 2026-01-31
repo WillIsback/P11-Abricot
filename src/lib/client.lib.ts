@@ -36,6 +36,21 @@ const isUserOwner = (userId: string, OwnerId: string): boolean => {
 	return userId === OwnerId;
 };
 
+/**
+ * Vérifie si l'utilisateur peut éditer/supprimer un commentaire
+ * @param authorId - ID de l'auteur du commentaire
+ * @param projectOwnerId - ID du propriétaire du projet
+ * @param currentUserId - ID de l'utilisateur courant
+ * @returns true si l'utilisateur est l'auteur OU le propriétaire du projet
+ */
+const canEditComment = (
+	authorId: string,
+	projectOwnerId: string,
+	currentUserId: string,
+): boolean => {
+	return authorId === currentUserId || projectOwnerId === currentUserId;
+};
+
 const isRequired = (schema: z.ZodObject, key: string) => {
 	const field = schema.shape[key];
 	// Vérifie si le champ existe et s'il n'est PAS optionnel
@@ -52,5 +67,6 @@ export {
 	mapStatusLabel,
 	mapStatusString,
 	isUserOwner,
+	canEditComment,
 	isRequired,
 };

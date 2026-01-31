@@ -37,11 +37,9 @@ export default function DisplayEventCalendar({ tasks }: { tasks: TaskType[] }) {
 	const [isEventTaskOpen, setIsEventTaskOpen] = useState(false);
 	// Transformer les tâches en événements pour le calendrier
 	const events = mapTasksToEvents(tasks || mockTasks);
-	console.log("events", events);
 
 	// Handlers
 	const handleDayClick = (date: Date) => {
-		console.log("Jour cliqué:", date.toLocaleDateString("fr-FR"));
 		setIsEventTaskOpen(true);
 	};
 

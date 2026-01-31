@@ -16,12 +16,16 @@ interface TaskProjectProps {
 	task: z.infer<typeof Task>;
 	projectOwner: string;
 	projectId: string;
+	currentUserId: string;
+	userInitial: string;
 }
 
 export default function TaskProject({
 	task,
 	projectOwner,
 	projectId,
+	currentUserId,
+	userInitial,
 }: TaskProjectProps) {
 	const [isCollapse, setIsCollapse] = useState(true);
 	const formattedDate = format(new Date(task.dueDate), "d MMMM", {
@@ -86,7 +90,14 @@ export default function TaskProject({
 				</button>
 			</div>
 			{isCollapse && (
-				<Comments comments={task.comments} projectOwner={projectOwner} />
+				<Comments 
+					projectId={projectId} 
+					taskId={task.id} 
+					comments={task.comments} 
+					projectOwnerId={projectOwner} 
+					currentUserId={currentUserId}
+					userInitial={userInitial}
+				/>
 			)}
 		</article>
 	);

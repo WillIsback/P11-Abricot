@@ -14,7 +14,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useFormValidation } from "@/hooks/CustomHooks";
+import { useFormValidation, useProject } from "@/hooks/CustomHooks";
 import { UpdateProjectSchema } from "@/schemas/frontend.schemas";
 
 interface UpdateProjectProps {
@@ -36,6 +36,15 @@ export default function UpdateProject({
 		undefined,
 	);
 	const formRef = useRef<HTMLFormElement>(null);
+	const { members } = useProject();
+	
+	// Transformer les membres existants au format attendu par ComboboxContributor
+	const existingContributors = members.map((member) => ({
+		id: member.user.id,
+		email: member.user.email,
+		name: member.user.name,
+	}));
+	
 	const [
 		isFormValid,
 		resetForm,
@@ -124,6 +133,7 @@ export default function UpdateProject({
 						inputID="contributors"
 						onValueChange={handleCustomFieldChange("contributors")}
 						error={getFieldError("contributors")}
+						defaultValue={existingContributors}
 					/>
 					<DialogFooter className="gap-2 w-61 flex justify-start">
 						<CustomButton

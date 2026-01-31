@@ -42,7 +42,6 @@ export default function IconButton({
 		});
 	};
 	const handlePencilClick = () => {
-		console.log("Pencil Click");
 		setIsCreateTaskOpen(true);
 	};
 

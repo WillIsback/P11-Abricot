@@ -28,11 +28,13 @@ export async function generateAiTask(
 			ok: false,
 			message: "Session not verified",
 		};
+
 	const response = await MistralService.generateTasks(
 		tasks,
 		query,
 		session.token as string,
 	);
+	console.log('response',response)
 	if (response.ok)
 		return {
 			ok: true,
