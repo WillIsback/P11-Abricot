@@ -15,7 +15,22 @@ const CommentResponseSchema = z.object({
 });
 const DeleteCommentResponse = z.unknown().optional();
 
+/**
+ * Service de gestion des commentaires pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Toutes les méthodes incluent rate limiting (1 requête/500ms) et timeout de 3 secondes.
+ */
 export const CommentService = {
+	/**
+	 * Crée un nouveau commentaire sur une tâche via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param taskId - L'identifiant unique de la tâche.
+	 * @param payload - Les données du commentaire à créer.
+	 * @returns Un objet {@link ApiResult} contenant le commentaire créé ou les erreurs.
+	 */
 	postComment: async (
 		token: string,
 		projectId: string,
@@ -63,6 +78,16 @@ export const CommentService = {
 			};
 		}
 	},
+	/**
+	 * Met à jour un commentaire existant via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param taskId - L'identifiant unique de la tâche.
+	 * @param commentId - L'identifiant unique du commentaire à modifier.
+	 * @param payload - Les données modifiées du commentaire.
+	 * @returns Un objet {@link ApiResult} contenant le commentaire mis à jour ou les erreurs.
+	 */
 	updateComment: async (
 		token: string,
 		projectId: string,
@@ -114,6 +139,15 @@ export const CommentService = {
 			};
 		}
 	},
+	/**
+	 * Supprime un commentaire via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param taskId - L'identifiant unique de la tâche.
+	 * @param commentId - L'identifiant unique du commentaire à supprimer.
+	 * @returns Un objet {@link ApiResult} avec le statut de suppression.
+	 */
 	deleteComment: async (
 		token: string,
 		projectId: string,

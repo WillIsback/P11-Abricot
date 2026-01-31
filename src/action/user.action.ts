@@ -14,6 +14,18 @@ import {
 } from "@/schemas/frontend.schemas";
 import { userService } from "@/service/user.service";
 
+/**
+ * Met à jour le profil de l'utilisateur connecté via le formulaire.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, génère le nom complet
+ * à partir des prénom/nom, appelle le service utilisateur et revalide le cache.
+ *
+ * @param userName - Le nom actuel de l'utilisateur (pour gérer les modifications partielles).
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant les informations modifiées.
+ * @returns Un objet {@link FormActionState} contenant le profil mis à jour ou les erreurs.
+ */
 export async function updateProfile(
 	userName: string,
 	_state: FormActionState,
@@ -61,6 +73,17 @@ export async function updateProfile(
 	return apiErrorToState(response);
 }
 
+/**
+ * Met à jour le mot de passe de l'utilisateur connecté via le formulaire.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire,
+ * appelle le service utilisateur et revalide le cache.
+ *
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant l'ancien et le nouveau mot de passe.
+ * @returns Un objet {@link FormActionState} contenant le statut de l'opération ou les erreurs.
+ */
 export async function updatePassword(
 	_state: FormActionState,
 	formData: FormData,

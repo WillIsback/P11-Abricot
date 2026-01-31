@@ -33,7 +33,23 @@ const ProfileResponseData = z.object({
 type PostResponse = z.infer<typeof PostResponseData>;
 type UserResponse = z.infer<typeof ProfileResponseData>;
 
+/**
+ * Service d'authentification pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Toutes les méthodes incluent rate limiting et timeout pour la protection contre les abus.
+ */
 export const AuthService = {
+	/**
+	 * Inscrit un nouvel utilisateur via l'API.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param payload - Les données d'inscription (email, password, name).
+	 * @param userId - L'identifiant pour le rate limiting (email).
+	 * @returns Un objet {@link ApiResult} contenant l'utilisateur et le token ou les erreurs.
+	 */
 	register: async (
 		payload: z.infer<typeof Register>,
 		userId: string,
@@ -74,6 +90,16 @@ export const AuthService = {
 		}
 	},
 
+	/**
+	 * Authentifie un utilisateur existant via l'API.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param payload - Les identifiants de connexion (email, password).
+	 * @param userId - L'identifiant pour le rate limiting (email).
+	 * @returns Un objet {@link ApiResult} contenant l'utilisateur et le token ou les erreurs.
+	 */
 	login: async (
 		payload: z.infer<typeof Login>,
 		userId: string,
@@ -114,6 +140,16 @@ export const AuthService = {
 		}
 	},
 
+	/**
+	 * Récupère le profil de l'utilisateur connecté.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()` pour éviter
+	 * les appels multiples dans un même cycle de rendu. Timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @returns Un objet {@link ApiResult} contenant les données du profil ou les erreurs.
+	 */
 	profile: cache(async (token: string): Promise<ApiResult<UserResponse>> => {
 		try {
 			const res = await withTimeout(

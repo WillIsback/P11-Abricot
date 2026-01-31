@@ -16,6 +16,10 @@
 /playwright-report
 /playwright/.auth
 /tests
+
+# documentation
+/docs
+
 # next.js
 /.next/
 /out/

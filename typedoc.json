@@ -1,0 +1,30 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": [
+		"src/action/*.ts",
+		"src/lib/*.ts",
+		"src/service/*.ts",
+		"src/hooks/*.ts",
+		"src/contexts/*.tsx",
+		"src/schemas/*.ts",
+		"src/type/*.ts"
+	],
+	"exclude": ["**/*.spec.ts", "**/*.test.ts", "**/node_modules/**"],
+	"out": "docs",
+	"name": "Abricot - Documentation API",
+	"readme": "README.md",
+	"includeVersion": true,
+	"excludePrivate": true,
+	"excludeProtected": true,
+	"excludeInternal": true,
+	"skipErrorChecking": true,
+	"hideGenerator": false,
+	"navigationLinks": {
+		"GitHub": "https://github.com/WillIsback/P11-Abricot"
+	},
+	"plugin": [],
+	"categorizeByGroup": true,
+	"categoryOrder": ["Actions", "Services", "Libraries", "Hooks", "Contexts", "Schemas", "Types", "*"],
+	"sort": ["source-order", "alphabetical"],
+	"kindSortOrder": ["Function", "Class", "Interface", "TypeAlias", "Variable", "Enum"]
+}

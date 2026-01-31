@@ -9,6 +9,15 @@ import { DashboardService } from "@/service/dashboard.service";
  * Fetch simples, pas de formulaires
  */
 
+/**
+ * Récupère toutes les tâches assignées à l'utilisateur connecté.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis appelle le service dashboard
+ * pour obtenir la liste des tâches assignées à l'utilisateur.
+ *
+ * @returns Un objet {@link FetchResult} contenant la liste des tâches ou un message d'erreur.
+ */
 export async function getAllTasks(): Promise<FetchResult> {
 	// 1. Verify session
 	const session = await verifySession();
@@ -39,6 +48,15 @@ export async function getAllTasks(): Promise<FetchResult> {
 	};
 }
 
+/**
+ * Récupère tous les projets avec leurs tâches pour le dashboard.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis appelle le service dashboard
+ * pour obtenir tous les projets incluant leurs tâches respectives.
+ *
+ * @returns Un objet {@link FetchResult} contenant les projets avec leurs tâches ou un message d'erreur.
+ */
 export async function getAllTasksAllProjects(): Promise<FetchResult> {
 	// 1. Verify session
 	const session = await verifySession();

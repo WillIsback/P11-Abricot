@@ -9,6 +9,19 @@ import { MistralService } from "@/service/mistral.service";
 import { TaskService } from "@/service/task.service";
 
 type TasksType = z.infer<typeof Task>[];
+
+/**
+ * Génère des suggestions de tâches via l'IA Mistral.
+ *
+ * @remarks
+ * Cette Server Action utilise le service Mistral avec RAG (Retrieval-Augmented Generation)
+ * pour générer des tâches pertinentes basées sur les tâches existantes et le prompt utilisateur.
+ *
+ * @param tasks - La liste des tâches existantes du projet (utilisée pour le contexte RAG).
+ * @param _prevState - L'état précédent (requis par useActionState).
+ * @param formData - Les données du formulaire contenant le prompt utilisateur.
+ * @returns Un objet contenant les tâches générées ou un message d'erreur.
+ */
 export async function generateAiTask(
 	tasks: TasksType,
 	_prevState: unknown,
@@ -47,6 +60,19 @@ export async function generateAiTask(
 	};
 }
 
+/**
+ * Crée une tâche générée par l'IA dans un projet.
+ *
+ * @remarks
+ * Cette Server Action prend les données d'une tâche générée par Mistral
+ * et la crée dans le projet via le service tâche. Revalide le cache du projet après création.
+ *
+ * @param projectId - L'identifiant unique du projet où créer la tâche.
+ * @param title - Le titre de la tâche générée.
+ * @param description - La description de la tâche générée.
+ * @param dueDate - La date d'échéance de la tâche (format ISO).
+ * @returns Un objet contenant la tâche créée ou un message d'erreur.
+ */
 export async function createAiTask(
 	projectId: string,
 	title: string,

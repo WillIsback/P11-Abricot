@@ -11,6 +11,15 @@ const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY ?? "";
 // Flag pour éviter la double initialisation
 let isInitialized = false;
 
+/**
+ * Initialise la configuration LlamaIndex avec Mistral AI.
+ *
+ * @remarks
+ * Cette fonction configure le LLM et le modèle d'embedding Mistral.
+ * Elle n'est exécutée qu'une seule fois grâce au flag `isInitialized`.
+ *
+ * @internal
+ */
 const initializeLlamaIndex = () => {
 	if (isInitialized) return;
 
@@ -38,6 +47,11 @@ const CreateTasksZodSchema = z.object({
 	),
 });
 
+/**
+ * Type représentant une réponse réussie du service Mistral.
+ *
+ * @typeParam T - Le type des données retournées.
+ */
 type ServiceResult<T> = {
 	ok: boolean;
 	status: number;
@@ -45,6 +59,9 @@ type ServiceResult<T> = {
 	data: T;
 };
 
+/**
+ * Type représentant une erreur du service Mistral.
+ */
 type ServiceError = {
 	ok: false;
 	status: number;
@@ -54,6 +71,15 @@ type ServiceError = {
 
 type ServiceResponse<T> = ServiceResult<T> | ServiceError;
 
+/**
+ * Crée un objet d'erreur standardisé pour le service.
+ *
+ * @param status - Le code de statut HTTP.
+ * @param message - Le message d'erreur.
+ * @returns Un objet {@link ServiceError} formaté.
+ *
+ * @internal
+ */
 const createError = (status: number, message: string): ServiceError => ({
 	ok: false,
 	status,
@@ -61,7 +87,26 @@ const createError = (status: number, message: string): ServiceError => ({
 	data: null,
 });
 
+/**
+ * Service d'intégration avec Mistral AI pour la génération de tâches.
+ *
+ * @remarks
+ * Utilise LlamaIndex avec RAG (Retrieval-Augmented Generation) pour
+ * générer des tâches pertinentes basées sur le contexte du projet.
+ */
 export const MistralService = {
+	/**
+	 * Génère des suggestions de tâches via Mistral AI.
+	 *
+	 * @remarks
+	 * Si des tâches existantes sont fournies, utilise RAG pour contextualiser.
+	 * Sinon, utilise le LLM directement. Inclut rate limiting et timeout de 100s.
+	 *
+	 * @param existingTasks - Les tâches existantes du projet (pour le contexte RAG).
+	 * @param query - Le prompt utilisateur décrivant les tâches souhaitées.
+	 * @param token - Le token JWT pour le rate limiting.
+	 * @returns Un objet {@link ServiceResponse} contenant les tâches générées ou les erreurs.
+	 */
 	async generateTasks(
 		existingTasks: Task[],
 		query: string,
@@ -161,6 +206,18 @@ export const MistralService = {
 	},
 };
 
+/**
+ * Génère le prompt pour le mode RAG (avec tâches existantes).
+ *
+ * @remarks
+ * Le prompt inclut la date du jour et une plage de dates futures
+ * pour les échéances des tâches générées.
+ *
+ * @param query - Le prompt utilisateur.
+ * @returns Le prompt formaté pour l'envoi au LLM.
+ *
+ * @internal
+ */
 const generatePrompt = (query: string) => {
 	const today = format(new Date(), "yyyy-MM-dd");
 	const inOneMonth = format(addWeeks(new Date(), 4), "yyyy-MM-dd");
@@ -197,6 +254,18 @@ IMPORTANT:
 `;
 };
 
+/**
+ * Génère le prompt pour le mode direct (sans tâches existantes).
+ *
+ * @remarks
+ * Utilisé quand il n'y a pas de tâches existantes pour contextualiser.
+ * Le prompt inclut la date du jour et une plage de dates futures.
+ *
+ * @param query - Le prompt utilisateur.
+ * @returns Le prompt formaté pour l'envoi au LLM.
+ *
+ * @internal
+ */
 const generateDirectPrompt = (query: string) => {
 	const today = format(new Date(), "yyyy-MM-dd");
 	const inOneMonth = format(addWeeks(new Date(), 4), "yyyy-MM-dd");

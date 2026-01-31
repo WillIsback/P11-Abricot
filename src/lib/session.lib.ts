@@ -6,6 +6,9 @@ import * as z from "zod";
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
+/**
+ * Schéma Zod pour la validation du payload de session.
+ */
 const SchemaSessionPayload = z.object({
 	userId: z.string(),
 	token: z.string(),
@@ -13,9 +16,19 @@ const SchemaSessionPayload = z.object({
 	expiresAt: z.date().optional(),
 });
 
+/**
+ * Type représentant le payload d'une session utilisateur.
+ */
 type SessionPayload = z.infer<typeof SchemaSessionPayload>;
 
+/**
+ * Type représentant une création de session réussie.
+ */
 type SessionSuccess = { ok: true; token: string; expiresAt: Date };
+
+/**
+ * Type représentant un échec de création de session.
+ */
 type SessionFailure = {
 	ok: false;
 	status: number;
@@ -23,6 +36,16 @@ type SessionFailure = {
 	validationError: z.ZodError;
 };
 
+/**
+ * Chiffre un payload de session en JWT.
+ *
+ * @remarks
+ * Utilise l'algorithme HS256 et jose pour la signature JWT.
+ * Le token expire après 7 jours par défaut si aucune date n'est spécifiée.
+ *
+ * @param payload - Les données de session à chiffrer.
+ * @returns Un objet {@link SessionSuccess} avec le token ou {@link SessionFailure} en cas d'erreur.
+ */
 export async function encrypt(
 	payload: SessionPayload,
 ): Promise<SessionSuccess | SessionFailure> {
@@ -51,6 +74,16 @@ export async function encrypt(
 	return { ok: true, token: jwt, expiresAt };
 }
 
+/**
+ * Déchiffre un token JWT de session.
+ *
+ * @remarks
+ * Vérifie la signature et l'expiration du token.
+ * Retourne null si le token est invalide ou expiré.
+ *
+ * @param session - Le token JWT à déchiffrer (optionnel).
+ * @returns Le payload déchiffré ou null si invalide.
+ */
 export async function decrypt(session: string | undefined = "") {
 	if (!session) {
 		return null;
@@ -66,6 +99,18 @@ export async function decrypt(session: string | undefined = "") {
 	}
 }
 
+/**
+ * Crée une nouvelle session utilisateur et stocke le cookie.
+ *
+ * @remarks
+ * Génère un JWT, le stocke dans un cookie HTTP-only sécurisé
+ * avec une expiration de 7 jours.
+ *
+ * @param userId - L'identifiant unique de l'utilisateur.
+ * @param token - Le token d'authentification de l'API backend.
+ * @param role - Le rôle de l'utilisateur (default: "USER").
+ * @returns Un objet {@link SessionSuccess} ou {@link SessionFailure}.
+ */
 export async function createSession(
 	userId: string,
 	token: string,
@@ -90,6 +135,15 @@ export async function createSession(
 	return session;
 }
 
+/**
+ * Met à jour la session existante avec une nouvelle date d'expiration.
+ *
+ * @remarks
+ * Récupère le cookie de session existant, le déchiffre,
+ * et prolonge l'expiration de 7 jours.
+ *
+ * @returns null si la session n'existe pas ou est invalide.
+ */
 export async function updateSession() {
 	const session = (await cookies()).get("session")?.value;
 	const payload = await decrypt(session);
@@ -110,6 +164,12 @@ export async function updateSession() {
 	});
 }
 
+/**
+ * Supprime la session utilisateur en effaçant le cookie.
+ *
+ * @remarks
+ * Utilisée lors de la déconnexion pour invalider la session côté client.
+ */
 export async function deleteSession() {
 	const cookieStore = await cookies();
 	cookieStore.delete("session");

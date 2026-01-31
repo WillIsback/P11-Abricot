@@ -14,6 +14,19 @@ import {
 } from "@/schemas/frontend.schemas";
 import { CommentService } from "@/service/comment.service";
 
+/**
+ * Crée un nouveau commentaire sur une tâche via le formulaire.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, appelle le service commentaire
+ * pour créer le commentaire, et revalide le cache du projet concerné.
+ *
+ * @param projectId - L'identifiant unique du projet contenant la tâche.
+ * @param taskId - L'identifiant unique de la tâche à commenter.
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant le contenu du commentaire.
+ * @returns Un objet {@link FormActionState} contenant le commentaire créé ou les erreurs.
+ */
 export async function createComment(
 	projectId: string,
 	taskId: string,
@@ -53,6 +66,20 @@ export async function createComment(
 	return apiErrorToState(response);
 }
 
+/**
+ * Met à jour un commentaire existant via le formulaire de modification.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, appelle le service commentaire
+ * pour mettre à jour le commentaire, et revalide le cache du projet concerné.
+ *
+ * @param projectId - L'identifiant unique du projet contenant la tâche.
+ * @param taskId - L'identifiant unique de la tâche contenant le commentaire.
+ * @param commentId - L'identifiant unique du commentaire à modifier.
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant le contenu modifié.
+ * @returns Un objet {@link FormActionState} contenant le commentaire mis à jour ou les erreurs.
+ */
 export async function updateComment(
 	projectId: string,
 	taskId: string,
@@ -92,6 +119,18 @@ export async function updateComment(
 	return apiErrorToState(response);
 }
 
+/**
+ * Supprime un commentaire d'une tâche.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis appelle le service commentaire
+ * pour supprimer le commentaire et revalide le cache du projet.
+ *
+ * @param projectId - L'identifiant unique du projet contenant la tâche.
+ * @param taskId - L'identifiant unique de la tâche contenant le commentaire.
+ * @param commentId - L'identifiant unique du commentaire à supprimer.
+ * @returns Un objet {@link FormActionState} contenant le statut de l'opération.
+ */
 export async function deleteComment(
 	projectId: string,
 	taskId: string,

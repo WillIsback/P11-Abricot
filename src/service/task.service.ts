@@ -18,7 +18,21 @@ const CreateTaskResponse = z.object({
 // Accept undefined or any shape without failing validation.
 const DeleteTaskResponse = z.unknown().optional();
 
+/**
+ * Service de gestion des tâches pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Toutes les méthodes incluent rate limiting (1 requête/500ms) et timeout de 3 secondes.
+ */
 export const TaskService = {
+	/**
+	 * Crée une nouvelle tâche dans un projet via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param payload - Les données de la tâche à créer.
+	 * @returns Un objet {@link ApiResult} contenant la tâche créée ou les erreurs.
+	 */
 	createTask: async (
 		token: string,
 		projectId: string,
@@ -66,6 +80,15 @@ export const TaskService = {
 		}
 	},
 
+	/**
+	 * Met à jour une tâche existante via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param taskId - L'identifiant unique de la tâche à modifier.
+	 * @param payload - Les données modifiées de la tâche.
+	 * @returns Un objet {@link ApiResult} contenant la tâche mise à jour ou les erreurs.
+	 */
 	updateTask: async (
 		token: string,
 		projectId: string,
@@ -115,6 +138,14 @@ export const TaskService = {
 		}
 	},
 
+	/**
+	 * Supprime une tâche via l'API.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param taskId - L'identifiant unique de la tâche à supprimer.
+	 * @returns Un objet {@link ApiResult} avec le statut de suppression.
+	 */
 	deleteTask: async (
 		token: string,
 		projectId: string,
@@ -158,6 +189,18 @@ export const TaskService = {
 		}
 	},
 
+	/**
+	 * Crée une tâche sans rate limiting (pour création en lot par l'IA).
+	 *
+	 * @remarks
+	 * Utilisée par le service Mistral pour créer plusieurs tâches générées par l'IA.
+	 * Ne possède pas de rate limiting pour permettre la création en séquence rapide.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @param payload - Les données de la tâche à créer.
+	 * @returns Un objet {@link ApiResult} contenant la tâche créée ou les erreurs.
+	 */
 	createMultipleTask: async (
 		token: string,
 		projectId: string,

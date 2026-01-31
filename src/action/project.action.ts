@@ -19,6 +19,16 @@ import { ProjectService } from "@/service/project.service";
  * GET ACTIONS (simples)
  ****************************************************************
  */
+
+/**
+ * Récupère tous les projets de l'utilisateur connecté.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis appelle le service projet
+ * pour obtenir la liste complète des projets.
+ *
+ * @returns Un objet {@link FetchResult} contenant la liste des projets ou un message d'erreur.
+ */
 export async function getAllProjects(): Promise<FetchResult> {
 	// 1. Verify session
 	const session = await verifySession();
@@ -47,6 +57,16 @@ export async function getAllProjects(): Promise<FetchResult> {
 	};
 }
 
+/**
+ * Récupère toutes les tâches d'un projet spécifique.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis récupère les tâches
+ * associées au projet via le service projet.
+ *
+ * @param projectId - L'identifiant unique du projet.
+ * @returns Un objet {@link FetchResult} contenant la liste des tâches ou un message d'erreur.
+ */
 export async function getProjectTask(projectId: string): Promise<FetchResult> {
 	// 1. Verify session
 	const session = await verifySession();
@@ -81,6 +101,18 @@ export async function getProjectTask(projectId: string): Promise<FetchResult> {
 /***************************************************************
  * POST/PUT ACTIONS (avec formulaire)
  ****************************************************************
+ */
+
+/**
+ * Crée un nouveau projet via le formulaire de création.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, appelle le service projet
+ * pour créer le projet, et revalide le cache des projets.
+ *
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant les informations du projet.
+ * @returns Un objet {@link FormActionState} contenant le projet créé ou les erreurs de validation.
  */
 export async function createProject(
 	_state: FormActionState,
@@ -121,6 +153,18 @@ export async function createProject(
 	return apiErrorToState(response);
 }
 
+/**
+ * Met à jour un projet existant via le formulaire de modification.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, appelle le service projet
+ * pour mettre à jour le projet, et revalide le cache des projets.
+ *
+ * @param projectId - L'identifiant unique du projet à modifier.
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant les informations modifiées.
+ * @returns Un objet {@link FormActionState} contenant le projet mis à jour ou les erreurs de validation.
+ */
 export async function updateProject(
 	projectId: string,
 	_state: FormActionState,

@@ -31,7 +31,25 @@ const UpdatePasswordResponseSchema = z.unknown().optional();
 type UpdatePasswordResponse = z.infer<typeof UpdatePasswordResponseSchema>;
 type UsersResponse = z.infer<typeof Users>;
 
+/**
+ * Service de gestion des utilisateurs pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Les méthodes de lecture sont mises en cache avec React `cache()`.
+ * Les méthodes de mutation incluent rate limiting.
+ */
 export const userService = {
+	/**
+	 * Recherche des utilisateurs par nom ou email.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()`. Timeout de 3 secondes.
+	 * Utilisée pour l'autocomplétion dans les formulaires d'assignation.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param query - La chaîne de recherche (minimum 2 caractères).
+	 * @returns Un objet {@link ApiResult} contenant la liste des utilisateurs ou les erreurs.
+	 */
 	getUsersSearch: cache(
 		async (token: string, query: string): Promise<ApiResult<UsersResponse>> => {
 			// // 1. Vérifier rate limit (utiliser token comme identifiant unique)
@@ -67,6 +85,16 @@ export const userService = {
 		},
 	),
 
+	/**
+	 * Met à jour le profil de l'utilisateur connecté.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param payload - Les données modifiées du profil (nom et/ou email).
+	 * @returns Un objet {@link ApiResult} contenant le profil mis à jour ou les erreurs.
+	 */
 	updateProfile: async (
 		token: string,
 		payload: z.infer<typeof UpdateProfilePayloadSchematic>,
@@ -113,6 +141,16 @@ export const userService = {
 			};
 		}
 	},
+	/**
+	 * Met à jour le mot de passe de l'utilisateur connecté.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param payload - L'ancien et le nouveau mot de passe.
+	 * @returns Un objet {@link ApiResult} avec le statut de l'opération.
+	 */
 	updatePassword: async (
 		token: string,
 		payload: z.infer<typeof UpdatePasswordSchema>,

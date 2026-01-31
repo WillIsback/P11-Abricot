@@ -29,7 +29,24 @@ type ProjectResponse = z.infer<typeof Projectobj>;
 type ProjectsResponse = z.infer<typeof Projects>;
 type TaksResponse = z.infer<typeof Tasks>;
 
+/**
+ * Service de gestion des projets pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Toutes les méthodes de mutation incluent rate limiting et timeout.
+ * Les méthodes de lecture sont mises en cache avec React `cache()`.
+ */
 export const ProjectService = {
+	/**
+	 * Crée un nouveau projet via l'API.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param payload - Les données du projet à créer.
+	 * @returns Un objet {@link ApiResult} contenant le projet créé ou les erreurs.
+	 */
 	createProject: async (
 		token: string,
 		payload: z.infer<typeof CreateProjectSchema>,
@@ -78,6 +95,17 @@ export const ProjectService = {
 		}
 	},
 
+	/**
+	 * Met à jour un projet existant via l'API.
+	 *
+	 * @remarks
+	 * Inclut rate limiting (1 requête/500ms) et timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet à modifier.
+	 * @param payload - Les données modifiées du projet.
+	 * @returns Un objet {@link ApiResult} contenant le projet mis à jour ou les erreurs.
+	 */
 	updateProject: async (
 		token: string,
 		projectId: string,
@@ -127,6 +155,16 @@ export const ProjectService = {
 		}
 	},
 
+	/**
+	 * Récupère tous les projets de l'utilisateur.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()` et utilise
+	 * le tag "projects" pour l'invalidation. Timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @returns Un objet {@link ApiResult} contenant la liste des projets ou les erreurs.
+	 */
 	getProjects: cache(
 		async (token: string): Promise<ApiResult<ProjectsResponse>> => {
 			try {
@@ -154,6 +192,17 @@ export const ProjectService = {
 		},
 	),
 
+	/**
+	 * Récupère toutes les tâches d'un projet spécifique.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()` et utilise
+	 * le tag "projects" pour l'invalidation. Timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @param projectId - L'identifiant unique du projet.
+	 * @returns Un objet {@link ApiResult} contenant la liste des tâches ou les erreurs.
+	 */
 	getProjectTask: cache(
 		async (
 			token: string,

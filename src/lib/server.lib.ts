@@ -4,6 +4,11 @@ import * as z from "zod";
 
 import { ErrorSchema, Success } from "@/schemas/backend.schemas";
 
+/**
+ * Type représentant une réponse API réussie.
+ *
+ * @typeParam T - Le type des données retournées.
+ */
 type ApiSuccess<T> = {
 	ok: true;
 	status: number;
@@ -11,6 +16,9 @@ type ApiSuccess<T> = {
 	data: T;
 };
 
+/**
+ * Type représentant une réponse API échouée.
+ */
 type ApiFailure = {
 	ok: false;
 	status: number;
@@ -21,8 +29,13 @@ type ApiFailure = {
 };
 
 /**
- * Pour les actions avec formulaires (useActionState)
- * Contient les infos pour la validation et la gestion du formulaire
+ * Type pour les états des actions avec formulaires (useActionState).
+ *
+ * @remarks
+ * Contient les informations nécessaires pour la validation et la gestion du formulaire,
+ * incluant les erreurs de validation côté client et API.
+ *
+ * @typeParam T - Le type des données retournées en cas de succès.
  */
 type FormActionState<T = unknown> =
 	| {
@@ -37,8 +50,12 @@ type FormActionState<T = unknown> =
 	| undefined;
 
 /**
- * Pour les actions simples (fetch, sans formulaire)
- * Minimaliste et directe
+ * Type pour les actions simples (fetch, sans formulaire).
+ *
+ * @remarks
+ * Structure minimaliste et directe pour les résultats de fetch.
+ *
+ * @typeParam T - Le type des données retournées.
  */
 type FetchResult<T = unknown> = {
 	ok: boolean;
@@ -46,14 +63,39 @@ type FetchResult<T = unknown> = {
 	message?: string;
 };
 
+/**
+ * Type union représentant le résultat d'une requête API.
+ *
+ * @typeParam T - Le type des données en cas de succès.
+ */
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
+/**
+ * Valide les données d'une réponse HTTP avec un schéma Zod.
+ *
+ * @typeParam T - Le type attendu après validation.
+ * @param res - La réponse HTTP à valider.
+ * @param schema - Le schéma Zod pour la validation.
+ * @returns Le résultat de la validation Zod (SafeParseReturnType).
+ */
 const validateResponse = async <T>(res: Response, schema: z.ZodType<T>) => {
 	const responseData = await res.json();
 	// console.log("responseData : ", responseData);
 	return schema.safeParse(responseData);
 };
 
+/**
+ * Gère une réponse HTTP et la transforme en ApiResult typé.
+ *
+ * @remarks
+ * Cette fonction parse la réponse, valide les données avec le schéma fourni,
+ * et retourne un objet standardisé avec le statut de succès ou d'échec.
+ *
+ * @typeParam T - Le type des données attendues en cas de succès.
+ * @param res - La réponse HTTP à traiter.
+ * @param schema - Le schéma Zod pour valider les données.
+ * @returns Un objet {@link ApiResult} contenant les données ou les erreurs.
+ */
 const handleFetch = async <T>(
 	res: Response,
 	schema: z.ZodType<T>,
@@ -107,6 +149,12 @@ const handleFetch = async <T>(
 
 // ===== HELPERS =====
 
+/**
+ * Convertit une erreur API en état de formulaire.
+ *
+ * @param response - L'objet ApiFailure contenant les détails de l'erreur.
+ * @returns Un objet {@link FormActionState} formaté pour l'affichage des erreurs.
+ */
 const apiErrorToState = (response: ApiFailure): FormActionState => ({
 	ok: false,
 	status: response.status,
@@ -114,6 +162,12 @@ const apiErrorToState = (response: ApiFailure): FormActionState => ({
 	apiValidationError: response.validationError,
 });
 
+/**
+ * Convertit une erreur de validation Zod en état de formulaire.
+ *
+ * @param validatedFields - Le résultat d'échec de la validation Zod.
+ * @returns Un objet {@link FormActionState} contenant les erreurs de validation.
+ */
 const validationErrorToState = (
 	validatedFields: z.ZodSafeParseError<unknown>,
 ): FormActionState => ({
@@ -126,10 +180,18 @@ const validationErrorToState = (
 // ===== TIMEOUT & RATE LIMIT =====
 
 /**
- * Wrapper pour ajouter un timeout à une Promise
- * @param promise La Promise à exécuter
- * @param timeoutMs Durée max en millisecondes (default: 3000ms)
- * @param message Message d'erreur personnalisé
+ * Wrapper pour ajouter un timeout à une Promise.
+ *
+ * @remarks
+ * Utilise Promise.race pour faire échouer la requête si elle dépasse le délai spécifié.
+ *
+ * @typeParam T - Le type de retour de la Promise.
+ * @param promise - La Promise à exécuter.
+ * @param timeoutMs - Durée max en millisecondes (default: 3000ms).
+ * @param message - Message d'erreur personnalisé.
+ * @returns La valeur résolue de la Promise ou rejette avec une erreur de timeout.
+ *
+ * @throws Error si le timeout est atteint avant la résolution de la Promise.
  */
 export async function withTimeout<T>(
 	promise: Promise<T>,
@@ -148,11 +210,16 @@ export async function withTimeout<T>(
 const rateLimitMap = new Map<string, number[]>();
 
 /**
- * Vérifie le rate limit par userId
- * @param userId Identifiant unique de l'utilisateur (session.userId ou session.token)
- * @param windowMs Fenêtre de temps en ms (default: 500ms)
- * @param maxRequests Nombre max de requêtes dans la fenêtre (default: 1)
- * @returns true si OK, false si rate limit atteint
+ * Vérifie le rate limit par userId avec une fenêtre glissante.
+ *
+ * @remarks
+ * Utilise une Map en mémoire pour tracker les timestamps des requêtes.
+ * Les timestamps expirés sont automatiquement nettoyés à chaque appel.
+ *
+ * @param userId - Identifiant unique de l'utilisateur (session.userId ou session.token).
+ * @param windowMs - Fenêtre de temps en ms (default: 500ms).
+ * @param maxRequests - Nombre max de requêtes dans la fenêtre (default: 1).
+ * @returns `true` si la requête est autorisée, `false` si le rate limit est atteint.
  */
 export function checkRateLimit(
 	userId: string,

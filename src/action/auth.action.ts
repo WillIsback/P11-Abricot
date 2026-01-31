@@ -13,15 +13,33 @@ import { sanitizeString } from "@/lib/utils";
 import { LoginFormSchema, SignupFormSchema } from "@/schemas/frontend.schemas";
 import { AuthService } from "@/service/auth.service";
 
+/**
+ * Déconnecte l'utilisateur en supprimant sa session et le redirige vers la page de connexion.
+ *
+ * @remarks
+ * Cette fonction est une Server Action Next.js qui supprime le cookie de session
+ * et effectue une redirection côté serveur.
+ *
+ * @throws Redirige automatiquement vers `/login` après suppression de la session.
+ */
 export async function logout() {
 	await deleteSession();
 	redirect("/login");
 }
 
 /**
- * Les composants clients appellent ces actions, pas directement les services.
+ * Inscrit un nouvel utilisateur via le formulaire d'inscription.
+ *
+ * @remarks
+ * Cette Server Action valide les champs du formulaire, sanitize les données,
+ * appelle le service d'authentification, crée une session et redirige vers le dashboard.
+ *
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant firstName, lastName, email et password.
+ * @returns Un objet {@link FormActionState} contenant le statut de l'opération et les éventuelles erreurs.
+ *
+ * @throws Redirige automatiquement vers `/dashboard` en cas de succès.
  */
-
 export async function signup(
 	_state: FormActionState,
 	formData: FormData,
@@ -70,6 +88,19 @@ export async function signup(
 	redirect("/dashboard");
 }
 
+/**
+ * Authentifie un utilisateur via le formulaire de connexion.
+ *
+ * @remarks
+ * Cette Server Action valide les identifiants, appelle le service d'authentification,
+ * crée une session et redirige vers le dashboard.
+ *
+ * @param _state - L'état précédent du formulaire (requis par useActionState).
+ * @param formData - Les données du formulaire contenant email et password.
+ * @returns Un objet {@link FormActionState} contenant le statut de l'opération et les éventuelles erreurs.
+ *
+ * @throws Redirige automatiquement vers `/dashboard` en cas de succès.
+ */
 export async function login(
 	_state: FormActionState,
 	formData: FormData,
@@ -110,6 +141,15 @@ export async function login(
 	redirect("/dashboard");
 }
 
+/**
+ * Récupère les informations du profil de l'utilisateur connecté.
+ *
+ * @remarks
+ * Cette Server Action vérifie la session, puis récupère les données du profil
+ * via le service d'authentification.
+ *
+ * @returns Un objet {@link FetchResult} contenant les données du profil utilisateur ou un message d'erreur.
+ */
 export async function profile(): Promise<FetchResult> {
 	// 1. Verify session
 	const session = await verifySession();

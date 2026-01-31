@@ -16,7 +16,22 @@ const ProjectsWithTasks = z.object({
 type TaksResponse = z.infer<typeof Tasks>;
 type ProjectsWithTasksResponse = z.infer<typeof ProjectsWithTasks>;
 
+/**
+ * Service du dashboard pour communiquer avec l'API backend.
+ *
+ * @remarks
+ * Toutes les méthodes sont mises en cache avec React `cache()` et incluent un timeout de 3 secondes.
+ */
 export const DashboardService = {
+	/**
+	 * Récupère toutes les tâches assignées à l'utilisateur connecté.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()`. Timeout de 3 secondes.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @returns Un objet {@link ApiResult} contenant la liste des tâches ou les erreurs.
+	 */
 	getAssignedTasks: cache(
 		async (token: string): Promise<ApiResult<TaksResponse>> => {
 			try {
@@ -42,6 +57,16 @@ export const DashboardService = {
 			}
 		},
 	),
+	/**
+	 * Récupère tous les projets avec leurs tâches.
+	 *
+	 * @remarks
+	 * Cette méthode est mise en cache avec React `cache()`. Timeout de 3 secondes.
+	 * Utilisée pour afficher la vue globale du dashboard.
+	 *
+	 * @param token - Le token JWT d'authentification.
+	 * @returns Un objet {@link ApiResult} contenant les projets avec leurs tâches ou les erreurs.
+	 */
 	getProjectWithTasks: cache(
 		async (token: string): Promise<ApiResult<ProjectsWithTasksResponse>> => {
 			try {
