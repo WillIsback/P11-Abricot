@@ -66,6 +66,16 @@ Le project fonctionne avec un [fork](https://github.com/WillIsback/dev-react-P11
 pnpm install
 ```
 
+### Paramètrage
+
+Créer le fichier .env basé sur le modele example.env
+
+```bash
+BACKEND_PUBLIC_API_URL=http://localhost:8000
+SESSION_SECRET='ton_super_secret'
+MISTRAL_API_KEY='ta_clef_api_MistrelAI'
+```
+
 ### Développement
 
 ```bash
