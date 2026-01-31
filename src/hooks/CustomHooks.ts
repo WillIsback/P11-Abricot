@@ -2,6 +2,7 @@ import type React from "react";
 import {
 	type DependencyList,
 	use,
+	useCallback,
 	useEffect,
 	useState,
 	useTransition,
@@ -82,13 +83,13 @@ export function useFormValidation(
 	const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
 
 	if (!formRef) throw Error("le formRef est null");
-	// Fonction de réinitialisation du formulaire
-	const resetForm = () => {
+	// Fonction de réinitialisation du formulaire (stable grâce à useCallback)
+	const resetForm = useCallback(() => {
 		setFieldErrors({});
 		setTouchedFields(new Set());
 		setIsFormValid(false);
 		formRef.current?.reset();
-	};
+	}, [formRef]);
 
 	const validateForm = (fieldName?: string) => {
 		// Marquer le champ comme touché

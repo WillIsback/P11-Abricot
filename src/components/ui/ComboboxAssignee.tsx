@@ -18,7 +18,8 @@ import {
 	useComboboxAnchor,
 } from "@/components/ui/combobox";
 import { useProject } from "@/hooks/CustomHooks";
-import { User } from "@/schemas/backend.schemas";
+import type { User } from "@/schemas/backend.schemas";
+
 type UserType = z.infer<typeof User>;
 
 interface ComboboxAssigneeProps {

@@ -7,6 +7,13 @@ import Chips from "../ui/Chips";
 import DashBoardKanban from "./DashboardKanban";
 import DashBoardTasks from "./DashboardTasks";
 
+const priorityOrder: Record<string, number> = {
+	LOW: 0,
+	MEDIUM: 1,
+	HIGH: 2,
+	URGENT: 3,
+};
+
 export default function DisplayDashboardContent() {
 	const searchParams = useSearchParams();
 	const chips = searchParams.get("chips");
@@ -23,9 +30,11 @@ export default function DisplayDashboardContent() {
 		);
 	if (!isTasks(state?.data)) return <p>error</p>;
 
+	const sortedTasks = [...state.data.tasks].sort(
+		(t1, t2) => priorityOrder[t2.priority] - priorityOrder[t1.priority],
+	);
 	const q = search?.toLowerCase() ?? "";
-
-	const filteredTasks = state?.data.tasks.filter((t) => {
+	const filteredTasks = sortedTasks.filter((t) => {
 		const okSearch =
 			!q ||
 			t.title.toLowerCase().includes(q) ||

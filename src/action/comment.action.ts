@@ -8,13 +8,15 @@ import {
 	validationErrorToState,
 } from "@/lib/server.lib";
 import { formDataToObject } from "@/lib/utils";
-import { CreateCommentSchema, UpdateCommentSchema } from "@/schemas/frontend.schemas";
+import {
+	CreateCommentSchema,
+	UpdateCommentSchema,
+} from "@/schemas/frontend.schemas";
 import { CommentService } from "@/service/comment.service";
-
 
 export async function createComment(
 	projectId: string,
-  taskId: string,
+	taskId: string,
 	_state: FormActionState,
 	formData: FormData,
 ): Promise<FormActionState> {
@@ -36,7 +38,7 @@ export async function createComment(
 	const response = await CommentService.postComment(
 		session.token as string,
 		projectId,
-    taskId,
+		taskId,
 		validatedFields.data,
 	);
 	if (response.ok) {

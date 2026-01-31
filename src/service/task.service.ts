@@ -157,7 +157,7 @@ export const TaskService = {
 			};
 		}
 	},
-	
+
 	createMultipleTask: async (
 		token: string,
 		projectId: string,

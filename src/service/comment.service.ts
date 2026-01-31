@@ -1,25 +1,25 @@
+import * as z from "zod";
 import {
 	type ApiResult,
 	checkRateLimit,
 	handleFetch,
 	withTimeout,
 } from "@/lib/server.lib";
-import { CreateCommentSchema } from "@/schemas/frontend.schemas";
 import { Comment } from "@/schemas/backend.schemas";
-import * as z from 'zod';
+import { CreateCommentSchema } from "@/schemas/frontend.schemas";
 
 const BASE_URL = process.env.API_URL || "http://localhost:8000";
 
 const CommentResponseSchema = z.object({
-  comment: Comment
-})
+	comment: Comment,
+});
 const DeleteCommentResponse = z.unknown().optional();
 
 export const CommentService = {
 	postComment: async (
 		token: string,
 		projectId: string,
-    taskId: string,
+		taskId: string,
 		payload: z.infer<typeof CreateCommentSchema>,
 	): Promise<ApiResult<z.infer<typeof CommentResponseSchema>>> => {
 		// 1. Vérifier rate limit (utiliser token comme identifiant unique)
@@ -66,7 +66,7 @@ export const CommentService = {
 	updateComment: async (
 		token: string,
 		projectId: string,
-    taskId: string,
+		taskId: string,
 		commentId: string,
 		payload: z.infer<typeof CreateCommentSchema>,
 	): Promise<ApiResult<z.infer<typeof CommentResponseSchema>>> => {
@@ -85,14 +85,17 @@ export const CommentService = {
 		try {
 			// 2. Ajouter timeout de 3s
 			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`, {
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
+				fetch(
+					`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`,
+					{
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify(payload),
 					},
-					body: JSON.stringify(payload),
-				}),
+				),
 				3000,
 			);
 			return await handleFetch(res, CommentResponseSchema);
@@ -129,13 +132,16 @@ export const CommentService = {
 		try {
 			// 2. Ajouter timeout de 3s
 			const res = await withTimeout(
-				fetch(`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`, {
-					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
+				fetch(
+					`${BASE_URL}/projects/${projectId}/tasks/${taskId}/comments/${commentId}`,
+					{
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
 					},
-				}),
+				),
 				3000,
 			);
 			return await handleFetch(res, DeleteCommentResponse);
@@ -154,4 +160,4 @@ export const CommentService = {
 			};
 		}
 	},
-}
+};

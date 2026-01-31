@@ -160,25 +160,28 @@ export default function UpdateTask({
 					<fieldset className="flex flex-col gap-4">
 						<legend className="body-s">Statut :</legend>
 
-						<input type="hidden" name="status" value={selectedStatus} />
-						<div className="flex gap-2" role="radiogroup">
+						<div className="flex gap-2">
 							{status.map((s) => {
 								const isSelected = selectedStatus === s;
 								return (
-									<button
+									<label
 										key={s}
-										type="button"
-										role="radio"
-										aria-checked={isSelected}
-										onClick={() => handleStatusSelection(s)}
 										className={`cursor-pointer rounded p-1 transition-all ${
 											isSelected
 												? "ring-2 ring-offset-1 ring-blue-500 bg-gray-50 rounded-2xl"
 												: "opacity-70 hover:opacity-100"
 										}`}
 									>
+										<input
+											type="radio"
+											name="status"
+											value={s}
+											checked={isSelected}
+											onChange={() => handleStatusSelection(s)}
+											className="sr-only"
+										/>
 										<Tags label={mapStatusLabel[s]} color={mapStatusColor[s]} />
-									</button>
+									</label>
 								);
 							})}
 						</div>

@@ -39,7 +39,8 @@ export default function ComboboxContributor({
 }: ComboboxContributorProps) {
 	const anchor = useComboboxAnchor();
 	const [query, setQuery] = React.useState<string>("");
-	const [selectedUsers, setSelectedUsers] = React.useState<SearchUser[]>(defaultValue);
+	const [selectedUsers, setSelectedUsers] =
+		React.useState<SearchUser[]>(defaultValue);
 	const [searchResults, setSearchResults] = React.useState<SearchUser[]>([]);
 	const [isPending, startTransition] = useTransition();
 
@@ -74,7 +75,12 @@ export default function ComboboxContributor({
 			<Combobox
 				multiple
 				autoHighlight
-				items={[...selectedUsers, ...searchResults.filter(r => !selectedUsers.some(s => s.id === r.id))]}
+				items={[
+					...selectedUsers,
+					...searchResults.filter(
+						(r) => !selectedUsers.some((s) => s.id === r.id),
+					),
+				]}
 				itemToStringValue={(user) => (user as SearchUser).id}
 				value={selectedUsers}
 				onValueChange={(newValue) => {

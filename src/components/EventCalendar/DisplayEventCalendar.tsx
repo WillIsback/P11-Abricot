@@ -39,7 +39,7 @@ export default function DisplayEventCalendar({ tasks }: { tasks: TaskType[] }) {
 	const events = mapTasksToEvents(tasks || mockTasks);
 
 	// Handlers
-	const handleDayClick = (date: Date) => {
+	const handleDayClick = () => {
 		setIsEventTaskOpen(true);
 	};
 

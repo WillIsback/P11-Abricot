@@ -122,8 +122,6 @@ export const isProjects = (projects: unknown): projects is ProjectsType => {
 	return ProjectSchema.safeParse(projects).success;
 };
 
-
-
 /**
  * Génère un nom complet à partir du nom actuel et des modifications partielles.
  * Gère les noms composés (ex: "Jean Pierre Dupont" → prénom: "Jean", nom: "Pierre Dupont")
@@ -143,4 +141,4 @@ export const generateName = (
 	const newLastName = lastName?.trim() || currentLastName;
 
 	return `${newFirstName} ${newLastName}`.trim();
-}
+};

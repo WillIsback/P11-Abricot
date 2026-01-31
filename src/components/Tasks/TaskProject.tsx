@@ -90,11 +90,11 @@ export default function TaskProject({
 				</button>
 			</div>
 			{isCollapse && (
-				<Comments 
-					projectId={projectId} 
-					taskId={task.id} 
-					comments={task.comments} 
-					projectOwnerId={projectOwner} 
+				<Comments
+					projectId={projectId}
+					taskId={task.id}
+					comments={task.comments}
+					projectOwnerId={projectOwner}
 					currentUserId={currentUserId}
 					userInitial={userInitial}
 				/>

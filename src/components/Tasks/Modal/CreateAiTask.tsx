@@ -75,20 +75,19 @@ export default function CreateAiTask({
 				id: crypto.randomUUID(),
 			}));
 			const handleMockData = () => {
-				if(tasksWithIds){
+				if (tasksWithIds) {
 					setTasksList(tasksWithIds);
 				}
-			}
+			};
 			handleMockData();
-			
 		} else if (state?.data?.tasks) {
 			const tasksWithIds = state.data.tasks.map((task: Omit<AiTask, "id">) => ({
 				...task,
 				id: crypto.randomUUID(),
 			}));
-			const handleMistralData = (tasksWithIds: AiTask[]) =>{
+			const handleMistralData = (tasksWithIds: AiTask[]) => {
 				setTasksList(tasksWithIds);
-			}
+			};
 			handleMistralData(tasksWithIds);
 		}
 	}, [isTestMode, state?.data?.tasks]);
@@ -116,7 +115,7 @@ export default function CreateAiTask({
 		});
 		onOpenChange(!ok);
 	};
-	
+
 	// Nettoyer quand le modal se ferme
 	const handleOpenChange = (isOpen: boolean) => {
 		onOpenChange(isOpen);
@@ -164,7 +163,7 @@ export default function CreateAiTask({
 						<div className="flex gap-2 items-center">
 							<Sparkle className="fill-brand-dark stroke-0" />
 							<DialogTitle>
-								{tasksList.length===0 ? "Créer une tâche" : "Vos tâches..."}
+								{tasksList.length === 0 ? "Créer une tâche" : "Vos tâches..."}
 							</DialogTitle>
 						</div>
 						<DialogDescription className="sr-only">
@@ -222,7 +221,9 @@ export default function CreateAiTask({
 					</div>
 
 					<form action={formAction} className="flex flex-col gap-6 flex-1">
-						{tasksList.length > 0 &&<hr className="-mx-18.25 w-[calc(100%+8)]" />}
+						{tasksList.length > 0 && (
+							<hr className="-mx-18.25 w-[calc(100%+8)]" />
+						)}
 						<div className="flex flex-1 gap-3.5 px-8 py-4.5 rounded-[80px] bg-gray-50 justify-between">
 							<label htmlFor="prompt" className="sr-only">
 								Décrivez les tâches à générer par IA

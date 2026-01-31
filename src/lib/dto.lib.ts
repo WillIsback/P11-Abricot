@@ -20,4 +20,3 @@ export async function getProjectDetail(projectId: string) {
 		return project;
 	}
 }
-

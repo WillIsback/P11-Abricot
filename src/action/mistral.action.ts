@@ -34,7 +34,7 @@ export async function generateAiTask(
 		query,
 		session.token as string,
 	);
-	console.log('response',response)
+	console.log("response", response);
 	if (response.ok)
 		return {
 			ok: true,

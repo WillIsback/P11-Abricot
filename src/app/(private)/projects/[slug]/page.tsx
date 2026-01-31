@@ -16,7 +16,6 @@ import { getProjectDetail } from "@/lib/dto.lib";
 import { isUser } from "@/lib/utils";
 import type { Task } from "@/schemas/backend.schemas";
 
-
 interface Tasks {
 	tasks: z.infer<typeof Task>[];
 }
@@ -33,6 +32,13 @@ export async function generateMetadata({
 		description: project?.description || "Détail du projet",
 	};
 }
+
+const priorityOrder: Record<string, number> = {
+	LOW: 0,
+	MEDIUM: 1,
+	HIGH: 2,
+	URGENT: 3,
+};
 
 type ProjetPageProps = {
 	searchParams: Promise<{
@@ -70,9 +76,12 @@ export default async function Projet({
 	const userInitial = getInitialsFromName(profileData.data.user.name);
 	const userID = profileData.data.user.id;
 
+	const sortedTasks = [...tasks].sort(
+		(t1, t2) => priorityOrder[t2.priority] - priorityOrder[t1.priority],
+	);
 	const q = search?.toLowerCase() ?? "";
 
-	const filteredTasks = tasks.filter((t) => {
+	const filteredTasks = sortedTasks.filter((t) => {
 		const okStatus = !status || t.status === status;
 		const okSearch =
 			!q ||

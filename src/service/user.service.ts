@@ -19,18 +19,17 @@ const Users = z.object({
 });
 
 const UpdateProfileResponse = z.object({
-	user: User
-})
+	user: User,
+});
 
 const UpdateProfilePayloadSchematic = z.object({
 	name: z.string().optional(),
 	email: z.email().optional(),
 });
-const UpdatePasswordResponseSchema  = z.unknown().optional();
+const UpdatePasswordResponseSchema = z.unknown().optional();
 
 type UpdatePasswordResponse = z.infer<typeof UpdatePasswordResponseSchema>;
 type UsersResponse = z.infer<typeof Users>;
-
 
 export const userService = {
 	getUsersSearch: cache(

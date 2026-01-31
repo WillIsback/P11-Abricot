@@ -37,14 +37,14 @@ export default function UpdateProject({
 	);
 	const formRef = useRef<HTMLFormElement>(null);
 	const { members } = useProject();
-	
+
 	// Transformer les membres existants au format attendu par ComboboxContributor
 	const existingContributors = members.map((member) => ({
 		id: member.user.id,
 		email: member.user.email,
 		name: member.user.name,
 	}));
-	
+
 	const [
 		isFormValid,
 		resetForm,

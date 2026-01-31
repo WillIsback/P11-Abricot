@@ -3,9 +3,17 @@
 import { PencilLine, Trash2 } from "lucide-react";
 import { useActionState, useState } from "react";
 import type * as z from "zod";
-import { createComment, deleteComment, updateComment } from "@/action/comment.action";
-import { canEditComment, getInitialsFromName, isUserOwner } from "@/lib/client.lib";
-import { Comment as CommentSchema } from "@/schemas/backend.schemas";
+import {
+	createComment,
+	deleteComment,
+	updateComment,
+} from "@/action/comment.action";
+import {
+	canEditComment,
+	getInitialsFromName,
+	isUserOwner,
+} from "@/lib/client.lib";
+import type { Comment as CommentSchema } from "@/schemas/backend.schemas";
 import CustomButton from "./CustomButton";
 import UserIcon from "./UserIcon";
 
@@ -27,12 +35,26 @@ function CommentItem({
 	currentUserId,
 }: CommentItemProps) {
 	const [isEditing, setIsEditing] = useState(false);
-	const boundUpdateComment = updateComment.bind(null, projectId, taskId, comment.id);
-	const [stateUpdate, actionUpdate, pendingUpdate] = useActionState(boundUpdateComment, undefined);
-	const canEdit = canEditComment(comment.authorId, projectOwnerId, currentUserId);
+	const boundUpdateComment = updateComment.bind(
+		null,
+		projectId,
+		taskId,
+		comment.id,
+	);
+	const [stateUpdate, actionUpdate, pendingUpdate] = useActionState(
+		boundUpdateComment,
+		undefined,
+	);
+	const canEdit = canEditComment(
+		comment.authorId,
+		projectOwnerId,
+		currentUserId,
+	);
 
 	const handleDelete = async () => {
-		const confirmed = window.confirm("Voulez-vous vraiment supprimer ce commentaire ?");
+		const confirmed = window.confirm(
+			"Voulez-vous vraiment supprimer ce commentaire ?",
+		);
 		if (confirmed) {
 			await deleteComment(projectId, taskId, comment.id);
 		}
@@ -107,7 +129,7 @@ function CommentItem({
 						<button
 							className="flex gap-2 flex-nowrap items-center cursor-pointer"
 							type="button"
-							onClick={() =>setIsEditing(true)}
+							onClick={() => setIsEditing(true)}
 						>
 							<PencilLine size={14} stroke="#6B7280" />
 							<span className="text-gray-600 body-xs">Modifier</span>
@@ -135,7 +157,10 @@ export default function Comments({
 	userInitial: string;
 }) {
 	const boundCreateComment = createComment.bind(null, projectId, taskId);
-	const [stateCreate, actionCreate, pendingCreate] = useActionState(boundCreateComment, undefined);
+	const [stateCreate, actionCreate, pendingCreate] = useActionState(
+		boundCreateComment,
+		undefined,
+	);
 
 	return (
 		<div className="flex flex-col gap-4">

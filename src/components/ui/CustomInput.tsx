@@ -1,8 +1,9 @@
 import ComboboxAssignee from "./ComboboxAssignee";
+import type { SearchUser } from "./ComboboxContributor";
 import ComboboxContributor from "./ComboboxContributor";
 import ComboboxPriority from "./ComboboxPriority";
 import DatePicker from "./DatePicker";
-import type { SearchUser } from "./ComboboxContributor";
+
 type InputType =
 	| "DatePicker"
 	| "Assignee"

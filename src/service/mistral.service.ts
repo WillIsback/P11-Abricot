@@ -1,5 +1,5 @@
 import { MistralAI, MistralAIEmbedding } from "@llamaindex/mistral";
-import { format, addWeeks } from "date-fns";
+import { addWeeks, format } from "date-fns";
 import { Document, Settings, VectorStoreIndex } from "llamaindex";
 import * as z from "zod";
 import { checkRateLimit, withTimeout } from "@/lib/server.lib";
@@ -13,7 +13,7 @@ let isInitialized = false;
 
 const initializeLlamaIndex = () => {
 	if (isInitialized) return;
-	
+
 	Settings.llm = new MistralAI({
 		model: "mistral-small-latest",
 		apiKey: MISTRAL_API_KEY,
@@ -22,7 +22,7 @@ const initializeLlamaIndex = () => {
 	Settings.embedModel = new MistralAIEmbedding({
 		apiKey: MISTRAL_API_KEY,
 	});
-	
+
 	isInitialized = true;
 };
 
@@ -69,7 +69,7 @@ export const MistralService = {
 	): Promise<ServiceResponse<z.infer<typeof CreateTasksZodSchema>>> {
 		// Initialiser LlamaIndex au premier appel
 		initializeLlamaIndex();
-		
+
 		if (!checkRateLimit(token, 500, 1)) {
 			console.error("Rate Limit reached");
 			return createError(429, "Rate Limit reached");
@@ -82,15 +82,15 @@ export const MistralService = {
 			// Si pas de tâches existantes, utiliser le LLM directement (pas de RAG)
 			if (existingTasks.length === 0) {
 				console.log("No existing tasks - using LLM directly without RAG");
-				
+
 				const llm = Settings.llm;
 				const directPrompt = generateDirectPrompt(cleanedQuery);
-				
+
 				const llmResponse = await withTimeout(
 					llm.complete({ prompt: directPrompt }),
 					100000,
 				);
-				
+
 				responseText = llmResponse.text || "";
 				console.log("Direct LLM response:", responseText);
 			} else {
@@ -114,9 +114,9 @@ export const MistralService = {
 				const index = await VectorStoreIndex.fromDocuments(documents);
 				const queryEngine = index.asQueryEngine();
 				const prompt = generatePrompt(cleanedQuery);
-				
+
 				console.log("RAG Prompt:", prompt);
-				
+
 				const queryResponse = await withTimeout(
 					queryEngine.query({ query: prompt }),
 					100000,
@@ -125,7 +125,7 @@ export const MistralService = {
 				responseText = queryResponse.toString() || "";
 				console.log("RAG response:", responseText);
 			}
-			
+
 			if (!responseText || responseText === "Empty Response") {
 				return createError(500, "Le modèle n'a pas généré de réponse.");
 			}
@@ -134,9 +134,12 @@ export const MistralService = {
 			const jsonMatch = responseText.match(/\{[\s\S]*"tasks"[\s\S]*\}/);
 			if (!jsonMatch) {
 				console.error("No JSON found in response:", responseText);
-				return createError(422, "Le modèle n'a pas retourné un format JSON valide.");
+				return createError(
+					422,
+					"Le modèle n'a pas retourné un format JSON valide.",
+				);
 			}
-	
+
 			const responseObject = JSON.parse(jsonMatch[0]);
 			const parsed = CreateTasksZodSchema.safeParse(responseObject);
 
@@ -161,7 +164,7 @@ export const MistralService = {
 const generatePrompt = (query: string) => {
 	const today = format(new Date(), "yyyy-MM-dd");
 	const inOneMonth = format(addWeeks(new Date(), 4), "yyyy-MM-dd");
-	
+
 	return `
 You are a helpful AI assistant specialized in project management task generation.
 
@@ -197,7 +200,7 @@ IMPORTANT:
 const generateDirectPrompt = (query: string) => {
 	const today = format(new Date(), "yyyy-MM-dd");
 	const inOneMonth = format(addWeeks(new Date(), 4), "yyyy-MM-dd");
-	
+
 	return `
 You are a helpful AI assistant specialized in project management task generation.
 

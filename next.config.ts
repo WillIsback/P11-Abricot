@@ -10,8 +10,8 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {
-    globalNotFound: true,
-  },
+		globalNotFound: true,
+	},
 };
 
 export default nextConfig;
