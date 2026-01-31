@@ -12,7 +12,7 @@ export default async function Projects({}){
   if(!isUser(profileData.data)) return <p>Une erreur est apparue : {profileData.message}</p>
   const userInitial = getInitialsFromName(profileData.data.user.name)
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex bg-gray-50">
       <div className="w-360 m-auto mt-0">
         <Menu userInitial={userInitial}/>
         <main className="px-25 py-22.25">

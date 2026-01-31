@@ -17,8 +17,8 @@ export default function SignIn() {
 
 
   return (
-    <div className="flex h-screen">
-      <div className="flex flex-1 m-auto bg-[url('/images/SignIn.png')] bg-content bg-center">
+    <div className="flex min-h-screen">
+      <div className="flex w-full bg-[url('/images/SignIn.png')] bg-cover bg-center">
         <main
           className="flex flex-col items-center justify-center
             relative z-10 bg-gray-50 px-35 py-13.75 gap-30"

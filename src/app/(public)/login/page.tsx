@@ -17,8 +17,8 @@ export default function Login() {
 
 
   return (
-    <div className="flex h-screen">
-      <div className="flex m-auto w-full bg-[url('/images/LogIn.png')] bg-content bg-center">
+    <div className="flex min-h-screen">
+      <div className="flex w-full bg-[url('/images/LogIn.png')] bg-cover bg-center">
         <main
           className="flex flex-col items-center justify-center
             relative z-10 bg-gray-50 px-35 py-13.75 gap-50.5"

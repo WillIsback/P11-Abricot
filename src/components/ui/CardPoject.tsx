@@ -84,6 +84,7 @@ export default function CardProject ({ name, description, owner, members, tasks 
             gap-14
             border
             border-gray-200
+            bg-white
         ">
             <div className="flex flex-col gap-2">
                 <h5 className="text-black">{name}</h5>
