@@ -1,739 +1,739 @@
 {
-  "users": [
-    {
-      "id": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "email": "alice@example.com",
-      "name": "Alice Martin",
-      "createdAt": "2024-01-01T10:00:00.000Z",
-      "updatedAt": "2024-01-01T10:00:00.000Z"
-    },
-    {
-      "id": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "email": "bob@example.com",
-      "name": "Bob Dupont",
-      "createdAt": "2024-01-01T10:05:00.000Z",
-      "updatedAt": "2024-01-01T10:05:00.000Z"
-    },
-    {
-      "id": "clx3c4d5e6f7g8h9i0j1k2l3",
-      "email": "caroline@example.com",
-      "name": "Caroline Leroy",
-      "createdAt": "2024-01-01T10:10:00.000Z",
-      "updatedAt": "2024-01-01T10:10:00.000Z"
-    },
-    {
-      "id": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "email": "david@example.com",
-      "name": "David Moreau",
-      "createdAt": "2024-01-01T10:15:00.000Z",
-      "updatedAt": "2024-01-01T10:15:00.000Z"
-    },
-    {
-      "id": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "email": "emma@example.com",
-      "name": "Emma Rousseau",
-      "createdAt": "2024-01-01T10:20:00.000Z",
-      "updatedAt": "2024-01-01T10:20:00.000Z"
-    },
-    {
-      "id": "clx6f7g8h9i0j1k2l3m4n5o6",
-      "email": "francois@example.com",
-      "name": "François Dubois",
-      "createdAt": "2024-01-01T10:25:00.000Z",
-      "updatedAt": "2024-01-01T10:25:00.000Z"
-    },
-    {
-      "id": "clx7g8h9i0j1k2l3m4n5o6p7",
-      "email": "gabrielle@example.com",
-      "name": "Gabrielle Simon",
-      "createdAt": "2024-01-01T10:30:00.000Z",
-      "updatedAt": "2024-01-01T10:30:00.000Z"
-    },
-    {
-      "id": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "email": "henri@example.com",
-      "name": "Henri Laurent",
-      "createdAt": "2024-01-01T10:35:00.000Z",
-      "updatedAt": "2024-01-01T10:35:00.000Z"
-    },
-    {
-      "id": "clx9i0j1k2l3m4n5o6p7q8r9",
-      "email": "isabelle@example.com",
-      "name": "Isabelle Petit",
-      "createdAt": "2024-01-01T10:40:00.000Z",
-      "updatedAt": "2024-01-01T10:40:00.000Z"
-    },
-    {
-      "id": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "email": "jacques@example.com",
-      "name": "Jacques Durand",
-      "createdAt": "2024-01-01T10:45:00.000Z",
-      "updatedAt": "2024-01-01T10:45:00.000Z"
-    }
-  ],
-  "projects": [
-    {
-      "id": "clxp1a2b3c4d5e6f7g8h9i0",
-      "name": "Application E-commerce",
-      "description": "Développement d'une plateforme de vente en ligne moderne avec paiement sécurisé et gestion des stocks.",
-      "ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-02T09:00:00.000Z",
-      "updatedAt": "2024-01-02T09:00:00.000Z"
-    },
-    {
-      "id": "clxp2b3c4d5e6f7g8h9i0j1",
-      "name": "Système de Gestion RH",
-      "description": "Application web pour la gestion des ressources humaines : congés, évaluations, planning.",
-      "ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-02T09:30:00.000Z",
-      "updatedAt": "2024-01-02T09:30:00.000Z"
-    },
-    {
-      "id": "clxp3c4d5e6f7g8h9i0j1k2",
-      "name": "Application Mobile Fitness",
-      "description": "App mobile pour le suivi d'entraînement, nutrition et objectifs fitness personnalisés.",
-      "ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-02T10:00:00.000Z",
-      "updatedAt": "2024-01-02T10:00:00.000Z"
-    },
-    {
-      "id": "clxp4d5e6f7g8h9i0j1k2l3",
-      "name": "Plateforme de Formation",
-      "description": "Système de gestion de cours en ligne avec vidéos, quiz et suivi des progrès.",
-      "ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-02T10:30:00.000Z",
-      "updatedAt": "2024-01-02T10:30:00.000Z"
-    },
-    {
-      "id": "clxp5e6f7g8h9i0j1k2l3m4",
-      "name": "Dashboard Analytics",
-      "description": "Interface de visualisation de données avec graphiques interactifs et rapports automatisés.",
-      "ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-02T11:00:00.000Z",
-      "updatedAt": "2024-01-02T11:00:00.000Z"
-    }
-  ],
-  "projectMembers": [
-    {
-      "id": "clxm1a2b3c4d5e6f7g8h9i0",
-      "role": "CONTRIBUTOR",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "joinedAt": "2024-01-02T09:05:00.000Z"
-    },
-    {
-      "id": "clxm2b3c4d5e6f7g8h9i0j1",
-      "role": "CONTRIBUTOR",
-      "userId": "clx3c4d5e6f7g8h9i0j1k2l3",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "joinedAt": "2024-01-02T09:06:00.000Z"
-    },
-    {
-      "id": "clxm3c4d5e6f7g8h9i0j1k2",
-      "role": "CONTRIBUTOR",
-      "userId": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "joinedAt": "2024-01-02T09:07:00.000Z"
-    },
-    {
-      "id": "clxm4d5e6f7g8h9i0j1k2l3",
-      "role": "CONTRIBUTOR",
-      "userId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "joinedAt": "2024-01-02T09:35:00.000Z"
-    },
-    {
-      "id": "clxm5e6f7g8h9i0j1k2l3m4",
-      "role": "CONTRIBUTOR",
-      "userId": "clx6f7g8h9i0j1k2l3m4n5o6",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "joinedAt": "2024-01-02T09:36:00.000Z"
-    },
-    {
-      "id": "clxm6f7g8h9i0j1k2l3m4n5",
-      "role": "CONTRIBUTOR",
-      "userId": "clx7g8h9i0j1k2l3m4n5o6p7",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "joinedAt": "2024-01-02T09:37:00.000Z"
-    },
-    {
-      "id": "clxm7g8h9i0j1k2l3m4n5o6",
-      "role": "CONTRIBUTOR",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "projectId": "clxp3c4d5e6f7g8h9i0j1k2",
-      "joinedAt": "2024-01-02T10:05:00.000Z"
-    },
-    {
-      "id": "clxm8h9i0j1k2l3m4n5o6p7",
-      "role": "CONTRIBUTOR",
-      "userId": "clx9i0j1k2l3m4n5o6p7q8r9",
-      "projectId": "clxp3c4d5e6f7g8h9i0j1k2",
-      "joinedAt": "2024-01-02T10:06:00.000Z"
-    },
-    {
-      "id": "clxm9i0j1k2l3m4n5o6p7q8",
-      "role": "CONTRIBUTOR",
-      "userId": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "projectId": "clxp4d5e6f7g8h9i0j1k2l3",
-      "joinedAt": "2024-01-02T10:35:00.000Z"
-    },
-    {
-      "id": "clxm0j1k2l3m4n5o6p7q8r9",
-      "role": "CONTRIBUTOR",
-      "userId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "projectId": "clxp4d5e6f7g8h9i0j1k2l3",
-      "joinedAt": "2024-01-02T10:36:00.000Z"
-    },
-    {
-      "id": "clxm1k2l3m4n5o6p7q8r9s0",
-      "role": "CONTRIBUTOR",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "joinedAt": "2024-01-02T11:05:00.000Z"
-    },
-    {
-      "id": "clxm2l3m4n5o6p7q8r9s0t1",
-      "role": "CONTRIBUTOR",
-      "userId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "joinedAt": "2024-01-02T11:06:00.000Z"
-    },
-    {
-      "id": "clxm3m4n5o6p7q8r9s0t1u2",
-      "role": "CONTRIBUTOR",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "joinedAt": "2024-01-02T11:07:00.000Z"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "clxt1a2b3c4d5e6f7g8h9i0",
-      "title": "Conception de la base de données",
-      "description": "Créer le schéma de base de données pour les produits, utilisateurs, commandes et paiements.",
-      "status": "DONE",
-      "priority": "HIGH",
-      "dueDate": "2024-01-15T23:59:59.000Z",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T09:00:00.000Z",
-      "updatedAt": "2024-01-14T16:30:00.000Z"
-    },
-    {
-      "id": "clxt2b3c4d5e6f7g8h9i0j1",
-      "title": "Développement de l'API REST",
-      "description": "Implémenter les endpoints pour la gestion des produits, panier et commandes.",
-      "status": "IN_PROGRESS",
-      "priority": "HIGH",
-      "dueDate": "2024-02-01T23:59:59.000Z",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T09:15:00.000Z",
-      "updatedAt": "2024-01-24T11:20:00.000Z"
-    },
-    {
-      "id": "clxt3c4d5e6f7g8h9i0j1k2",
-      "title": "Interface utilisateur responsive",
-      "description": "Créer les composants React pour la liste des produits, panier et checkout.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-02-15T23:59:59.000Z",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T09:30:00.000Z",
-      "updatedAt": "2024-01-03T09:30:00.000Z"
-    },
-    {
-      "id": "clxt4d5e6f7g8h9i0j1k2l3",
-      "title": "Intégration système de paiement",
-      "description": "Intégrer Stripe pour le traitement des paiements sécurisés.",
-      "status": "TODO",
-      "priority": "HIGH",
-      "dueDate": "2024-02-28T23:59:59.000Z",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T09:45:00.000Z",
-      "updatedAt": "2024-01-03T09:45:00.000Z"
-    },
-    {
-      "id": "clxt5e6f7g8h9i0j1k2l3m4",
-      "title": "Tests automatisés",
-      "description": "Écrire les tests unitaires et d'intégration pour l'API et l'interface.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-03-10T23:59:59.000Z",
-      "projectId": "clxp1a2b3c4d5e6f7g8h9i0",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T10:00:00.000Z",
-      "updatedAt": "2024-01-03T10:00:00.000Z"
-    },
-    {
-      "id": "clxt6f7g8h9i0j1k2l3m4n5",
-      "title": "Module de gestion des congés",
-      "description": "Développer le système de demande et validation des congés avec workflow d'approbation.",
-      "status": "IN_PROGRESS",
-      "priority": "HIGH",
-      "dueDate": "2024-01-20T23:59:59.000Z",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T10:15:00.000Z",
-      "updatedAt": "2024-01-18T14:00:00.000Z"
-    },
-    {
-      "id": "clxt7g8h9i0j1k2l3m4n5o6",
-      "title": "Interface d'évaluation des employés",
-      "description": "Créer les formulaires d'évaluation et le système de notation.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-02-05T23:59:59.000Z",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T10:30:00.000Z",
-      "updatedAt": "2024-01-03T10:30:00.000Z"
-    },
-    {
-      "id": "clxt8h9i0j1k2l3m4n5o6p7",
-      "title": "Tableau de bord RH",
-      "description": "Dashboard avec statistiques sur les effectifs, congés et performances.",
-      "status": "TODO",
-      "priority": "LOW",
-      "dueDate": "2024-02-20T23:59:59.000Z",
-      "projectId": "clxp2b3c4d5e6f7g8h9i0j1",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T10:45:00.000Z",
-      "updatedAt": "2024-01-03T10:45:00.000Z"
-    },
-    {
-      "id": "clxt9i0j1k2l3m4n5o6p7q8",
-      "title": "Design de l'interface mobile",
-      "description": "Créer les maquettes et prototypes pour l'application mobile.",
-      "status": "DONE",
-      "priority": "HIGH",
-      "dueDate": "2024-01-10T23:59:59.000Z",
-      "projectId": "clxp3c4d5e6f7g8h9i0j1k2",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T11:00:00.000Z",
-      "updatedAt": "2024-01-09T17:00:00.000Z"
-    },
-    {
-      "id": "clxt0j1k2l3m4n5o6p7q8r9",
-      "title": "Développement des écrans principaux",
-      "description": "Implémenter les écrans d'accueil, profil utilisateur et suivi d'entraînement.",
-      "status": "IN_PROGRESS",
-      "priority": "HIGH",
-      "dueDate": "2024-01-25T23:59:59.000Z",
-      "projectId": "clxp3c4d5e6f7g8h9i0j1k2",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T11:15:00.000Z",
-      "updatedAt": "2024-01-22T10:30:00.000Z"
-    },
-    {
-      "id": "clxt1k2l3m4n5o6p7q8r9s0",
-      "title": "Intégration API nutrition",
-      "description": "Connecter l'app à une API de données nutritionnelles pour les calories et nutriments.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-02-10T23:59:59.000Z",
-      "projectId": "clxp3c4d5e6f7g8h9i0j1k2",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T11:30:00.000Z",
-      "updatedAt": "2024-01-03T11:30:00.000Z"
-    },
-    {
-      "id": "clxt2l3m4n5o6p7q8r9s0t1",
-      "title": "Système de gestion des cours",
-      "description": "Créer l'interface d'administration pour ajouter et organiser les cours.",
-      "status": "DONE",
-      "priority": "HIGH",
-      "dueDate": "2024-01-05T23:59:59.000Z",
-      "projectId": "clxp4d5e6f7g8h9i0j1k2l3",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T11:45:00.000Z",
-      "updatedAt": "2024-01-05T15:00:00.000Z"
-    },
-    {
-      "id": "clxt3m4n5o6p7q8r9s0t1u2",
-      "title": "Lecteur vidéo personnalisé",
-      "description": "Développer un lecteur vidéo avec contrôles de progression et notes.",
-      "status": "IN_PROGRESS",
-      "priority": "HIGH",
-      "dueDate": "2024-01-30T23:59:59.000Z",
-      "projectId": "clxp4d5e6f7g8h9i0j1k2l3",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T12:00:00.000Z",
-      "updatedAt": "2024-01-23T13:45:00.000Z"
-    },
-    {
-      "id": "clxt4n5o6p7q8r9s0t1u2v3",
-      "title": "Système de quiz interactif",
-      "description": "Créer les quiz avec questions à choix multiples et évaluation automatique.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-02-15T23:59:59.000Z",
-      "projectId": "clxp4d5e6f7g8h9i0j1k2l3",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T12:15:00.000Z",
-      "updatedAt": "2024-01-03T12:15:00.000Z"
-    },
-    {
-      "id": "clxt5o6p7q8r9s0t1u2v3w4",
-      "title": "Architecture des données",
-      "description": "Concevoir l'architecture pour la collecte et le stockage des données analytiques.",
-      "status": "DONE",
-      "priority": "HIGH",
-      "dueDate": "2024-01-08T23:59:59.000Z",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T12:30:00.000Z",
-      "updatedAt": "2024-01-08T14:20:00.000Z"
-    },
-    {
-      "id": "clxt6p7q8r9s0t1u2v3w4x5",
-      "title": "Développement des graphiques",
-      "description": "Implémenter les composants de visualisation avec Chart.js ou D3.js.",
-      "status": "IN_PROGRESS",
-      "priority": "HIGH",
-      "dueDate": "2024-01-22T23:59:59.000Z",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T12:45:00.000Z",
-      "updatedAt": "2024-01-21T09:15:00.000Z"
-    },
-    {
-      "id": "clxt7q8r9s0t1u2v3w4x5y6",
-      "title": "Système d'alertes",
-      "description": "Créer le système de notifications pour les seuils et anomalies détectées.",
-      "status": "TODO",
-      "priority": "MEDIUM",
-      "dueDate": "2024-02-08T23:59:59.000Z",
-      "projectId": "clxp5e6f7g8h9i0j1k2l3m4",
-      "creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-03T13:00:00.000Z",
-      "updatedAt": "2024-01-03T13:00:00.000Z"
-    }
-  ],
-  "taskAssignees": [
-    {
-      "id": "clxta1a2b3c4d5e6f7g8h9i0",
-      "taskId": "clxt1a2b3c4d5e6f7g8h9i0",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "assignedAt": "2024-01-03T09:05:00.000Z"
-    },
-    {
-      "id": "clxta2b3c4d5e6f7g8h9i0j1",
-      "taskId": "clxt1a2b3c4d5e6f7g8h9i0",
-      "userId": "clx3c4d5e6f7g8h9i0j1k2l3",
-      "assignedAt": "2024-01-03T09:06:00.000Z"
-    },
-    {
-      "id": "clxta3c4d5e6f7g8h9i0j1k2",
-      "taskId": "clxt2b3c4d5e6f7g8h9i0j1",
-      "userId": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "assignedAt": "2024-01-03T09:20:00.000Z"
-    },
-    {
-      "id": "clxta4d5e6f7g8h9i0j1k2l3",
-      "taskId": "clxt3c4d5e6f7g8h9i0j1k2",
-      "userId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "assignedAt": "2024-01-03T09:35:00.000Z"
-    },
-    {
-      "id": "clxta5e6f7g8h9i0j1k2l3m4",
-      "taskId": "clxt3c4d5e6f7g8h9i0j1k2",
-      "userId": "clx3c4d5e6f7g8h9i0j1k2l3",
-      "assignedAt": "2024-01-03T09:36:00.000Z"
-    },
-    {
-      "id": "clxta6f7g8h9i0j1k2l3m4n5",
-      "taskId": "clxt4d5e6f7g8h9i0j1k2l3",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "assignedAt": "2024-01-03T09:50:00.000Z"
-    },
-    {
-      "id": "clxta7g8h9i0j1k2l3m4n5o6",
-      "taskId": "clxt5e6f7g8h9i0j1k2l3m4",
-      "userId": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "assignedAt": "2024-01-03T10:05:00.000Z"
-    },
-    {
-      "id": "clxta8h9i0j1k2l3m4n5o6p7",
-      "taskId": "clxt5e6f7g8h9i0j1k2l3m4",
-      "userId": "clx3c4d5e6f7g8h9i0j1k2l3",
-      "assignedAt": "2024-01-03T10:06:00.000Z"
-    },
-    {
-      "id": "clxta9i0j1k2l3m4n5o6p7q8",
-      "taskId": "clxt6f7g8h9i0j1k2l3m4n5",
-      "userId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "assignedAt": "2024-01-03T10:20:00.000Z"
-    },
-    {
-      "id": "clxta0j1k2l3m4n5o6p7q8r9",
-      "taskId": "clxt6f7g8h9i0j1k2l3m4n5",
-      "userId": "clx6f7g8h9i0j1k2l3m4n5o6",
-      "assignedAt": "2024-01-03T10:21:00.000Z"
-    },
-    {
-      "id": "clxta1k2l3m4n5o6p7q8r9s0",
-      "taskId": "clxt7g8h9i0j1k2l3m4n5o6",
-      "userId": "clx7g8h9i0j1k2l3m4n5o6p7",
-      "assignedAt": "2024-01-03T10:35:00.000Z"
-    },
-    {
-      "id": "clxta2l3m4n5o6p7q8r9s0t1",
-      "taskId": "clxt8h9i0j1k2l3m4n5o6p7",
-      "userId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "assignedAt": "2024-01-03T10:50:00.000Z"
-    },
-    {
-      "id": "clxta3m4n5o6p7q8r9s0t1u2",
-      "taskId": "clxt9i0j1k2l3m4n5o6p7q8",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "assignedAt": "2024-01-03T11:05:00.000Z"
-    },
-    {
-      "id": "clxta4n5o6p7q8r9s0t1u2v3",
-      "taskId": "clxt0j1k2l3m4n5o6p7q8r9",
-      "userId": "clx9i0j1k2l3m4n5o6p7q8r9",
-      "assignedAt": "2024-01-03T11:20:00.000Z"
-    },
-    {
-      "id": "clxta5o6p7q8r9s0t1u2v3w4",
-      "taskId": "clxt0j1k2l3m4n5o6p7q8r9",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "assignedAt": "2024-01-03T11:21:00.000Z"
-    },
-    {
-      "id": "clxta6p7q8r9s0t1u2v3w4x5",
-      "taskId": "clxt1k2l3m4n5o6p7q8r9s0",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "assignedAt": "2024-01-03T11:35:00.000Z"
-    },
-    {
-      "id": "clxta7q8r9s0t1u2v3w4x5y6",
-      "taskId": "clxt2l3m4n5o6p7q8r9s0t1",
-      "userId": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "assignedAt": "2024-01-03T11:50:00.000Z"
-    },
-    {
-      "id": "clxta8r9s0t1u2v3w4x5y6z7",
-      "taskId": "clxt3m4n5o6p7q8r9s0t1u2",
-      "userId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "assignedAt": "2024-01-03T12:05:00.000Z"
-    },
-    {
-      "id": "clxta9s0t1u2v3w4x5y6z7a8",
-      "taskId": "clxt3m4n5o6p7q8r9s0t1u2",
-      "userId": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "assignedAt": "2024-01-03T12:06:00.000Z"
-    },
-    {
-      "id": "clxta0t1u2v3w4x5y6z7a8b9",
-      "taskId": "clxt4n5o6p7q8r9s0t1u2v3",
-      "userId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "assignedAt": "2024-01-03T12:20:00.000Z"
-    },
-    {
-      "id": "clxta1u2v3w4x5y6z7a8b9c0",
-      "taskId": "clxt5o6p7q8r9s0t1u2v3w4",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "assignedAt": "2024-01-03T12:35:00.000Z"
-    },
-    {
-      "id": "clxta2v3w4x5y6z7a8b9c0d1",
-      "taskId": "clxt6p7q8r9s0t1u2v3w4x5",
-      "userId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "assignedAt": "2024-01-03T12:50:00.000Z"
-    },
-    {
-      "id": "clxta3w4x5y6z7a8b9c0d1e2",
-      "taskId": "clxt6p7q8r9s0t1u2v3w4x5",
-      "userId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "assignedAt": "2024-01-03T12:51:00.000Z"
-    },
-    {
-      "id": "clxta4x5y6z7a8b9c0d1e2f3",
-      "taskId": "clxt7q8r9s0t1u2v3w4x5y6",
-      "userId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "assignedAt": "2024-01-03T13:05:00.000Z"
-    }
-  ],
-  "comments": [
-    {
-      "id": "clxtc1a2b3c4d5e6f7g8h9i0",
-      "content": "Base de données créée avec succès. Toutes les tables sont en place et les relations sont correctes.",
-      "taskId": "clxt1a2b3c4d5e6f7g8h9i0",
-      "authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "createdAt": "2024-01-14T16:00:00.000Z",
-      "updatedAt": "2024-01-14T16:00:00.000Z"
-    },
-    {
-      "id": "clxtc2b3c4d5e6f7g8h9i0j1",
-      "content": "Excellent travail sur cette tâche ! Le code est propre et bien documenté.",
-      "taskId": "clxt1a2b3c4d5e6f7g8h9i0",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-14T17:30:00.000Z",
-      "updatedAt": "2024-01-14T17:30:00.000Z"
-    },
-    {
-      "id": "clxtc3c4d5e6f7g8h9i0j1k2",
-      "content": "API REST en cours de développement. Les endpoints produits et utilisateurs sont terminés.",
-      "taskId": "clxt2b3c4d5e6f7g8h9i0j1",
-      "authorId": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "createdAt": "2024-01-24T11:00:00.000Z",
-      "updatedAt": "2024-01-24T11:00:00.000Z"
-    },
-    {
-      "id": "clxtc4d5e6f7g8h9i0j1k2l3",
-      "content": "Attention à la sécurité des données. Vérifier les permissions utilisateur.",
-      "taskId": "clxt2b3c4d5e6f7g8h9i0j1",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-24T14:20:00.000Z",
-      "updatedAt": "2024-01-24T14:20:00.000Z"
-    },
-    {
-      "id": "clxtc5e6f7g8h9i0j1k2l3m4",
-      "content": "Intégration Stripe prévue pour la semaine prochaine. Documentation consultée.",
-      "taskId": "clxt4d5e6f7g8h9i0j1k2l3",
-      "authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "createdAt": "2024-01-19T10:30:00.000Z",
-      "updatedAt": "2024-01-19T10:30:00.000Z"
-    },
-    {
-      "id": "clxtc6f7g8h9i0j1k2l3m4n5",
-      "content": "Tests unitaires écrits pour 80% des fonctions. Tests d'intégration à venir.",
-      "taskId": "clxt5e6f7g8h9i0j1k2l3m4",
-      "authorId": "clx4d5e6f7g8h9i0j1k2l3m4",
-      "createdAt": "2024-01-20T15:45:00.000Z",
-      "updatedAt": "2024-01-20T15:45:00.000Z"
-    },
-    {
-      "id": "clxtc7g8h9i0j1k2l3m4n5o6",
-      "content": "Module congés bien avancé. Workflow d'approbation fonctionnel.",
-      "taskId": "clxt6f7g8h9i0j1k2l3m4n5",
-      "authorId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "createdAt": "2024-01-18T13:30:00.000Z",
-      "updatedAt": "2024-01-18T13:30:00.000Z"
-    },
-    {
-      "id": "clxtc8h9i0j1k2l3m4n5o6p7",
-      "content": "Deadline respectée, bravo à toute l'équipe !",
-      "taskId": "clxt6f7g8h9i0j1k2l3m4n5",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-18T16:00:00.000Z",
-      "updatedAt": "2024-01-18T16:00:00.000Z"
-    },
-    {
-      "id": "clxtc9i0j1k2l3m4n5o6p7q8",
-      "content": "Design mobile terminé et validé par le client. Interface moderne et intuitive.",
-      "taskId": "clxt9i0j1k2l3m4n5o6p7q8",
-      "authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "createdAt": "2024-01-09T16:30:00.000Z",
-      "updatedAt": "2024-01-09T16:30:00.000Z"
-    },
-    {
-      "id": "clxtc0j1k2l3m4n5o6p7q8r9",
-      "content": "Écrans principaux en développement. Navigation fluide entre les sections.",
-      "taskId": "clxt0j1k2l3m4n5o6p7q8r9",
-      "authorId": "clx9i0j1k2l3m4n5o6p7q8r9",
-      "createdAt": "2024-01-22T10:00:00.000Z",
-      "updatedAt": "2024-01-22T10:00:00.000Z"
-    },
-    {
-      "id": "clxtc1k2l3m4n5o6p7q8r9s0",
-      "content": "Petit bug détecté sur mobile. À corriger avant la livraison.",
-      "taskId": "clxt0j1k2l3m4n5o6p7q8r9",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-22T14:15:00.000Z",
-      "updatedAt": "2024-01-22T14:15:00.000Z"
-    },
-    {
-      "id": "clxtc2l3m4n5o6p7q8r9s0t1",
-      "content": "API nutrition identifiée. Documentation reçue, intégration prévue.",
-      "taskId": "clxt1k2l3m4n5o6p7q8r9s0",
-      "authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "createdAt": "2024-01-21T11:00:00.000Z",
-      "updatedAt": "2024-01-21T11:00:00.000Z"
-    },
-    {
-      "id": "clxtc3m4n5o6p7q8r9s0t1u2",
-      "content": "Système de cours opérationnel. Interface d'administration complète.",
-      "taskId": "clxt2l3m4n5o6p7q8r9s0t1",
-      "authorId": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "createdAt": "2024-01-05T14:30:00.000Z",
-      "updatedAt": "2024-01-05T14:30:00.000Z"
-    },
-    {
-      "id": "clxtc4n5o6p7q8r9s0t1u2v3",
-      "content": "Documentation mise à jour. Tutoriel d'utilisation créé.",
-      "taskId": "clxt2l3m4n5o6p7q8r9s0t1",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-05T16:00:00.000Z",
-      "updatedAt": "2024-01-05T16:00:00.000Z"
-    },
-    {
-      "id": "clxtc5o6p7q8r9s0t1u2v3w4",
-      "content": "Lecteur vidéo en cours. Contrôles de base implémentés.",
-      "taskId": "clxt3m4n5o6p7q8r9s0t1u2",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-23T13:00:00.000Z",
-      "updatedAt": "2024-01-23T13:00:00.000Z"
-    },
-    {
-      "id": "clxtc6p7q8r9s0t1u2v3w4x5",
-      "content": "Tests de charge effectués. Performance satisfaisante.",
-      "taskId": "clxt3m4n5o6p7q8r9s0t1u2",
-      "authorId": "clx0j1k2l3m4n5o6p7q8r9s0",
-      "createdAt": "2024-01-23T15:30:00.000Z",
-      "updatedAt": "2024-01-23T15:30:00.000Z"
-    },
-    {
-      "id": "clxtc7q8r9s0t1u2v3w4x5y6",
-      "content": "Quiz interactif en développement. Système de notation en place.",
-      "taskId": "clxt4n5o6p7q8r9s0t1u2v3",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-22T09:00:00.000Z",
-      "updatedAt": "2024-01-22T09:00:00.000Z"
-    },
-    {
-      "id": "clxtc8r9s0t1u2v3w4x5y6z7",
-      "content": "Architecture données validée. Performance optimisée pour les gros volumes.",
-      "taskId": "clxt5o6p7q8r9s0t1u2v3w4",
-      "authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "createdAt": "2024-01-08T13:50:00.000Z",
-      "updatedAt": "2024-01-08T13:50:00.000Z"
-    },
-    {
-      "id": "clxtc9s0t1u2v3w4x5y6z7a8",
-      "content": "Code review terminée. Quelques améliorations mineures suggérées.",
-      "taskId": "clxt5o6p7q8r9s0t1u2v3w4",
-      "authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
-      "createdAt": "2024-01-08T16:00:00.000Z",
-      "updatedAt": "2024-01-08T16:00:00.000Z"
-    },
-    {
-      "id": "clxtc0t1u2v3w4x5y6z7a8b9",
-      "content": "Graphiques en cours. Chart.js intégré, premiers graphiques affichés.",
-      "taskId": "clxt6p7q8r9s0t1u2v3w4x5",
-      "authorId": "clx5e6f7g8h9i0j1k2l3m4n5",
-      "createdAt": "2024-01-21T09:00:00.000Z",
-      "updatedAt": "2024-01-21T09:00:00.000Z"
-    },
-    {
-      "id": "clxtc1u2v3w4x5y6z7a8b9c0",
-      "content": "Déploiement en production réussi. Monitoring en place.",
-      "taskId": "clxt6p7q8r9s0t1u2v3w4x5",
-      "authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
-      "createdAt": "2024-01-21T14:45:00.000Z",
-      "updatedAt": "2024-01-21T14:45:00.000Z"
-    },
-    {
-      "id": "clxtc2v3w4x5y6z7a8b9c0d1",
-      "content": "Système d'alertes planifié. Notifications par email et push prévues.",
-      "taskId": "clxt7q8r9s0t1u2v3w4x5y6",
-      "authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
-      "createdAt": "2024-01-23T11:00:00.000Z",
-      "updatedAt": "2024-01-23T11:00:00.000Z"
-    }
-  ]
+	"users": [
+		{
+			"id": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"email": "alice@example.com",
+			"name": "Alice Martin",
+			"createdAt": "2024-01-01T10:00:00.000Z",
+			"updatedAt": "2024-01-01T10:00:00.000Z"
+		},
+		{
+			"id": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"email": "bob@example.com",
+			"name": "Bob Dupont",
+			"createdAt": "2024-01-01T10:05:00.000Z",
+			"updatedAt": "2024-01-01T10:05:00.000Z"
+		},
+		{
+			"id": "clx3c4d5e6f7g8h9i0j1k2l3",
+			"email": "caroline@example.com",
+			"name": "Caroline Leroy",
+			"createdAt": "2024-01-01T10:10:00.000Z",
+			"updatedAt": "2024-01-01T10:10:00.000Z"
+		},
+		{
+			"id": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"email": "david@example.com",
+			"name": "David Moreau",
+			"createdAt": "2024-01-01T10:15:00.000Z",
+			"updatedAt": "2024-01-01T10:15:00.000Z"
+		},
+		{
+			"id": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"email": "emma@example.com",
+			"name": "Emma Rousseau",
+			"createdAt": "2024-01-01T10:20:00.000Z",
+			"updatedAt": "2024-01-01T10:20:00.000Z"
+		},
+		{
+			"id": "clx6f7g8h9i0j1k2l3m4n5o6",
+			"email": "francois@example.com",
+			"name": "François Dubois",
+			"createdAt": "2024-01-01T10:25:00.000Z",
+			"updatedAt": "2024-01-01T10:25:00.000Z"
+		},
+		{
+			"id": "clx7g8h9i0j1k2l3m4n5o6p7",
+			"email": "gabrielle@example.com",
+			"name": "Gabrielle Simon",
+			"createdAt": "2024-01-01T10:30:00.000Z",
+			"updatedAt": "2024-01-01T10:30:00.000Z"
+		},
+		{
+			"id": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"email": "henri@example.com",
+			"name": "Henri Laurent",
+			"createdAt": "2024-01-01T10:35:00.000Z",
+			"updatedAt": "2024-01-01T10:35:00.000Z"
+		},
+		{
+			"id": "clx9i0j1k2l3m4n5o6p7q8r9",
+			"email": "isabelle@example.com",
+			"name": "Isabelle Petit",
+			"createdAt": "2024-01-01T10:40:00.000Z",
+			"updatedAt": "2024-01-01T10:40:00.000Z"
+		},
+		{
+			"id": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"email": "jacques@example.com",
+			"name": "Jacques Durand",
+			"createdAt": "2024-01-01T10:45:00.000Z",
+			"updatedAt": "2024-01-01T10:45:00.000Z"
+		}
+	],
+	"projects": [
+		{
+			"id": "clxp1a2b3c4d5e6f7g8h9i0",
+			"name": "Application E-commerce",
+			"description": "Développement d'une plateforme de vente en ligne moderne avec paiement sécurisé et gestion des stocks.",
+			"ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-02T09:00:00.000Z",
+			"updatedAt": "2024-01-02T09:00:00.000Z"
+		},
+		{
+			"id": "clxp2b3c4d5e6f7g8h9i0j1",
+			"name": "Système de Gestion RH",
+			"description": "Application web pour la gestion des ressources humaines : congés, évaluations, planning.",
+			"ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-02T09:30:00.000Z",
+			"updatedAt": "2024-01-02T09:30:00.000Z"
+		},
+		{
+			"id": "clxp3c4d5e6f7g8h9i0j1k2",
+			"name": "Application Mobile Fitness",
+			"description": "App mobile pour le suivi d'entraînement, nutrition et objectifs fitness personnalisés.",
+			"ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-02T10:00:00.000Z",
+			"updatedAt": "2024-01-02T10:00:00.000Z"
+		},
+		{
+			"id": "clxp4d5e6f7g8h9i0j1k2l3",
+			"name": "Plateforme de Formation",
+			"description": "Système de gestion de cours en ligne avec vidéos, quiz et suivi des progrès.",
+			"ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-02T10:30:00.000Z",
+			"updatedAt": "2024-01-02T10:30:00.000Z"
+		},
+		{
+			"id": "clxp5e6f7g8h9i0j1k2l3m4",
+			"name": "Dashboard Analytics",
+			"description": "Interface de visualisation de données avec graphiques interactifs et rapports automatisés.",
+			"ownerId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-02T11:00:00.000Z",
+			"updatedAt": "2024-01-02T11:00:00.000Z"
+		}
+	],
+	"projectMembers": [
+		{
+			"id": "clxm1a2b3c4d5e6f7g8h9i0",
+			"role": "CONTRIBUTOR",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"joinedAt": "2024-01-02T09:05:00.000Z"
+		},
+		{
+			"id": "clxm2b3c4d5e6f7g8h9i0j1",
+			"role": "CONTRIBUTOR",
+			"userId": "clx3c4d5e6f7g8h9i0j1k2l3",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"joinedAt": "2024-01-02T09:06:00.000Z"
+		},
+		{
+			"id": "clxm3c4d5e6f7g8h9i0j1k2",
+			"role": "CONTRIBUTOR",
+			"userId": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"joinedAt": "2024-01-02T09:07:00.000Z"
+		},
+		{
+			"id": "clxm4d5e6f7g8h9i0j1k2l3",
+			"role": "CONTRIBUTOR",
+			"userId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"joinedAt": "2024-01-02T09:35:00.000Z"
+		},
+		{
+			"id": "clxm5e6f7g8h9i0j1k2l3m4",
+			"role": "CONTRIBUTOR",
+			"userId": "clx6f7g8h9i0j1k2l3m4n5o6",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"joinedAt": "2024-01-02T09:36:00.000Z"
+		},
+		{
+			"id": "clxm6f7g8h9i0j1k2l3m4n5",
+			"role": "CONTRIBUTOR",
+			"userId": "clx7g8h9i0j1k2l3m4n5o6p7",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"joinedAt": "2024-01-02T09:37:00.000Z"
+		},
+		{
+			"id": "clxm7g8h9i0j1k2l3m4n5o6",
+			"role": "CONTRIBUTOR",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"projectId": "clxp3c4d5e6f7g8h9i0j1k2",
+			"joinedAt": "2024-01-02T10:05:00.000Z"
+		},
+		{
+			"id": "clxm8h9i0j1k2l3m4n5o6p7",
+			"role": "CONTRIBUTOR",
+			"userId": "clx9i0j1k2l3m4n5o6p7q8r9",
+			"projectId": "clxp3c4d5e6f7g8h9i0j1k2",
+			"joinedAt": "2024-01-02T10:06:00.000Z"
+		},
+		{
+			"id": "clxm9i0j1k2l3m4n5o6p7q8",
+			"role": "CONTRIBUTOR",
+			"userId": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"projectId": "clxp4d5e6f7g8h9i0j1k2l3",
+			"joinedAt": "2024-01-02T10:35:00.000Z"
+		},
+		{
+			"id": "clxm0j1k2l3m4n5o6p7q8r9",
+			"role": "CONTRIBUTOR",
+			"userId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"projectId": "clxp4d5e6f7g8h9i0j1k2l3",
+			"joinedAt": "2024-01-02T10:36:00.000Z"
+		},
+		{
+			"id": "clxm1k2l3m4n5o6p7q8r9s0",
+			"role": "CONTRIBUTOR",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"joinedAt": "2024-01-02T11:05:00.000Z"
+		},
+		{
+			"id": "clxm2l3m4n5o6p7q8r9s0t1",
+			"role": "CONTRIBUTOR",
+			"userId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"joinedAt": "2024-01-02T11:06:00.000Z"
+		},
+		{
+			"id": "clxm3m4n5o6p7q8r9s0t1u2",
+			"role": "CONTRIBUTOR",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"joinedAt": "2024-01-02T11:07:00.000Z"
+		}
+	],
+	"tasks": [
+		{
+			"id": "clxt1a2b3c4d5e6f7g8h9i0",
+			"title": "Conception de la base de données",
+			"description": "Créer le schéma de base de données pour les produits, utilisateurs, commandes et paiements.",
+			"status": "DONE",
+			"priority": "HIGH",
+			"dueDate": "2024-01-15T23:59:59.000Z",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T09:00:00.000Z",
+			"updatedAt": "2024-01-14T16:30:00.000Z"
+		},
+		{
+			"id": "clxt2b3c4d5e6f7g8h9i0j1",
+			"title": "Développement de l'API REST",
+			"description": "Implémenter les endpoints pour la gestion des produits, panier et commandes.",
+			"status": "IN_PROGRESS",
+			"priority": "HIGH",
+			"dueDate": "2024-02-01T23:59:59.000Z",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T09:15:00.000Z",
+			"updatedAt": "2024-01-24T11:20:00.000Z"
+		},
+		{
+			"id": "clxt3c4d5e6f7g8h9i0j1k2",
+			"title": "Interface utilisateur responsive",
+			"description": "Créer les composants React pour la liste des produits, panier et checkout.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-02-15T23:59:59.000Z",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T09:30:00.000Z",
+			"updatedAt": "2024-01-03T09:30:00.000Z"
+		},
+		{
+			"id": "clxt4d5e6f7g8h9i0j1k2l3",
+			"title": "Intégration système de paiement",
+			"description": "Intégrer Stripe pour le traitement des paiements sécurisés.",
+			"status": "TODO",
+			"priority": "HIGH",
+			"dueDate": "2024-02-28T23:59:59.000Z",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T09:45:00.000Z",
+			"updatedAt": "2024-01-03T09:45:00.000Z"
+		},
+		{
+			"id": "clxt5e6f7g8h9i0j1k2l3m4",
+			"title": "Tests automatisés",
+			"description": "Écrire les tests unitaires et d'intégration pour l'API et l'interface.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-03-10T23:59:59.000Z",
+			"projectId": "clxp1a2b3c4d5e6f7g8h9i0",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T10:00:00.000Z",
+			"updatedAt": "2024-01-03T10:00:00.000Z"
+		},
+		{
+			"id": "clxt6f7g8h9i0j1k2l3m4n5",
+			"title": "Module de gestion des congés",
+			"description": "Développer le système de demande et validation des congés avec workflow d'approbation.",
+			"status": "IN_PROGRESS",
+			"priority": "HIGH",
+			"dueDate": "2024-01-20T23:59:59.000Z",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T10:15:00.000Z",
+			"updatedAt": "2024-01-18T14:00:00.000Z"
+		},
+		{
+			"id": "clxt7g8h9i0j1k2l3m4n5o6",
+			"title": "Interface d'évaluation des employés",
+			"description": "Créer les formulaires d'évaluation et le système de notation.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-02-05T23:59:59.000Z",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T10:30:00.000Z",
+			"updatedAt": "2024-01-03T10:30:00.000Z"
+		},
+		{
+			"id": "clxt8h9i0j1k2l3m4n5o6p7",
+			"title": "Tableau de bord RH",
+			"description": "Dashboard avec statistiques sur les effectifs, congés et performances.",
+			"status": "TODO",
+			"priority": "LOW",
+			"dueDate": "2024-02-20T23:59:59.000Z",
+			"projectId": "clxp2b3c4d5e6f7g8h9i0j1",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T10:45:00.000Z",
+			"updatedAt": "2024-01-03T10:45:00.000Z"
+		},
+		{
+			"id": "clxt9i0j1k2l3m4n5o6p7q8",
+			"title": "Design de l'interface mobile",
+			"description": "Créer les maquettes et prototypes pour l'application mobile.",
+			"status": "DONE",
+			"priority": "HIGH",
+			"dueDate": "2024-01-10T23:59:59.000Z",
+			"projectId": "clxp3c4d5e6f7g8h9i0j1k2",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T11:00:00.000Z",
+			"updatedAt": "2024-01-09T17:00:00.000Z"
+		},
+		{
+			"id": "clxt0j1k2l3m4n5o6p7q8r9",
+			"title": "Développement des écrans principaux",
+			"description": "Implémenter les écrans d'accueil, profil utilisateur et suivi d'entraînement.",
+			"status": "IN_PROGRESS",
+			"priority": "HIGH",
+			"dueDate": "2024-01-25T23:59:59.000Z",
+			"projectId": "clxp3c4d5e6f7g8h9i0j1k2",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T11:15:00.000Z",
+			"updatedAt": "2024-01-22T10:30:00.000Z"
+		},
+		{
+			"id": "clxt1k2l3m4n5o6p7q8r9s0",
+			"title": "Intégration API nutrition",
+			"description": "Connecter l'app à une API de données nutritionnelles pour les calories et nutriments.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-02-10T23:59:59.000Z",
+			"projectId": "clxp3c4d5e6f7g8h9i0j1k2",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T11:30:00.000Z",
+			"updatedAt": "2024-01-03T11:30:00.000Z"
+		},
+		{
+			"id": "clxt2l3m4n5o6p7q8r9s0t1",
+			"title": "Système de gestion des cours",
+			"description": "Créer l'interface d'administration pour ajouter et organiser les cours.",
+			"status": "DONE",
+			"priority": "HIGH",
+			"dueDate": "2024-01-05T23:59:59.000Z",
+			"projectId": "clxp4d5e6f7g8h9i0j1k2l3",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T11:45:00.000Z",
+			"updatedAt": "2024-01-05T15:00:00.000Z"
+		},
+		{
+			"id": "clxt3m4n5o6p7q8r9s0t1u2",
+			"title": "Lecteur vidéo personnalisé",
+			"description": "Développer un lecteur vidéo avec contrôles de progression et notes.",
+			"status": "IN_PROGRESS",
+			"priority": "HIGH",
+			"dueDate": "2024-01-30T23:59:59.000Z",
+			"projectId": "clxp4d5e6f7g8h9i0j1k2l3",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T12:00:00.000Z",
+			"updatedAt": "2024-01-23T13:45:00.000Z"
+		},
+		{
+			"id": "clxt4n5o6p7q8r9s0t1u2v3",
+			"title": "Système de quiz interactif",
+			"description": "Créer les quiz avec questions à choix multiples et évaluation automatique.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-02-15T23:59:59.000Z",
+			"projectId": "clxp4d5e6f7g8h9i0j1k2l3",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T12:15:00.000Z",
+			"updatedAt": "2024-01-03T12:15:00.000Z"
+		},
+		{
+			"id": "clxt5o6p7q8r9s0t1u2v3w4",
+			"title": "Architecture des données",
+			"description": "Concevoir l'architecture pour la collecte et le stockage des données analytiques.",
+			"status": "DONE",
+			"priority": "HIGH",
+			"dueDate": "2024-01-08T23:59:59.000Z",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T12:30:00.000Z",
+			"updatedAt": "2024-01-08T14:20:00.000Z"
+		},
+		{
+			"id": "clxt6p7q8r9s0t1u2v3w4x5",
+			"title": "Développement des graphiques",
+			"description": "Implémenter les composants de visualisation avec Chart.js ou D3.js.",
+			"status": "IN_PROGRESS",
+			"priority": "HIGH",
+			"dueDate": "2024-01-22T23:59:59.000Z",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T12:45:00.000Z",
+			"updatedAt": "2024-01-21T09:15:00.000Z"
+		},
+		{
+			"id": "clxt7q8r9s0t1u2v3w4x5y6",
+			"title": "Système d'alertes",
+			"description": "Créer le système de notifications pour les seuils et anomalies détectées.",
+			"status": "TODO",
+			"priority": "MEDIUM",
+			"dueDate": "2024-02-08T23:59:59.000Z",
+			"projectId": "clxp5e6f7g8h9i0j1k2l3m4",
+			"creatorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-03T13:00:00.000Z",
+			"updatedAt": "2024-01-03T13:00:00.000Z"
+		}
+	],
+	"taskAssignees": [
+		{
+			"id": "clxta1a2b3c4d5e6f7g8h9i0",
+			"taskId": "clxt1a2b3c4d5e6f7g8h9i0",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"assignedAt": "2024-01-03T09:05:00.000Z"
+		},
+		{
+			"id": "clxta2b3c4d5e6f7g8h9i0j1",
+			"taskId": "clxt1a2b3c4d5e6f7g8h9i0",
+			"userId": "clx3c4d5e6f7g8h9i0j1k2l3",
+			"assignedAt": "2024-01-03T09:06:00.000Z"
+		},
+		{
+			"id": "clxta3c4d5e6f7g8h9i0j1k2",
+			"taskId": "clxt2b3c4d5e6f7g8h9i0j1",
+			"userId": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"assignedAt": "2024-01-03T09:20:00.000Z"
+		},
+		{
+			"id": "clxta4d5e6f7g8h9i0j1k2l3",
+			"taskId": "clxt3c4d5e6f7g8h9i0j1k2",
+			"userId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"assignedAt": "2024-01-03T09:35:00.000Z"
+		},
+		{
+			"id": "clxta5e6f7g8h9i0j1k2l3m4",
+			"taskId": "clxt3c4d5e6f7g8h9i0j1k2",
+			"userId": "clx3c4d5e6f7g8h9i0j1k2l3",
+			"assignedAt": "2024-01-03T09:36:00.000Z"
+		},
+		{
+			"id": "clxta6f7g8h9i0j1k2l3m4n5",
+			"taskId": "clxt4d5e6f7g8h9i0j1k2l3",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"assignedAt": "2024-01-03T09:50:00.000Z"
+		},
+		{
+			"id": "clxta7g8h9i0j1k2l3m4n5o6",
+			"taskId": "clxt5e6f7g8h9i0j1k2l3m4",
+			"userId": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"assignedAt": "2024-01-03T10:05:00.000Z"
+		},
+		{
+			"id": "clxta8h9i0j1k2l3m4n5o6p7",
+			"taskId": "clxt5e6f7g8h9i0j1k2l3m4",
+			"userId": "clx3c4d5e6f7g8h9i0j1k2l3",
+			"assignedAt": "2024-01-03T10:06:00.000Z"
+		},
+		{
+			"id": "clxta9i0j1k2l3m4n5o6p7q8",
+			"taskId": "clxt6f7g8h9i0j1k2l3m4n5",
+			"userId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"assignedAt": "2024-01-03T10:20:00.000Z"
+		},
+		{
+			"id": "clxta0j1k2l3m4n5o6p7q8r9",
+			"taskId": "clxt6f7g8h9i0j1k2l3m4n5",
+			"userId": "clx6f7g8h9i0j1k2l3m4n5o6",
+			"assignedAt": "2024-01-03T10:21:00.000Z"
+		},
+		{
+			"id": "clxta1k2l3m4n5o6p7q8r9s0",
+			"taskId": "clxt7g8h9i0j1k2l3m4n5o6",
+			"userId": "clx7g8h9i0j1k2l3m4n5o6p7",
+			"assignedAt": "2024-01-03T10:35:00.000Z"
+		},
+		{
+			"id": "clxta2l3m4n5o6p7q8r9s0t1",
+			"taskId": "clxt8h9i0j1k2l3m4n5o6p7",
+			"userId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"assignedAt": "2024-01-03T10:50:00.000Z"
+		},
+		{
+			"id": "clxta3m4n5o6p7q8r9s0t1u2",
+			"taskId": "clxt9i0j1k2l3m4n5o6p7q8",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"assignedAt": "2024-01-03T11:05:00.000Z"
+		},
+		{
+			"id": "clxta4n5o6p7q8r9s0t1u2v3",
+			"taskId": "clxt0j1k2l3m4n5o6p7q8r9",
+			"userId": "clx9i0j1k2l3m4n5o6p7q8r9",
+			"assignedAt": "2024-01-03T11:20:00.000Z"
+		},
+		{
+			"id": "clxta5o6p7q8r9s0t1u2v3w4",
+			"taskId": "clxt0j1k2l3m4n5o6p7q8r9",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"assignedAt": "2024-01-03T11:21:00.000Z"
+		},
+		{
+			"id": "clxta6p7q8r9s0t1u2v3w4x5",
+			"taskId": "clxt1k2l3m4n5o6p7q8r9s0",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"assignedAt": "2024-01-03T11:35:00.000Z"
+		},
+		{
+			"id": "clxta7q8r9s0t1u2v3w4x5y6",
+			"taskId": "clxt2l3m4n5o6p7q8r9s0t1",
+			"userId": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"assignedAt": "2024-01-03T11:50:00.000Z"
+		},
+		{
+			"id": "clxta8r9s0t1u2v3w4x5y6z7",
+			"taskId": "clxt3m4n5o6p7q8r9s0t1u2",
+			"userId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"assignedAt": "2024-01-03T12:05:00.000Z"
+		},
+		{
+			"id": "clxta9s0t1u2v3w4x5y6z7a8",
+			"taskId": "clxt3m4n5o6p7q8r9s0t1u2",
+			"userId": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"assignedAt": "2024-01-03T12:06:00.000Z"
+		},
+		{
+			"id": "clxta0t1u2v3w4x5y6z7a8b9",
+			"taskId": "clxt4n5o6p7q8r9s0t1u2v3",
+			"userId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"assignedAt": "2024-01-03T12:20:00.000Z"
+		},
+		{
+			"id": "clxta1u2v3w4x5y6z7a8b9c0",
+			"taskId": "clxt5o6p7q8r9s0t1u2v3w4",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"assignedAt": "2024-01-03T12:35:00.000Z"
+		},
+		{
+			"id": "clxta2v3w4x5y6z7a8b9c0d1",
+			"taskId": "clxt6p7q8r9s0t1u2v3w4x5",
+			"userId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"assignedAt": "2024-01-03T12:50:00.000Z"
+		},
+		{
+			"id": "clxta3w4x5y6z7a8b9c0d1e2",
+			"taskId": "clxt6p7q8r9s0t1u2v3w4x5",
+			"userId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"assignedAt": "2024-01-03T12:51:00.000Z"
+		},
+		{
+			"id": "clxta4x5y6z7a8b9c0d1e2f3",
+			"taskId": "clxt7q8r9s0t1u2v3w4x5y6",
+			"userId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"assignedAt": "2024-01-03T13:05:00.000Z"
+		}
+	],
+	"comments": [
+		{
+			"id": "clxtc1a2b3c4d5e6f7g8h9i0",
+			"content": "Base de données créée avec succès. Toutes les tables sont en place et les relations sont correctes.",
+			"taskId": "clxt1a2b3c4d5e6f7g8h9i0",
+			"authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"createdAt": "2024-01-14T16:00:00.000Z",
+			"updatedAt": "2024-01-14T16:00:00.000Z"
+		},
+		{
+			"id": "clxtc2b3c4d5e6f7g8h9i0j1",
+			"content": "Excellent travail sur cette tâche ! Le code est propre et bien documenté.",
+			"taskId": "clxt1a2b3c4d5e6f7g8h9i0",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-14T17:30:00.000Z",
+			"updatedAt": "2024-01-14T17:30:00.000Z"
+		},
+		{
+			"id": "clxtc3c4d5e6f7g8h9i0j1k2",
+			"content": "API REST en cours de développement. Les endpoints produits et utilisateurs sont terminés.",
+			"taskId": "clxt2b3c4d5e6f7g8h9i0j1",
+			"authorId": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"createdAt": "2024-01-24T11:00:00.000Z",
+			"updatedAt": "2024-01-24T11:00:00.000Z"
+		},
+		{
+			"id": "clxtc4d5e6f7g8h9i0j1k2l3",
+			"content": "Attention à la sécurité des données. Vérifier les permissions utilisateur.",
+			"taskId": "clxt2b3c4d5e6f7g8h9i0j1",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-24T14:20:00.000Z",
+			"updatedAt": "2024-01-24T14:20:00.000Z"
+		},
+		{
+			"id": "clxtc5e6f7g8h9i0j1k2l3m4",
+			"content": "Intégration Stripe prévue pour la semaine prochaine. Documentation consultée.",
+			"taskId": "clxt4d5e6f7g8h9i0j1k2l3",
+			"authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"createdAt": "2024-01-19T10:30:00.000Z",
+			"updatedAt": "2024-01-19T10:30:00.000Z"
+		},
+		{
+			"id": "clxtc6f7g8h9i0j1k2l3m4n5",
+			"content": "Tests unitaires écrits pour 80% des fonctions. Tests d'intégration à venir.",
+			"taskId": "clxt5e6f7g8h9i0j1k2l3m4",
+			"authorId": "clx4d5e6f7g8h9i0j1k2l3m4",
+			"createdAt": "2024-01-20T15:45:00.000Z",
+			"updatedAt": "2024-01-20T15:45:00.000Z"
+		},
+		{
+			"id": "clxtc7g8h9i0j1k2l3m4n5o6",
+			"content": "Module congés bien avancé. Workflow d'approbation fonctionnel.",
+			"taskId": "clxt6f7g8h9i0j1k2l3m4n5",
+			"authorId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"createdAt": "2024-01-18T13:30:00.000Z",
+			"updatedAt": "2024-01-18T13:30:00.000Z"
+		},
+		{
+			"id": "clxtc8h9i0j1k2l3m4n5o6p7",
+			"content": "Deadline respectée, bravo à toute l'équipe !",
+			"taskId": "clxt6f7g8h9i0j1k2l3m4n5",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-18T16:00:00.000Z",
+			"updatedAt": "2024-01-18T16:00:00.000Z"
+		},
+		{
+			"id": "clxtc9i0j1k2l3m4n5o6p7q8",
+			"content": "Design mobile terminé et validé par le client. Interface moderne et intuitive.",
+			"taskId": "clxt9i0j1k2l3m4n5o6p7q8",
+			"authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"createdAt": "2024-01-09T16:30:00.000Z",
+			"updatedAt": "2024-01-09T16:30:00.000Z"
+		},
+		{
+			"id": "clxtc0j1k2l3m4n5o6p7q8r9",
+			"content": "Écrans principaux en développement. Navigation fluide entre les sections.",
+			"taskId": "clxt0j1k2l3m4n5o6p7q8r9",
+			"authorId": "clx9i0j1k2l3m4n5o6p7q8r9",
+			"createdAt": "2024-01-22T10:00:00.000Z",
+			"updatedAt": "2024-01-22T10:00:00.000Z"
+		},
+		{
+			"id": "clxtc1k2l3m4n5o6p7q8r9s0",
+			"content": "Petit bug détecté sur mobile. À corriger avant la livraison.",
+			"taskId": "clxt0j1k2l3m4n5o6p7q8r9",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-22T14:15:00.000Z",
+			"updatedAt": "2024-01-22T14:15:00.000Z"
+		},
+		{
+			"id": "clxtc2l3m4n5o6p7q8r9s0t1",
+			"content": "API nutrition identifiée. Documentation reçue, intégration prévue.",
+			"taskId": "clxt1k2l3m4n5o6p7q8r9s0",
+			"authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"createdAt": "2024-01-21T11:00:00.000Z",
+			"updatedAt": "2024-01-21T11:00:00.000Z"
+		},
+		{
+			"id": "clxtc3m4n5o6p7q8r9s0t1u2",
+			"content": "Système de cours opérationnel. Interface d'administration complète.",
+			"taskId": "clxt2l3m4n5o6p7q8r9s0t1",
+			"authorId": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"createdAt": "2024-01-05T14:30:00.000Z",
+			"updatedAt": "2024-01-05T14:30:00.000Z"
+		},
+		{
+			"id": "clxtc4n5o6p7q8r9s0t1u2v3",
+			"content": "Documentation mise à jour. Tutoriel d'utilisation créé.",
+			"taskId": "clxt2l3m4n5o6p7q8r9s0t1",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-05T16:00:00.000Z",
+			"updatedAt": "2024-01-05T16:00:00.000Z"
+		},
+		{
+			"id": "clxtc5o6p7q8r9s0t1u2v3w4",
+			"content": "Lecteur vidéo en cours. Contrôles de base implémentés.",
+			"taskId": "clxt3m4n5o6p7q8r9s0t1u2",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-23T13:00:00.000Z",
+			"updatedAt": "2024-01-23T13:00:00.000Z"
+		},
+		{
+			"id": "clxtc6p7q8r9s0t1u2v3w4x5",
+			"content": "Tests de charge effectués. Performance satisfaisante.",
+			"taskId": "clxt3m4n5o6p7q8r9s0t1u2",
+			"authorId": "clx0j1k2l3m4n5o6p7q8r9s0",
+			"createdAt": "2024-01-23T15:30:00.000Z",
+			"updatedAt": "2024-01-23T15:30:00.000Z"
+		},
+		{
+			"id": "clxtc7q8r9s0t1u2v3w4x5y6",
+			"content": "Quiz interactif en développement. Système de notation en place.",
+			"taskId": "clxt4n5o6p7q8r9s0t1u2v3",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-22T09:00:00.000Z",
+			"updatedAt": "2024-01-22T09:00:00.000Z"
+		},
+		{
+			"id": "clxtc8r9s0t1u2v3w4x5y6z7",
+			"content": "Architecture données validée. Performance optimisée pour les gros volumes.",
+			"taskId": "clxt5o6p7q8r9s0t1u2v3w4",
+			"authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"createdAt": "2024-01-08T13:50:00.000Z",
+			"updatedAt": "2024-01-08T13:50:00.000Z"
+		},
+		{
+			"id": "clxtc9s0t1u2v3w4x5y6z7a8",
+			"content": "Code review terminée. Quelques améliorations mineures suggérées.",
+			"taskId": "clxt5o6p7q8r9s0t1u2v3w4",
+			"authorId": "clx1a2b3c4d5e6f7g8h9i0j1",
+			"createdAt": "2024-01-08T16:00:00.000Z",
+			"updatedAt": "2024-01-08T16:00:00.000Z"
+		},
+		{
+			"id": "clxtc0t1u2v3w4x5y6z7a8b9",
+			"content": "Graphiques en cours. Chart.js intégré, premiers graphiques affichés.",
+			"taskId": "clxt6p7q8r9s0t1u2v3w4x5",
+			"authorId": "clx5e6f7g8h9i0j1k2l3m4n5",
+			"createdAt": "2024-01-21T09:00:00.000Z",
+			"updatedAt": "2024-01-21T09:00:00.000Z"
+		},
+		{
+			"id": "clxtc1u2v3w4x5y6z7a8b9c0",
+			"content": "Déploiement en production réussi. Monitoring en place.",
+			"taskId": "clxt6p7q8r9s0t1u2v3w4x5",
+			"authorId": "clx8h9i0j1k2l3m4n5o6p7q8",
+			"createdAt": "2024-01-21T14:45:00.000Z",
+			"updatedAt": "2024-01-21T14:45:00.000Z"
+		},
+		{
+			"id": "clxtc2v3w4x5y6z7a8b9c0d1",
+			"content": "Système d'alertes planifié. Notifications par email et push prévues.",
+			"taskId": "clxt7q8r9s0t1u2v3w4x5y6",
+			"authorId": "clx2b3c4d5e6f7g8h9i0j1k2",
+			"createdAt": "2024-01-23T11:00:00.000Z",
+			"updatedAt": "2024-01-23T11:00:00.000Z"
+		}
+	]
 }
