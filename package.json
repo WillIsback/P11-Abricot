@@ -9,9 +9,6 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
-		"test:perf": "playwright test tests/performance",
-		"test:perf:ui": "playwright test tests/performance --ui",
-		"test:perf:report": "playwright show-report",
 		"docs": "typedoc",
 		"docs:watch": "typedoc --watch"
 	},
