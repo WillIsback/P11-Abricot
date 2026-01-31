@@ -14,8 +14,9 @@
 /coverage
 /test-results
 /playwright-report
-/playwright/.auth
-/tests
+/tests/.auth
+/tests/visual
+visual-report.html
 
 # documentation
 /docs

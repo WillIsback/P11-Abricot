@@ -10,7 +10,9 @@
 		"start": "next start",
 		"lint": "eslint",
 		"docs": "typedoc",
-		"docs:watch": "typedoc --watch"
+		"docs:watch": "typedoc --watch",
+		"test:visual": "playwright test --config playwright.config.ts",
+		"test:report": "node tests/visual/generate-report.ts"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.1.0",
