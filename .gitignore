@@ -20,6 +20,8 @@
 # documentation
 /docs
 
+# maquette figma
+/figma
 # next.js
 /.next/
 /out/

@@ -137,7 +137,7 @@ export default function UpdateProject({
 					/>
 					<DialogFooter className="gap-2 w-61 flex justify-start">
 						<CustomButton
-							label="Ajouter un projet"
+							label="Enregistrer"
 							pending={pending}
 							disabled={!isFormValid}
 							buttonType="submit"
