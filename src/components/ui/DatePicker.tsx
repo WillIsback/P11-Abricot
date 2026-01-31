@@ -15,7 +15,7 @@ import { fr } from 'date-fns/locale';
 
 
 
-export default function DatePicker({ name, onValueChange, required = false }: {name: string, onValueChange?: ()=>void ,required?: boolean}) {
+export default function DatePicker({ name, onValueChange, required = false, variant = 'default' }: {name: string, onValueChange?: ()=>void ,required?: boolean, variant?: string}) {
   const [date, setDate] = React.useState<Date>()
   return (
     <>
@@ -29,8 +29,9 @@ export default function DatePicker({ name, onValueChange, required = false }: {n
         <PopoverTrigger asChild>
           <Button
               data-empty={!date}
-              className="data-[empty=true]:text-muted-foreground bg-white min-h-13.25 
-              border w-full flex flex-row-reverse justify-between text-gray-800 cursor-pointer"
+              className={variant==='default'?`data-[empty=true]:text-muted-foreground bg-white min-h-13.25 
+                                      border w-full flex flex-row-reverse justify-between text-gray-800 cursor-pointer`
+                                    : "border shadow-md bg-gray-50" }
               variant='ghost'
               
           >

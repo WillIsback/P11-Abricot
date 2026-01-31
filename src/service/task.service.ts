@@ -126,8 +126,6 @@ export const TaskService = {
           }),
           3000
         );
-        console.log(res.status)
-        console.log(res.body)
         return await handleFetch(res, CreateTaskResponse);
       } catch (error) {
         // Capturer les erreurs de timeout

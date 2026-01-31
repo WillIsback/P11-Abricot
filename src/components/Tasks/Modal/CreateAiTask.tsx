@@ -9,19 +9,17 @@ import {
 } from '@/components/ui/dialog';
 
 import { generateAiTask } from '@/action/mistral.action';
-import { useActionState} from 'react';
+import { useActionState, useEffect, useTransition, useState } from 'react';
 import { Task } from '@/schemas/backend.schemas';
 import { Sparkle, AlertCircle, LoaderPinwheel } from 'lucide-react';
 import * as z from 'zod';
 import IAButton from "@/components/ui/IAButton";
 import TaskAI from '../TaskAi';
 import CustomButton from '@/components/ui/CustomButton';
-
-import { useTransition, useState } from 'react';
 import { createAiTask } from '@/action/mistral.action';
 
-const tasksZodSchema = z.array(Task)
-type TasksType = z.infer<typeof tasksZodSchema>
+
+type TasksType = z.infer<typeof Task>[]
 
 interface CreateAiTaskProps {
   open: boolean;
@@ -32,10 +30,23 @@ interface CreateAiTaskProps {
 }
 
 interface AiTask {
+  id: string;
   title: string;
   description: string;
   dueDate: string;
 }
+
+// Normalise une date en format ISO complet
+// "2026-02-15" → "2026-02-15T00:00:00.000Z"
+// "2026-02-15T00:00:00.000Z" → "2026-02-15T00:00:00.000Z" (inchangé)
+const normalizeToISODate = (dateString: string): string => {
+  // Si déjà au format ISO complet, retourne tel quel
+  if (dateString.includes('T')) {
+    return dateString;
+  }
+  // Sinon, complète avec l'heure
+  return `${dateString}T00:00:00.000Z`;
+};
 
 
 
@@ -51,13 +62,29 @@ export default function CreateAiTask({
   const [isAddingTasks, startTransition] = useTransition()
   const [message, setMessage] = useState('')
   const [ok, setOk] = useState(true)
+  const [tasksList, setTasksList] = useState<AiTask[]>([])
+
+  useEffect(() => {
+    const handleTasksListsChange = () => {
+      // if(state?.data?.tasks){
+        if(mockData){
+        const tasksWithIds = mockData.tasks.map((task) => ({
+          ...task,
+          id: crypto.randomUUID(),
+        }));
+        setTasksList(tasksWithIds)
+      }
+      else setTasksList([])
+    }
+    if(mockData){
+      handleTasksListsChange()
+    }
+  }, [])
 
   const handleClickAddTasks = (tasks : AiTask[]) => {
     tasks.forEach((task)=> {
         startTransition(async () => {
-          // Convertir la date en ISO datetime avec millisecondes
-          const isoDate = `${task.dueDate}T00:00:00.000Z`;
-
+          const isoDate = normalizeToISODate(task.dueDate);
           const response = await createAiTask(
             projectId,
             task.title,
@@ -73,7 +100,6 @@ export default function CreateAiTask({
             console.log('Tâche créée:', response.data)
             setMessage(`Tâche créée: ${response.data}`)
             setOk(true)
-
           }
         })
       })
@@ -85,6 +111,29 @@ export default function CreateAiTask({
     onOpenChange(isOpen);
   };
 
+  const handleDeleteTask = (taskId: string) => {
+    const nouvelleListe = tasksList.filter((task) => task.id !== taskId)
+    setTasksList(nouvelleListe)
+  }
+
+  const handleEditTask = (taskId: string, formData: FormData) => {
+    const newTitle = formData.get('title') as string | null;
+    const newDesc = formData.get('description') as string | null;
+    const newDueDate = formData.get('dueDate') as string | null;
+  
+    const nouvelleListe = tasksList.map((task) => {
+      if (task.id !== taskId) return task;
+      
+      // Spread : garde l'ancien, écrase seulement si nouvelle valeur existe
+      return {
+        ...task,
+        ...(newTitle && { title: newTitle }),
+        ...(newDesc && { description: newDesc }),
+        ...(newDueDate && { dueDate: newDueDate }),
+      };
+    });
+    setTasksList(nouvelleListe);
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -125,12 +174,16 @@ export default function CreateAiTask({
                         <div className="h-4 bg-gray-200 rounded w-full"></div>
                         <div className="h-4 bg-gray-200 rounded w-1/2"></div>
                       </div>
-                    ) : mockData && (
-                        mockData.tasks.map((task) => (
+                    ) : tasksList && (
+                        tasksList.map((task) => (
                           <TaskAI
-                            key={crypto.randomUUID()}
+                            key={task.id}
+                            taskId={task.id}
                             title={task.title}
                             description={task.description}
+                            dueDate={task.dueDate}
+                            handleDeleteTask={handleDeleteTask}
+                            handleEditTask={handleEditTask}
                           />
                       )))
                   }
@@ -142,7 +195,7 @@ export default function CreateAiTask({
                     pending={isAddingTasks}
                     disabled={false}
                     buttonType='button'
-                    onClick={() => handleClickAddTasks(mockData.tasks)}
+                    onClick={() => handleClickAddTasks(tasksList)}
                     className='whitespace-nowrap'
                   />
                   </div>
