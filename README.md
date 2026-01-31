@@ -1,5 +1,7 @@
 # Abricot.co - SaaS de Gestion de Projet IA
 
+[![Documentation](https://img.shields.io/badge/Documentation-TypeDoc-blue?style=for-the-badge&logo=typescript&logoColor=white)](https://willisback.github.io/P11-Abricot/)
+
 **Projet 11 - Formation Développeur FullStack IA - OpenClassroom**  
 Développé par : Derue William
 
