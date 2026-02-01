@@ -63,7 +63,7 @@ export default function ComboboxAssignee({
 				>
 					<ComboboxChips
 						ref={anchor}
-						className="w-full rounded-lg min-h-13.25 dark:bg-white bg-white focus:outline-none px-4.25 py-4.75 border"
+						className="w-full rounded-[4px] min-h-13.25 dark:bg-white bg-white focus:outline-none px-4.25 py-4.75 border"
 					>
 						<ComboboxValue>
 							{value.map((user) => (

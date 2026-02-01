@@ -149,7 +149,7 @@ export default function CreateAiTask({
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent
 				className="
-        px-18.25 pt-19.75 pb-9.75
+        px-13 pt-19.75 pb-19.75 h-fit
         m-auto flex flex-col justify-between
         bg-white rounded-[10px] items-center gap-14 
         [&_[data-slot=dialog-close]_svg]:stroke-gray-600
@@ -184,7 +184,7 @@ export default function CreateAiTask({
 							</div>
 						))}
 					<div className="flex flex-col gap-10">
-						<div className="flex flex-col gap-6 min-h-130.75 max-h-130.75 w-full overflow-auto">
+						<div className="flex flex-col gap-6 min-h-115 max-h-117 w-full overflow-auto">
 							{isPending ? (
 								// Skeleton de chargement
 								<div className="animate-pulse space-y-4">

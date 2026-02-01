@@ -189,6 +189,7 @@ export default function CreateTask({
 							pending={pending}
 							disabled={!isFormValid}
 							buttonType="submit"
+							className="whitespace-nowrap"
 						/>
 					</DialogFooter>
 				</form>

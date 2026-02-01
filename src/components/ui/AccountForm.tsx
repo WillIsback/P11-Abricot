@@ -13,12 +13,12 @@ import {
 
 export default function AccountForm({ userName }: { userName: string }) {
 	return (
-		<div className="flex flex-col gap-7.5 ">
+		<div className="flex flex-col gap-10.25 ">
 			<div className="flex flex-col gap-2">
-				<h1>Mon Compte</h1>
+				<h1 className="text-[18px]!">Mon Compte</h1>
 				<p className="body-m text-gray-600">{userName}</p>
 			</div>
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-10">
 				<ProfileForm userName={userName} />
 				<hr />
 				<PasswordForm />
@@ -60,11 +60,11 @@ const ProfileForm = ({ userName }: { userName: string }) => {
 			)}
 			<form
 				action={action}
-				className="flex flex-col gap-7.25 px-4 py-4"
+				className="flex flex-col gap-6"
 				onChange={handleFormChange}
 				ref={formRef}
 			>
-				<div className="flex flex-col gap-7.25">
+				<div className="flex flex-col gap-6">
 					<CustomInput
 						label="Prénom"
 						type="text"
@@ -86,12 +86,13 @@ const ProfileForm = ({ userName }: { userName: string }) => {
 						error={getFieldError("email")}
 					/>
 				</div>
-				<div className="flex w-fit">
+				<div className="flex w-60.5">
 					<CustomButton
 						label="Modifier les informations"
 						pending={pending}
 						disabled={!isFormValid}
 						buttonType="submit"
+						className="whitespace-nowrap"
 					/>
 				</div>
 			</form>
@@ -129,11 +130,11 @@ const PasswordForm = () => {
 
 			<form
 				action={action}
-				className="flex flex-col gap-7.25 px-4 py-4"
+				className="flex flex-col gap-6"
 				onChange={handleFormChange}
 				ref={formRef}
 			>
-				<div className="flex flex-col gap-7.25">
+				<div className="flex flex-col gap-6">
 					<CustomInput
 						label="Mot de passe actuel"
 						type="password"
@@ -148,12 +149,13 @@ const PasswordForm = () => {
 						error={getFieldError("newPassword")}
 					/>
 				</div>
-				<div className="flex w-fit">
+				<div className="flex w-60.5">
 					<CustomButton
 						label="Mettre à jour le mot de passe"
 						pending={pending}
 						disabled={!isFormValid}
 						buttonType="submit"
+						className="whitespace-nowrap"
 					/>
 				</div>
 			</form>

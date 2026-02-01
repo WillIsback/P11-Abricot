@@ -121,7 +121,7 @@ export default function CreateProject({
 						onValueChange={handleCustomFieldChange("contributors")}
 						error={getFieldError("contributors")}
 					/>
-					<DialogFooter className="gap-2 w-61 flex justify-start">
+					<DialogFooter className="gap-2 w-45.25 flex justify-start">
 						<CustomButton
 							label="Ajouter un projet"
 							pending={pending}

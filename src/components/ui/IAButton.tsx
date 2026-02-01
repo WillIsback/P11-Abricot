@@ -10,8 +10,8 @@ export default function IAButton() {
             flex
             items-center
             justify-center
-            h-10
-            w-10
+            h-6
+            w-6
             relative
             drop-shadow-md
             rounded-full
@@ -21,7 +21,7 @@ export default function IAButton() {
         "
 		>
 			<Sparkles
-				size={14}
+				size={8.4}
 				fill="white"
 				className="stroke-0 group-hover:fill-brand-dark group-hover:stroke-0 group-focus:fill-brand-dark group-focus:stroke-0"
 			/>

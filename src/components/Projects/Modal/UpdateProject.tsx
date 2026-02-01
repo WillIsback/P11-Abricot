@@ -135,7 +135,7 @@ export default function UpdateProject({
 						error={getFieldError("contributors")}
 						defaultValue={existingContributors}
 					/>
-					<DialogFooter className="gap-2 w-61 flex justify-start">
+					<DialogFooter className="gap-2 w-45.25 flex justify-start">
 						<CustomButton
 							label="Enregistrer"
 							pending={pending}

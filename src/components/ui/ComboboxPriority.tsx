@@ -45,7 +45,7 @@ export default function ComboboxPriority({
 					id={name}
 					aria-labelledby={`${name}-label`}
 					placeholder="Select a priority"
-					className="w-full rounded-lg min-h-13.25 bg-white dark:bg-white
+					className="w-full rounded-[4px] min-h-13.25 bg-white dark:bg-white
         focus:outline-none px-4.25 py-4.75 border"
 				/>
 				<ComboboxContent

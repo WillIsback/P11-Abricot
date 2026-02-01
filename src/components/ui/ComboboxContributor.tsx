@@ -90,17 +90,22 @@ export default function ComboboxContributor({
 			>
 				<ComboboxChips
 					ref={anchor}
-					className="w-full rounded-lg min-h-13.25 dark:bg-white bg-white focus:outline-none px-4.25 py-4.75 border"
+					className="w-full rounded-[4px] min-h-13.25 dark:bg-white bg-white focus:outline-none px-4.25 py-4.75 border"
 				>
 					<ComboboxValue>
-						{selectedUsers.map((user) => (
+						{selectedUsers.slice(0, 2).map((user) => (
 							<ComboboxChip key={user.id}>{user.name}</ComboboxChip>
 						))}
+						{selectedUsers.length > 2 && (
+							<span className="text-sm text-gray-600 px-2">
+								+{selectedUsers.length - 2}
+							</span>
+						)}
 					</ComboboxValue>
 					<ComboboxChipsInput
 						id={name}
 						aria-labelledby={`${name}-label`}
-						placeholder="Choisir un ou plusieurs collaborateurs"
+						placeholder={selectedUsers.length === 0 ? "Choisir un ou plusieurs collaborateurs" : ""}
 						onChange={(e) => {
 							setQuery(e.target.value);
 						}}
