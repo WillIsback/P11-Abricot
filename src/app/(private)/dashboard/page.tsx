@@ -38,7 +38,7 @@ export default async function DashBoard({ searchParams }: DashboardPageProps) {
 		<div className="flex w-full bg-gray-50">
 			<div className="w-full m-auto mt-0">
 				<Menu userInitial={userInitial} />
-				<main id="main-content" className="px-25 py-22.25">
+				<main id="main-content" className="w-1215/1440 m-auto py-22.25">
 					<Banner title="Tableau de bord" name={profileData.data?.user.name} />
 					<DisplayDashboardContent />
 				</main>

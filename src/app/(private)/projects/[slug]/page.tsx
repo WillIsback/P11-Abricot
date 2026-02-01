@@ -110,10 +110,10 @@ export default async function Projet({
 						className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto"
 					>
 						<Workers owner={owner} members={members} variant="Default" />
-						<div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-10 gap-10.25">
+						<div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-6 gap-10.25">
 							<ProjetFilterBar />
 							{chips === "task" ? (
-								<ul className="flex flex-col gap-4.25">
+								<ul className="flex flex-col gap-4.25 w-1097/1215 px-10">
 									{filteredTasks.map((task) => {
 										return (
 											<li key={task.id}>

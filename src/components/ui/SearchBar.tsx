@@ -35,7 +35,7 @@ export default function SearchBar() {
 	};
 
 	return (
-		<div className="relative flex w-89.25 px-8 py-5.75 justify-between items-center bg-white border border-gray-200 rounded-xl gap-2">
+		<div className="relative flex px-8 py-5.75 justify-between items-center bg-white border border-gray-200 rounded-xl gap-2">
 			{activeSearch && (
 				<div className="absolute left-8 flex items-center gap-1.5 px-2 py-1 border border-gray-300 rounded-full bg-white z-10">
 					<span className="body-xs text-gray-700 whitespace-nowrap">

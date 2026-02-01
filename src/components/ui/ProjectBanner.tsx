@@ -40,14 +40,17 @@ export default function ProjectBanner(props: ProjectBannerProps) {
 					<p>{props.description}</p>
 				</div>
 			</div>
-			<div className="flex items-center gap-3">
-				<CustomButton
-					onClick={() => setIsCreateTaskOpen(true)}
-					label="Créer une tâche"
-					pending={false}
-					disabled={false}
-					buttonType="button"
-				/>
+			<div className="flex w-fit items-center gap-3">
+				<div className="flex w-35.25">
+					<CustomButton
+						onClick={() => setIsCreateTaskOpen(true)}
+						label="Créer une tâche"
+						pending={false}
+						disabled={false}
+						buttonType="button"
+						className="whitespace-nowrap"
+					/>
+				</div>
 				<IAButtonSquare onClick={() => setIsCreateAiTaskOpen(true)} />
 			</div>
 			{/* Modal de création de tâche */}

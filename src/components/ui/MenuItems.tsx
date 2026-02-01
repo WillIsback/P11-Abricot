@@ -30,7 +30,7 @@ export default function MenuItems() {
 						aria-current={isProjects ? "page" : undefined}
 						onClick={(e) => isProjects && e.preventDefault()}
 					>
-						<FolderOpen className="stroke-white fill-brand-dark group-aria-[current=page]:fill-white  group-aria-[current=page]:stroke-gray-950" />
+						<FolderOpen  size={'23px'} className="stroke-white scale-[1.5] fill-brand-dark group-aria-[current=page]:fill-white  group-aria-[current=page]:stroke-gray-950" />
 						<span className="body-m text-brand-text group-aria-[current=page]:text-white">
 							Projets
 						</span>

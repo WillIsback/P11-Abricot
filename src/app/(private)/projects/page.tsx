@@ -23,7 +23,7 @@ export default async function Projects() {
 		<div className="flex bg-gray-50">
 			<div className="w-360 m-auto mt-0">
 				<Menu userInitial={userInitial} />
-				<main id="main-content" className="px-25 py-22.25">
+				<main id="main-content" className="w-1166/1440 m-auto py-22.25">
 					<Banner title="Mes projets" name="" />
 					<DisplayProjects />
 				</main>
