@@ -24,7 +24,23 @@
 	},
 	"plugin": [],
 	"categorizeByGroup": true,
-	"categoryOrder": ["Actions", "Services", "Libraries", "Hooks", "Contexts", "Schemas", "Types", "*"],
+	"categoryOrder": [
+		"Actions",
+		"Services",
+		"Libraries",
+		"Hooks",
+		"Contexts",
+		"Schemas",
+		"Types",
+		"*"
+	],
 	"sort": ["source-order", "alphabetical"],
-	"kindSortOrder": ["Function", "Class", "Interface", "TypeAlias", "Variable", "Enum"]
+	"kindSortOrder": [
+		"Function",
+		"Class",
+		"Interface",
+		"TypeAlias",
+		"Variable",
+		"Enum"
+	]
 }

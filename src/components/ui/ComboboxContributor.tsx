@@ -105,7 +105,11 @@ export default function ComboboxContributor({
 					<ComboboxChipsInput
 						id={name}
 						aria-labelledby={`${name}-label`}
-						placeholder={selectedUsers.length === 0 ? "Choisir un ou plusieurs collaborateurs" : ""}
+						placeholder={
+							selectedUsers.length === 0
+								? "Choisir un ou plusieurs collaborateurs"
+								: ""
+						}
 						onChange={(e) => {
 							setQuery(e.target.value);
 						}}
