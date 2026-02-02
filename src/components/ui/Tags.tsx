@@ -22,6 +22,7 @@ export default function Tags({ label, color }: TagsProps) {
             items-center
             rounded-full
             justify-center
+						transform scale-[0.6] md:scale-[1]
             body-s
             px-4
             py-1

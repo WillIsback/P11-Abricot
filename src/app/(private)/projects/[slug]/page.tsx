@@ -93,11 +93,11 @@ export default async function Projet({
 	});
 
 	return (
-		<div className="flex  bg-gray-50">
-			<div className="w-360 m-auto mt-0">
+		<div className="flex bg-gray-50">
+			<div className="w-full md:max-w-360 m-auto mt-0">
 				<Menu userInitial={userInitial} />
 				<ProjectProvider data={project}>
-					<div className="flex pl-11 pr-25 mt-19.5">
+					<div className="flex md:m-auto pl-2 pr-2 lg:pl-11 md:pr-25 mt-19.5 w-1215/1440">
 						<ProjectBanner
 							title={name}
 							description={description}

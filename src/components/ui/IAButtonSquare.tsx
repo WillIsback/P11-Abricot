@@ -10,6 +10,7 @@ export default function IAButtonSquare({ onClick }: { onClick: () => void }) {
             flex
             items-center
             justify-center
+						transform scale-[0.6] md:scale-[0.8] lg:scale-[1]
             h-12.5
             w-23.5
             rounded-[10px]

@@ -5,7 +5,8 @@ import UserIcon from "../ui/UserIcon";
 
 export default function Menu({ userInitial }: { userInitial: string }) {
 	return (
-		<header className="flex flex-row w-full px-25 items-center justify-between py-2 bg-white h-fit">
+		<header className="flex flex-wrap md: flex-nowrap  w-full px-25 items-center justify-center md:justify-between py-2 bg-white h-fit
+		">
 			<Link href="/" aria-label="Abricot - Accueil">
 				<LogoBrandDark
 					aria-hidden="true"

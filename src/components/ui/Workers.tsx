@@ -8,7 +8,7 @@ export default function Workers({
 	const totalTeamMembers = members.length + 1;
 	return (
 		<div className="flex w-full h-fit gap-6 px-12.5 py-5 bg-gray-100 rounded-[10px]">
-			<div className="flex justify-between items-center w-full">
+			<div className="flex flex-col gap-4 md:flex-row md:gap-0 justify-between items-center w-full">
 				<div className="flex w-47.5 h-auto gap-2">
 					<h2 className="text-gray-800">Contributeurs</h2>
 					<span className="text-gray-600 body-m whitespace-nowrap">

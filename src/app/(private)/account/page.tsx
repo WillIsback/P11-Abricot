@@ -23,7 +23,7 @@ export default async function AccountPage() {
 				<Menu userInitial={userInitial} />
 				<main
 					id="main-content"
-					className=" m-auto w-1215/1440 px-14.75 py-10 rounded-[10px] bg-white border border-gray-200"
+					className=" m-auto w-full md:w-1215/1440 px-14.75 py-10 rounded-[10px] bg-white border border-gray-200"
 				>
 					<AccountForm userName={profileData.data.user.name} />
 				</main>

@@ -189,14 +189,15 @@ export default function Comments({
 						name="content"
 						aria-label="Ajouter un commentaire"
 						placeholder="Ajouter un commentaire..."
-						className="flex px-3.5 py-4.5 bg-gray-50 text-black body-2xs min-w-140 rounded-[10px]"
+						className="flex px-3.5 py-4.5 bg-gray-50 text-black
+						 body-2xs w-fit lg:min-w-140 rounded-[10px]"
 					/>
 					{stateCreate && !stateCreate.ok && (
 						<p role="alert" className="text-red-500 text-xs mt-1">
 							{stateCreate.message}
 						</p>
 					)}
-					<div className="flex w-fit place-self-end">
+					<div className="flex w-fit lg:place-self-end">
 						<CustomButton
 							label="Envoyer"
 							pending={pendingCreate}

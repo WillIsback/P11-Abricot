@@ -150,10 +150,10 @@ export default function CreateAiTask({
 			<DialogContent
 				className="
         px-13 pt-19.75 pb-19.75 h-fit
-        m-auto flex flex-col justify-between
-        bg-white rounded-[10px] items-center gap-14 
+        flex flex-col justify-between
+        bg-white rounded-[10px] items-center gap-14
         [&_[data-slot=dialog-close]_svg]:stroke-gray-600
-        **:data-[slot=dialog-close]:top-6    
+        **:data-[slot=dialog-close]:top-6
         **:data-[slot=dialog-close]:right-6
         min-w-5/12
         "

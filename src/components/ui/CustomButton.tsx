@@ -26,6 +26,7 @@ export default function CustomButton({
                     ${className}
                     flex
                     justify-center
+										transform scale-[0.6] md:scale-[0.8] lg:scale-[1]
                     items-center
                     h-12.5
                     w-full

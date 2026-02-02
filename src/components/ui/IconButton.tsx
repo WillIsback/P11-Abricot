@@ -58,7 +58,7 @@ export default function IconButton({
 					handlePencilClick={handlePencilClick}
 				/>
 			)}
-			{/* Modal de création de tâche */}
+			{/* Modal d'update de tâche */}
 			<UpdateTask
 				open={isCreateTaskOpen}
 				onOpenChange={setIsCreateTaskOpen}
@@ -102,7 +102,8 @@ function DropdownMenuDestructive({
 				<Button
 					variant="outline"
 					aria-label="Options de la tâche"
-					className="w-14.25 h-14.25 rounded-[10px] group flex items-center justify-center border border-gray-200 bg-white hover:border-brand-dark focus:border-brand-dark"
+					className="w-14.25 h-14.25 rounded-[10px] group flex items-center justify-center
+					 border border-gray-200 bg-white hover:border-brand-dark focus:border-brand-dark"
 				>
 					<Ellipsis className="w-3.75 stroke-gray-600 group-hover:stroke-brand-dark group-focus:stroke-brand-dark" />
 				</Button>

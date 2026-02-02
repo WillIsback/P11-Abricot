@@ -29,7 +29,7 @@ export default function ProjectBanner(props: ProjectBannerProps) {
 			<div className="flex gap-4">
 				<IconButton type="MoveLeft" />
 				<div className="flex flex-col gap-3.5 justify-center">
-					<div className="flex justify-between gap-4 w-57.75 items-center">
+					<div className="flex justify-between lg:gap-4 md:w-57.75 md:items-center">
 						<h1 className="whitespace-nowrap">{props.title}</h1>
 						<CustomLink
 							label="Modifier"
