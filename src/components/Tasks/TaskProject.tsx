@@ -33,8 +33,10 @@ export default function TaskProject({
 	});
 
 	return (
-		<article className="flex flex-col bg-white lg:w-255.5 rounded-[10px] py-6.25 px-10
-		gap-6 border border-gray-200">
+		<article
+			className="flex flex-col bg-white lg:w-255.5 rounded-[10px] py-6.25 px-10
+		gap-6 border border-gray-200"
+		>
 			{/* Bloc d'en tête */}
 			<div className="flex justify-between">
 				{/*Bloc titre projet + tags + description*/}
