@@ -49,7 +49,7 @@ export default function RootLayout({
 					Aller au contenu principal
 				</a>
 				<div
-					className="mx-auto w-full md:max-w-240
+					className="mx-auto w-full px-4 sm:px-6 md:px-0 md:max-w-240
            lg:max-w-300 xl:max-w-360 h-fit"
 				>
 					{children}

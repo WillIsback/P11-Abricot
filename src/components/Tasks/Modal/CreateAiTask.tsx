@@ -149,13 +149,13 @@ export default function CreateAiTask({
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent
 				className="
-        px-13 pt-19.75 pb-19.75 h-fit
+        px-4 sm:px-8 md:px-13 pt-8 sm:pt-19.75 pb-8 sm:pb-19.75 h-fit
         flex flex-col justify-between
-        bg-white rounded-[10px] items-center gap-14
+        bg-white rounded-[10px] items-center gap-6 sm:gap-14
         [&_[data-slot=dialog-close]_svg]:stroke-gray-600
-        **:data-[slot=dialog-close]:top-6
-        **:data-[slot=dialog-close]:right-6
-        min-w-5/12
+        **:data-[slot=dialog-close]:top-4 sm:**:data-[slot=dialog-close]:top-6
+        **:data-[slot=dialog-close]:right-4 sm:**:data-[slot=dialog-close]:right-6
+        w-full sm:min-w-5/12
         "
 			>
 				<div className="flex flex-col w-full gap-10">
@@ -207,7 +207,7 @@ export default function CreateAiTask({
 							)}
 						</div>
 						{tasksList.length > 0 && (
-							<div className="flex w-45.25 place-self-center">
+							<div className="flex w-full sm:w-45.25 place-self-center">
 								<CustomButton
 									label="+ Ajouter les tâches"
 									pending={isAddingTasks}

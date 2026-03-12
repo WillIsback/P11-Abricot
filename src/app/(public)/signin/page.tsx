@@ -23,7 +23,7 @@ export default function SignIn() {
 				<main
 					id="main-content"
 					className="flex flex-col items-center justify-center
-            relative z-10 bg-gray-50 px-35 py-13.75 gap-30"
+            relative z-10 bg-gray-50 px-6 sm:px-12 md:px-35 py-8 sm:py-13.75 gap-10 sm:gap-18 md:gap-30"
 				>
 					<LogoBrandDark aria-hidden="true" />
 					<div className="flex flex-col gap-7.5 w-full h-fit">

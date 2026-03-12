@@ -25,11 +25,11 @@ export default function ProjectBanner(props: ProjectBannerProps) {
 	const [isCreateAiTaskOpen, setIsCreateAiTaskOpen] = useState(false);
 
 	return (
-		<section className="flex justify-between w-full" aria-label="Banniere">
+		<section className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 w-full" aria-label="Banniere">
 			<div className="flex gap-4">
 				<IconButton type="MoveLeft" />
-				<div className="flex flex-col gap-3.5 justify-center">
-					<div className="flex justify-between lg:gap-4 md:w-57.75 md:items-center">
+				<div className="flex flex-col gap-2 sm:gap-3.5 justify-center">
+					<div className="flex flex-col sm:flex-row justify-between lg:gap-4 md:w-57.75 md:items-center">
 						<h1 className="whitespace-nowrap">{props.title}</h1>
 						<CustomLink
 							label="Modifier"
@@ -40,8 +40,8 @@ export default function ProjectBanner(props: ProjectBannerProps) {
 					<p>{props.description}</p>
 				</div>
 			</div>
-			<div className="flex w-fit items-center gap-3">
-				<div className="flex w-35.25">
+			<div className="flex w-full sm:w-fit items-center gap-3">
+				<div className="flex w-full sm:w-35.25">
 					<CustomButton
 						onClick={() => setIsCreateTaskOpen(true)}
 						label="Créer une tâche"

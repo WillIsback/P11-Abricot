@@ -19,11 +19,11 @@ export default async function AccountPage() {
 	const userInitial = getInitialsFromName(profileData.data.user.name);
 	return (
 		<div className="flex bg-gray-50">
-			<div className="w-360 mt-0 m-auto flex flex-col gap-14.25">
+			<div className="w-full max-w-360 mt-0 m-auto flex flex-col gap-14.25">
 				<Menu userInitial={userInitial} />
 				<main
 					id="main-content"
-					className=" m-auto w-full md:w-1215/1440 px-14.75 py-10 rounded-[10px] bg-white border border-gray-200"
+					className=" m-auto w-full px-4 sm:px-8 md:px-14.75 py-6 sm:py-10 rounded-[10px] bg-white border border-gray-200"
 				>
 					<AccountForm userName={profileData.data.user.name} />
 				</main>

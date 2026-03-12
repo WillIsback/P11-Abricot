@@ -69,7 +69,7 @@ const CustomLinkOpener = ({
 	className,
 }: {
 	label: string;
-	onClickHandler: () => undefined | undefined;
+	onClickHandler: () => void;
 	className?: string;
 }) => {
 	return (

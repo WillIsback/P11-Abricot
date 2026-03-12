@@ -7,7 +7,7 @@ type Member = z.infer<typeof ProjectMember>;
 export default function Contributors({ members }: { members?: Member[] }) {
 	const list = members ?? [];
 	return (
-		<ul className="flex gap-2">
+		<ul className="flex flex-col sm:flex-row gap-2">
 			{list.map((c) => (
 				<div
 					className="flex gap-1 w-fit h-fit items-center justify-center"

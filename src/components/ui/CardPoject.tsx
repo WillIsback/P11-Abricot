@@ -82,7 +82,8 @@ export default function CardProject({
 			className="
             flex
             flex-col
-            w-95
+            w-full
+            max-w-95
             h-auto
             rounded-xl
             px-8.5

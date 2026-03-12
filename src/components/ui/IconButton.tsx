@@ -79,7 +79,7 @@ function RouterBackButton({
 			type="button"
 			aria-label="Retour aux projets"
 			className="
-                w-14.25 h-14.25 rounded-[10px] group flex
+                w-10 h-10 sm:w-14.25 sm:h-14.25 rounded-[10px] group flex
                 items-center justify-center border border-gray-200 bg-white
                 hover:border-brand-dark focus:border-brand-dark"
 			onClick={handleBackButton}

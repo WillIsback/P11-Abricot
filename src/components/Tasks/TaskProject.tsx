@@ -34,8 +34,8 @@ export default function TaskProject({
 
 	return (
 		<article
-			className="flex flex-col bg-white lg:w-255.5 rounded-[10px] py-6.25 px-10
-		gap-6 border border-gray-200"
+			className="flex flex-col bg-white w-full lg:w-255.5 rounded-[10px] py-4 sm:py-6.25 px-4 sm:px-6 md:px-10
+		gap-4 sm:gap-6 border border-gray-200"
 		>
 			{/* Bloc d'en tête */}
 			<div className="flex justify-between">

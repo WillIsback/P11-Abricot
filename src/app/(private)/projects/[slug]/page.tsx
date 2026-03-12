@@ -97,7 +97,7 @@ export default async function Projet({
 			<div className="w-full md:max-w-360 m-auto mt-0">
 				<Menu userInitial={userInitial} />
 				<ProjectProvider data={project}>
-					<div className="flex md:m-auto pl-2 pr-2 lg:pl-11 md:pr-25 mt-19.5 w-1215/1440">
+					<div className="flex md:m-auto pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-11 md:pr-25 mt-8 sm:mt-19.5 w-full md:w-1215/1440">
 						<ProjectBanner
 							title={name}
 							description={description}
@@ -107,13 +107,13 @@ export default async function Projet({
 					</div>
 					<main
 						id="main-content"
-						className="flex flex-col pb-22.25 pt-12.25 w-1215/1440 gap-8.5 items-center m-auto"
+						className="flex flex-col pb-8 sm:pb-22.25 pt-6 sm:pt-12.25 w-full px-4 sm:px-8 md:px-0 md:w-1215/1440 gap-8.5 items-center m-auto"
 					>
 						<Workers owner={owner} members={members} variant="Default" />
-						<div className="flex flex-col w-full bg-white rounded-[10px] px-14.75 py-6 gap-10.25">
+						<div className="flex flex-col w-full bg-white rounded-[10px] px-4 sm:px-8 md:px-14.75 py-4 sm:py-6 gap-6 sm:gap-10.25">
 							<ProjetFilterBar />
 							{chips === "task" ? (
-								<ul className="flex flex-col gap-4.25 w-1097/1215 px-10">
+								<ul className="flex flex-col gap-4.25 w-full md:w-1097/1215 px-2 sm:px-4 md:px-10">
 									{filteredTasks.map((task) => {
 										return (
 											<li key={task.id}>

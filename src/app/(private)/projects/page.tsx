@@ -21,9 +21,9 @@ export default async function Projects() {
 	const userInitial = getInitialsFromName(profileData.data.user.name);
 	return (
 		<div className="flex bg-gray-50">
-			<div className="w-360 m-auto mt-0">
+			<div className="w-full max-w-360 m-auto mt-0">
 				<Menu userInitial={userInitial} />
-				<main id="main-content" className="w-1180/1440 m-auto py-22.25">
+				<main id="main-content" className="w-full px-4 sm:px-8 md:px-0 md:w-1180/1440 m-auto py-8 sm:py-14 md:py-22.25">
 					<Banner title="Mes projets" name="" />
 					<DisplayProjects />
 				</main>

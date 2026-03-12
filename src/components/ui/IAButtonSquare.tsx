@@ -10,15 +10,14 @@ export default function IAButtonSquare({ onClick }: { onClick: () => void }) {
             flex
             items-center
             justify-center
-						transform scale-[0.6] md:scale-[0.8] lg:scale-[1]
-            h-12.5
-            w-23.5
+            h-10 sm:h-12.5
+            w-16 sm:w-20 md:w-23.5
             rounded-[10px]
             bg-brand-text
             focus:bg-brand-light
             gap-2.5
-            px-6
-            py-3.25
+            px-3 sm:px-6
+            py-2 sm:py-3.25
             hover:shadow-md
             cursor-pointer
             "

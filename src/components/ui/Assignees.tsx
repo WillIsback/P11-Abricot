@@ -7,7 +7,7 @@ type Assignee = z.infer<typeof TaskAssignee>;
 export default function Assignees({ assignee }: { assignee?: Assignee[] }) {
 	const list = assignee ?? [];
 	return (
-		<ul className="flex gap-2">
+		<ul className="flex flex-col sm:flex-col gap-2 ">
 			{list.map((a) => {
 				return (
 					<div

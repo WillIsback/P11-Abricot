@@ -83,10 +83,10 @@ export default function UpdateProject({
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent
-				className="flex flex-col gap-10 sm:max-w-149.5 px-18.25 py-19.75
+				className="flex flex-col gap-6 sm:gap-10 sm:max-w-149.5 px-4 sm:px-8 md:px-18.25 py-8 sm:py-19.75
       [&_[data-slot=dialog-close]_svg]:stroke-gray-600
-        **:data-[slot=dialog-close]:top-6    
-        **:data-[slot=dialog-close]:right-6
+        **:data-[slot=dialog-close]:top-4 sm:**:data-[slot=dialog-close]:top-6
+        **:data-[slot=dialog-close]:right-4 sm:**:data-[slot=dialog-close]:right-6
       "
 			>
 				<DialogHeader>
@@ -135,7 +135,7 @@ export default function UpdateProject({
 						error={getFieldError("contributors")}
 						defaultValue={existingContributors}
 					/>
-					<DialogFooter className="gap-2 w-45.25 flex justify-start">
+					<DialogFooter className="gap-2 w-full sm:w-45.25 flex justify-start">
 						<CustomButton
 							label="Enregistrer"
 							pending={pending}

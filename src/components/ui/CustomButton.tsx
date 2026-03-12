@@ -26,13 +26,12 @@ export default function CustomButton({
                     ${className}
                     flex
                     justify-center
-										transform scale-[0.6] md:scale-[0.8] lg:scale-[1]
                     items-center
-                    h-12.5
+                    h-10 sm:h-12.5
                     w-full
-                    py-3.25
+                    py-2 sm:py-3.25
                     gap-2.5
-                    px-18.5
+                    px-6 sm:px-10 md:px-18.5
                     rounded-[10px]
 										cursor-pointer
                     ${
@@ -44,7 +43,7 @@ export default function CustomButton({
 			disabled={disabled}
 			ref={ref}
 		>
-			<span className="body-m">{label}</span>
+			<span className="body-s sm:body-m">{label}</span>
 		</button>
 	);
 }

@@ -61,7 +61,7 @@ function CommentItem({
 	};
 
 	return (
-		<li className="min-w-190 flex gap-3.5">
+		<li className="min-w-0 flex gap-3.5">
 			<UserIcon
 				user={getInitialsFromName(comment.author.name)}
 				variant="Comment"
@@ -176,7 +176,7 @@ export default function Comments({
 					/>
 				))}
 			</ul>
-			<div className="min-w-190 flex gap-3.5">
+			<div className="min-w-0 flex gap-3.5">
 				<UserIcon user={userInitial} variant="Comment" />
 				<form
 					action={actionCreate}
@@ -190,7 +190,7 @@ export default function Comments({
 						aria-label="Ajouter un commentaire"
 						placeholder="Ajouter un commentaire..."
 						className="flex px-3.5 py-4.5 bg-gray-50 text-black
-						 body-2xs w-fit lg:min-w-140 rounded-[10px]"
+						 body-2xs w-full lg:min-w-140 rounded-[10px]"
 					/>
 					{stateCreate && !stateCreate.ok && (
 						<p role="alert" className="text-red-500 text-xs mt-1">

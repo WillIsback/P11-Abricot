@@ -21,28 +21,28 @@ export default function TaskThumbnail(props: PropType) {
 	});
 	const href = `/projects/${props.projectId}?chips=task&status=${props.status}&search=${props.title}`;
 	return (
-		<article className="flex justify-between items-center flex-1 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">
+		<article className="flex flex-col sm:flex-row justify-between items-center flex-1 rounded-2.5  bg-white py-6.25 px-10 rounded-[10px] border border-gray-200 ">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-1.75">
 					<h3>{props.title}</h3>
 					<p className="body-s text-gray-600">{props.description}</p>
 				</div>
 				<div className="flex flex-row gap-3.75 items-center">
-					<div className="flex gap-2 min-w-26.75 flex-nowrap items-center">
+					<div className="flex gap-2 md:min-w-26.75 md:flex-nowrap items-center">
 						<FolderOpen className="fill-gray-400 stroke-white" />
 						<span className="text-gray-600 body-xs">
 							{isPending ? <LoaderCircle /> : projectName}
 						</span>
 					</div>
 					<span className="text-gray-400 text-[11px]">|</span>
-					<div className="flex gap-2 w-15.5 flex-nowrap items-center">
+					<div className="flex gap-2 w-15.5 md:flex-nowrap items-center">
 						<SVGCalendar />
 						<span className="text-gray-600 body-xs whitespace-nowrap">
 							{formattedDate}
 						</span>
 					</div>
 					<span className="text-gray-400 text-[11px]">|</span>
-					<div className="flex gap-2 w-15.5 flex-nowrap items-center">
+					<div className="flex gap-2 w-15.5 md:flex-nowrap items-center">
 						<MessageSquareText className="stroke-gray-600" width={15} />
 						<span className="text-gray-600 body-xs">
 							{props.comments.length}
@@ -52,7 +52,7 @@ export default function TaskThumbnail(props: PropType) {
 			</div>
 
 			{/*PARTIE DROITE*/}
-			<div className="flex flex-col items-end w-30.25 gap gap-9.25">
+			<div className="flex flex-row sm:flex-col items-center sm:items-end w-full sm:w-30.25 gap-4 sm:gap-9.25 justify-between sm:justify-start">
 				<Tags
 					label={mapStatusLabel[props.status]}
 					color={mapStatusColor[props.status]}

@@ -86,7 +86,7 @@ const ProfileForm = ({ userName }: { userName: string }) => {
 						error={getFieldError("email")}
 					/>
 				</div>
-				<div className="flex w-60.5">
+				<div className="flex w-full sm:w-60.5">
 					<CustomButton
 						label="Modifier les informations"
 						pending={pending}
@@ -149,7 +149,7 @@ const PasswordForm = () => {
 						error={getFieldError("newPassword")}
 					/>
 				</div>
-				<div className="flex w-60.5">
+				<div className="flex w-full sm:w-60.5">
 					<CustomButton
 						label="Mettre à jour le mot de passe"
 						pending={pending}

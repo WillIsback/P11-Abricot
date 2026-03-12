@@ -36,13 +36,13 @@ export default function EventTaskModal({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent
 				className="
-        px-18.25 pt-19.75 pb-9.75
+        px-4 sm:px-8 md:px-18.25 pt-8 sm:pt-19.75 pb-4 sm:pb-9.75
         m-auto flex flex-col justify-between
-        bg-white rounded-[10px] items-center gap-14 
+        bg-white rounded-[10px] items-center gap-6 sm:gap-14
         [&_[data-slot=dialog-close]_svg]:stroke-gray-600
-        **:data-[slot=dialog-close]:top-6    
-        **:data-[slot=dialog-close]:right-6
-        min-w-5/12
+        **:data-[slot=dialog-close]:top-4 sm:**:data-[slot=dialog-close]:top-6
+        **:data-[slot=dialog-close]:right-4 sm:**:data-[slot=dialog-close]:right-6
+        w-full sm:min-w-5/12
         "
 			>
 				<div className="flex flex-col flex-1 gap-10">

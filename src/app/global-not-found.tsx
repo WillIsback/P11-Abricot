@@ -36,9 +36,9 @@ export default function GlobalNotFound() {
 						backgroundColor: "rgba(255, 255, 255, 0.9)",
 						backdropFilter: "blur(4px)",
 						borderRadius: "1rem",
-						padding: "4rem 3rem",
+						padding: "2rem 1.5rem",
 						boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-						maxWidth: "28rem",
+						maxWidth: "min(28rem, 90vw)",
 						textAlign: "center",
 					}}
 				>

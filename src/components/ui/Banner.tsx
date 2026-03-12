@@ -15,8 +15,8 @@ export default function Banner(props: BannerProps) {
 	const isProject = pathname.includes("projects");
 
 	return (
-		<section className="flex justify-between flex-1" aria-label="Banniere">
-			<div className="flex flex-col gap-3.5 justify-center">
+		<section className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 flex-1" aria-label="Banniere">
+			<div className="flex flex-col gap-2 sm:gap-3.5 justify-center">
 				<h1>{props.title}</h1>
 				{isProject ? (
 					<p>Gérez vos projets</p>
@@ -24,7 +24,7 @@ export default function Banner(props: BannerProps) {
 					<p>Bonjour {props.name}, voici un aperçu de vos projets et tâches</p>
 				)}
 			</div>
-			<div className="flex items-center w-45.25">
+			<div className="flex items-center w-full sm:w-45.25">
 				<CustomButton
 					label="+ Créer un projet"
 					pending={false}

@@ -17,7 +17,7 @@ export default function Team({
 	const contributors = members.filter((m) => m.role === "CONTRIBUTOR");
 	const ownerInitials = getInitialsFromName(owner.name);
 	return (
-		<div className="flex gap-1">
+		<div className="flex flex-col sm:flex-row gap-1">
 			<div className="flex gap-1.5">
 				<p className="w-6.75 h-6.75 rounded-full bg-brand-light text-gray-950 body-2xs flex items-center justify-center">
 					{ownerInitials}
@@ -31,7 +31,7 @@ export default function Team({
 					{contributors.map((c, index) => (
 						<li
 							key={c.id}
-							className={`w-7 h-7 rounded-full bg-gray-200 border border-white text-gray-950 body-2xs flex items-center justify-center ${index > 0 ? "-ml-2" : ""}`}
+							className={`w-7 h-7rounded-full bg-gray-200 border border-white text-gray-950 body-2xs flex items-center justify-center ${index > 0 ? "-ml-2" : ""}`}
 						>
 							{getInitialsFromName(c.user.name)}
 						</li>

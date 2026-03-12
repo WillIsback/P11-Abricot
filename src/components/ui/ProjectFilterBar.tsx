@@ -5,8 +5,8 @@ import SearchBar from "./SearchBar";
 
 export default function ProjetFilterBar() {
 	return (
-		<div className="flex flex-col md:flex-row w-full items-stretch h-fit justify-between">
-			<div className="flexflex-col gap-2 justify-center md:items-stretch">
+		<div className="flex flex-col md:flex-row w-full items-stretch h-fit justify-between gap-4">
+			<div className="flex flex-col gap-2 justify-center md:items-stretch">
 				<h2>Tâches</h2>
 				<p className="body-m text-gray-600">Par odre de priorité</p>
 			</div>

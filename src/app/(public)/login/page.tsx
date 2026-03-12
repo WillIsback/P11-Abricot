@@ -23,7 +23,7 @@ export default function Login() {
 				<main
 					id="main-content"
 					className="flex flex-col items-center justify-center
-            relative z-10 bg-gray-50 px-35 py-13.75 gap-50.5"
+            relative z-10 bg-gray-50 px-6 sm:px-12 md:px-35 py-8 sm:py-13.75 gap-12 sm:gap-24 md:gap-50.5"
 				>
 					<LogoBrandDark aria-hidden="true" />
 					<div className="flex flex-col gap-7.5 w-full h-fit">

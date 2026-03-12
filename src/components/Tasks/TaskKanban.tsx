@@ -104,7 +104,7 @@ export default function TaskKanban(props: PropsType) {
 					</div>
 				</div>
 			</div>
-			<div className="w-30.25">
+			<div className="w-full sm:w-30.25">
 				<CustomButton
 					label="Voir"
 					pending={false}
