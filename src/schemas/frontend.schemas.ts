@@ -1,5 +1,12 @@
 import * as z from "zod";
 
+/**
+ * Schéma de validation pour le formulaire d'inscription.
+ *
+ * @remarks
+ * Valide le prénom, le nom, l'email et le mot de passe.
+ * Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.
+ */
 const SignupFormSchema = z.object({
 	firstName: z
 		.string()
@@ -18,11 +25,20 @@ const SignupFormSchema = z.object({
 		.trim(),
 });
 
+/**
+ * Schéma de validation pour le formulaire de connexion.
+ */
 const LoginFormSchema = z.object({
 	email: z.email({ error: "Please enter a valid email." }).trim(),
 	password: z.string().trim(),
 });
 
+/**
+ * Schéma de validation pour la création d'une tâche.
+ *
+ * @remarks
+ * Le statut par défaut est `TODO` et la priorité par défaut est `MEDIUM` si non précisés.
+ */
 const CreateTaskSchema = z.object({
 	title: z
 		.string()
@@ -36,6 +52,12 @@ const CreateTaskSchema = z.object({
 	status: z.enum(["TODO", "IN_PROGRESS", "DONE", "CANCELED"]).optional(),
 });
 
+/**
+ * Schéma de validation pour la mise à jour d'une tâche.
+ *
+ * @remarks
+ * Tous les champs sont optionnels pour permettre des mises à jour partielles.
+ */
 const UpdateTaskSchema = z.object({
 	title: z
 		.string()
@@ -51,6 +73,13 @@ const UpdateTaskSchema = z.object({
 	status: z.enum(["TODO", "IN_PROGRESS", "DONE", "CANCELED"]).optional(),
 });
 
+/**
+ * Schéma de validation pour la mise à jour du profil utilisateur.
+ *
+ * @remarks
+ * Tous les champs sont optionnels pour permettre des mises à jour partielles.
+ * Ne permet pas la mise à jour du mot de passe (utiliser `UpdatePasswordSchema`).
+ */
 const UpdateProfileSchema = z.object({
 	firstName: z
 		.string()
@@ -65,6 +94,13 @@ const UpdateProfileSchema = z.object({
 	email: z.email({ error: "Please enter a valid email." }).trim().optional(),
 });
 
+/**
+ * Schéma de validation pour la mise à jour du mot de passe.
+ *
+ * @remarks
+ * Le nouveau mot de passe doit contenir au moins 8 caractères,
+ * une minuscule, une majuscule et un chiffre.
+ */
 const UpdatePasswordSchema = z.object({
 	currentPassword: z.string().trim(),
 	newPassword: z
@@ -76,6 +112,9 @@ const UpdatePasswordSchema = z.object({
 		.trim(),
 });
 
+/**
+ * Schéma de validation pour la création d'un projet.
+ */
 const CreateProjectSchema = z.object({
 	name: z
 		.string()
@@ -86,29 +125,53 @@ const CreateProjectSchema = z.object({
 	contributors: z.array(z.email()).optional(), // Array d'emails des contributeurs
 });
 
+/**
+ * Schéma de validation pour la mise à jour d'un projet.
+ *
+ * @remarks
+ * Tous les champs sont optionnels pour permettre des mises à jour partielles.
+ */
 const UpdateProjectSchema = z.object({
 	name: z.string().optional(),
 	description: z.string().optional(),
 	contributors: z.array(z.email()).optional(),
 });
 
+/**
+ * Schéma de validation pour l'ajout d'un contributeur à un projet.
+ */
 const AddContributorSchema = z.object({
 	email: z.email({ error: "Please enter a valid email." }).trim(),
 	role: z.enum(["ADMIN", "CONTRIBUTOR"]).optional(),
 });
 
+/**
+ * Schéma de validation pour la suppression d'un contributeur d'un projet.
+ */
 const RemoveContributorSchema = z.object({
 	userId: z.string(),
 });
 
+/**
+ * Schéma de validation pour la création d'un commentaire.
+ */
 const CreateCommentSchema = z.object({
 	content: z.string(),
 });
 
+/**
+ * Schéma de validation pour la mise à jour d'un commentaire.
+ */
 const UpdateCommentSchema = z.object({
 	content: z.string(),
 });
 
+/**
+ * Schéma de validation pour la recherche d'utilisateurs.
+ *
+ * @remarks
+ * La requête doit contenir au moins 2 caractères.
+ */
 const UserSearchQuerySchema = z.string().min(2);
 
 export {

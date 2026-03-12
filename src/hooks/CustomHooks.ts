@@ -32,6 +32,7 @@ function useFetch<T>(
 	const [isPending, startTransition] = useTransition();
 	const [data, setData] = useState<T | null>(null);
 
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		startTransition(async () => {
 			try {
@@ -44,6 +45,7 @@ function useFetch<T>(
 		});
 		// biome-ignore lint/correctness/useExhaustiveDependencies: generic hook with dynamic dependency list by design
 	}, dependencies);
+	/* eslint-enable react-hooks/exhaustive-deps */
 
 	return [isPending, data];
 }
