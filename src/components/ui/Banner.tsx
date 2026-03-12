@@ -15,7 +15,10 @@ export default function Banner(props: BannerProps) {
 	const isProject = pathname.includes("projects");
 
 	return (
-		<section className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 flex-1" aria-label="Banniere">
+		<section
+			className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 flex-1"
+			aria-label="Banniere"
+		>
 			<div className="flex flex-col gap-2 sm:gap-3.5 justify-center">
 				<h1>{props.title}</h1>
 				{isProject ? (

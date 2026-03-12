@@ -25,7 +25,10 @@ export default function ProjectBanner(props: ProjectBannerProps) {
 	const [isCreateAiTaskOpen, setIsCreateAiTaskOpen] = useState(false);
 
 	return (
-		<section className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 w-full" aria-label="Banniere">
+		<section
+			className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 w-full"
+			aria-label="Banniere"
+		>
 			<div className="flex gap-4">
 				<IconButton type="MoveLeft" />
 				<div className="flex flex-col gap-2 sm:gap-3.5 justify-center">
